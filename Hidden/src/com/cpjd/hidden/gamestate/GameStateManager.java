@@ -8,8 +8,11 @@ import java.io.InputStream;
 
 import com.cpjd.hidden.gamestates.Menu;
 import com.cpjd.hidden.main.GamePanel;
+import com.cpjd.hidden.saves.SaveProfile;
 
 public class GameStateManager {
+
+	private SaveProfile save;
 	
 	public static final int NUM_GAME_STATES = 6;
 	public static final int INTRO = 0;

@@ -56,7 +56,7 @@ public class Layout {
 	 * @return
 	 */
 	public static int getObjectCenter(int p1, int p2, int width) {
-		return (p1 + (p2 - p1) / 2) - (width / 2);
+		return (p1 + ((p2 - p1) / 2) - (width / 2));
 	}
 	
 	/**

@@ -12,7 +12,7 @@ public class Credits extends Fragment {
 	
 	/*
 	 * Credits formatting tips
-	 * add prefix '[l]' for large text 
+	 * add prefix '[l]' for large text  
 	 */
 	
 	private final String[] credits = {
@@ -22,10 +22,11 @@ public class Credits extends Fragment {
 			"",
 			"Team",
 			"Will D.",
+			"Daniel P.",
+			"Alex H.",
 			"",
 			"Art resources:",
-			""
-			
+			""	
 	};
 	
 	public Credits() {

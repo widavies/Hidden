@@ -16,28 +16,44 @@ public class LevelButton {
 	private boolean clicked;
 	private Fragment fragment;
 	
-	public LevelButton(String text, Fragment fragment) {
+	private final int THRESHOLD = 3; // The time, in ticks * the index of how long to wait for it to appear
+	private int current = THRESHOLD;
+	
+	private boolean completed;
+	
+	public LevelButton(String text, Fragment fragment, boolean completed) {
 		this.text = text; this.fragment = fragment;
+		this.completed = completed;
 	}
 	
 	public void update() {
-		
+		current--;
+		if(current < 0) current = 0;
 	}
 	
 	public void draw(Graphics2D g, int x, int y) {
-		if(!fragment.isExpanded()) return;
+		if(!fragment.isExpanded() || current > 0) return;
 		FontMetrics fm = g.getFontMetrics();
 		this.x = x;
 		this.y = y;
 		
-		g.setColor(Color.BLACK);
+		if(completed) g.setColor(Color.GREEN);
+		if(!completed) g.setColor(Color.RED);
 		g.fillRect(x, y, 50, 50);
 		g.setColor(Color.WHITE);
-		if(hover) g.setColor(Color.BLACK);
-		g.fillRect(x + 5, y + 5, 40, 40);
+		if(hover && completed) g.setColor(Color.BLACK);
+		g.fillRect(x + 5, y + 5, 42, 40);
 		g.setColor(Color.BLACK);
-		if(hover) g.setColor(Color.WHITE);
+		if(hover && completed) g.setColor(Color.WHITE);
 		g.drawString(text, Layout.getStringCenter(x + 5, x + 5 + 40, text, g), y - 7 + fm.getHeight());
+	}
+	
+	public void reset(int index) {
+		current = THRESHOLD * index;
+	}
+	
+	public void setIndex(int index) {
+		current = current * index;
 	}
 	
 	public boolean isClicked() {
