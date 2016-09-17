@@ -1,4 +1,4 @@
-package com.cpjd.hide.toolbox;
+package com.cpjd.hidden.toolbox;
 
 import java.awt.Graphics2D;
 

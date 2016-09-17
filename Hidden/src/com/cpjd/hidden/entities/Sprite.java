@@ -1,4 +1,4 @@
-package com.cpjd.hide.entities;
+package com.cpjd.hidden.entities;
 
 import java.awt.Graphics2D;
 

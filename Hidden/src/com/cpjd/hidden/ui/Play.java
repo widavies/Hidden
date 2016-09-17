@@ -1,9 +1,9 @@
-package com.cpjd.hide.ui;
+package com.cpjd.hidden.ui;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import com.cpjd.hide.toolbox.Layout;
+import com.cpjd.hidden.toolbox.Layout;
 
 public class Play extends Fragment {
 	

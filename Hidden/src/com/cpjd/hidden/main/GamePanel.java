@@ -1,4 +1,4 @@
-package com.cpjd.hide.main;
+package com.cpjd.hidden.main;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -14,8 +14,8 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import com.cpjd.hide.gamestate.GameStateManager;
-import com.cpjd.hide.toolbox.Layout;
+import com.cpjd.hidden.gamestate.GameStateManager;
+import com.cpjd.hidden.toolbox.Layout;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener {
 	

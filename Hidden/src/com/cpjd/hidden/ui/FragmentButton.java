@@ -1,4 +1,4 @@
-package com.cpjd.hide.ui;
+package com.cpjd.hidden.ui;
 
 import java.awt.Color;
 import java.awt.FontMetrics;

@@ -1,11 +1,11 @@
-package com.cpjd.hide.ui;
+package com.cpjd.hidden.ui;
 
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import com.cpjd.hide.toolbox.Layout;
+import com.cpjd.hidden.toolbox.Layout;
 
 public class LevelButton {
 	

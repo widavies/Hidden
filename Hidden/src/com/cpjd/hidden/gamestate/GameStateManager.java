@@ -1,4 +1,4 @@
-package com.cpjd.hide.gamestate;
+package com.cpjd.hidden.gamestate;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.io.InputStream;
 
-import com.cpjd.hide.gamestates.Menu;
-import com.cpjd.hide.main.GamePanel;
+import com.cpjd.hidden.gamestates.Menu;
+import com.cpjd.hidden.main.GamePanel;
 
 public class GameStateManager {
 	

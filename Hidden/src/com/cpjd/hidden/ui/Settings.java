@@ -1,6 +1,6 @@
-package com.cpjd.hide.ui;
+package com.cpjd.hidden.ui;
 
-import com.cpjd.hide.toolbox.Layout;
+import com.cpjd.hidden.toolbox.Layout;
 
 public class Settings extends Fragment {
 	

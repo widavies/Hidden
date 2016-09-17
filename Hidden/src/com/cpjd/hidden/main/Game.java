@@ -1,4 +1,4 @@
-package com.cpjd.hide.main;
+package com.cpjd.hidden.main;
 
 import java.awt.Point;
 import java.awt.event.ComponentEvent;

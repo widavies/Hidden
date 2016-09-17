@@ -1,19 +1,19 @@
-package com.cpjd.hide.gamestates;
+package com.cpjd.hidden.gamestates;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-import com.cpjd.hide.gamestate.GameState;
-import com.cpjd.hide.gamestate.GameStateManager;
-import com.cpjd.hide.toolbox.Layout;
-import com.cpjd.hide.ui.Button;
-import com.cpjd.hide.ui.Credits;
-import com.cpjd.hide.ui.Exit;
-import com.cpjd.hide.ui.Fragment;
-import com.cpjd.hide.ui.Play;
-import com.cpjd.hide.ui.Settings;
+import com.cpjd.hidden.gamestate.GameState;
+import com.cpjd.hidden.gamestate.GameStateManager;
+import com.cpjd.hidden.toolbox.Layout;
+import com.cpjd.hidden.ui.Button;
+import com.cpjd.hidden.ui.Credits;
+import com.cpjd.hidden.ui.Exit;
+import com.cpjd.hidden.ui.Fragment;
+import com.cpjd.hidden.ui.Play;
+import com.cpjd.hidden.ui.Settings;
 
 public class Menu extends GameState {
 

@@ -1,11 +1,11 @@
-package com.cpjd.hide.toolbox;
+package com.cpjd.hidden.toolbox;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 
-import com.cpjd.hide.main.GamePanel;
+import com.cpjd.hidden.main.GamePanel;
 
 public class TextFlow {
 	

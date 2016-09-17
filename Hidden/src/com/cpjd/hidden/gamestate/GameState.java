@@ -1,4 +1,4 @@
-package com.cpjd.hide.gamestate;
+package com.cpjd.hidden.gamestate;
 
 import java.awt.Graphics2D;
 

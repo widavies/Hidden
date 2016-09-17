@@ -1,10 +1,10 @@
-package com.cpjd.hide.ui;
+package com.cpjd.hidden.ui;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
-import com.cpjd.hide.toolbox.Layout;
+import com.cpjd.hidden.toolbox.Layout;
 
 public class Credits extends Fragment {
 	
