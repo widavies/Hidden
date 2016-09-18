@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.hidden.toolbox.Layout;
 
 public class Credits extends Fragment {
@@ -29,7 +30,8 @@ public class Credits extends Fragment {
 			""	
 	};
 	
-	public Credits() {
+	public Credits(GameStateManager gsm) {
+		super(gsm);
 		TOTAL_EXPAND = Layout.HEIGHT / 3;
 	}
 	

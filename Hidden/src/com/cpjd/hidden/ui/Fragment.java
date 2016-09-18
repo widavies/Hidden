@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+import com.cpjd.hidden.gamestate.GameStateManager;
+
 public abstract class Fragment {
 	
 	protected final int PADDING = 10;
@@ -18,6 +20,12 @@ public abstract class Fragment {
 	protected boolean exit;
 	
 	protected int buttonx, buttony, buttonWidth, buttonHeight;
+	
+	protected GameStateManager gsm;
+	
+	public Fragment(GameStateManager gsm) {
+		this.gsm = gsm;
+	}
 	
 	public void setButtonSize(int x, int y, int width, int height) {
 		this.buttonx = x; this.buttony = y; this.buttonWidth = width; this.buttonHeight = height;

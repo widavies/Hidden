@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.hidden.toolbox.Layout;
 
 public class Play extends Fragment {
@@ -12,7 +13,8 @@ public class Play extends Fragment {
 	
 	private int centeredx;
 	
-	public Play() {
+	public Play(GameStateManager gsm) {
+		super(gsm);
 		TOTAL_EXPAND = Layout.HEIGHT / 3;
 		
 		for(int i = 0; i < 50; i++) {
@@ -40,6 +42,13 @@ public class Play extends Fragment {
 	public void update() {
 		centeredx = Layout.getObjectCenter(buttonx, buttonWidth + expand, (getButtonX(9) + 134) - getButtonX(0));
 		
+		for(int i = 0; i < levelButtons.size(); i++) {
+			if(levelButtons.get(i).isClicked()) {
+				gsm.setState(1);
+				return;
+			}
+		}
+		
 		if(exit) {
 			for(int i = 0; i < levelButtons.size(); i++) {
 				levelButtons.get(i).reset(i);
@@ -66,6 +75,15 @@ public class Play extends Fragment {
 		
 		for(int i = 0; i < levelButtons.size(); i++) {
 			levelButtons.get(i).mouseMoved(x, y);
+		}
+	}
+	
+	@Override
+	public void mousePressed(int x, int y) {
+		super.mousePressed(x, y);
+		
+		for(int i = 0; i < levelButtons.size(); i++) {
+			levelButtons.get(i).mousePressed(x, y);
 		}
 	}
 }

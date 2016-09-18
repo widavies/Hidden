@@ -69,4 +69,8 @@ public class LevelButton {
 		if(bounds.contains(x, y)) hover = true;
 		else hover = false;
 	}
+	public void mousePressed(int x, int y) {
+		Rectangle bounds = new Rectangle(this.x, this.y, 40, 40);
+		if(bounds.contains(x, y)) clicked = true;
+	}
 }

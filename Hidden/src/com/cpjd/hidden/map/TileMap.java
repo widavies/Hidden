@@ -120,10 +120,10 @@ public class TileMap {
 		map[row][col] = value;
 	}
 	
-	public double getx() {
+	public double getX() {
 		return x;
 	}
-	public double gety() {
+	public double getY() {
 		return y;
 	}
 	public int getWidth() {

@@ -3,11 +3,14 @@ package com.cpjd.hidden.ui;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import com.cpjd.hidden.gamestate.GameStateManager;
+
 public class Exit extends Fragment {
 	
 	FragmentButton okay, cancel;
 	
-	public Exit() {
+	public Exit(GameStateManager gsm) {
+		super(gsm);
 		TOTAL_EXPAND = 100;
 		
 		okay = new FragmentButton("Exit");

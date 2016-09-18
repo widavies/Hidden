@@ -6,23 +6,27 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.io.InputStream;
 
+import com.cpjd.hidden.chapters.Ch1;
 import com.cpjd.hidden.gamestates.Menu;
+import com.cpjd.hidden.hud.Console;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.saves.SaveProfile;
 
 public class GameStateManager {
 
 	private SaveProfile save;
-	
-	public static final int NUM_GAME_STATES = 6;
+	private Console console;
+
+	public static final int NUM_GAME_STATES = 2;
 	public static final int INTRO = 0;
+	public static final int CH1 = 1;
 
 	private GameState[] gameStates;
 	private int currentState;
 
 	// The game-wide font
 	private Font font;
-	
+
 	public GameStateManager() {
 		gameStates = new GameState[NUM_GAME_STATES];
 
@@ -30,12 +34,14 @@ public class GameStateManager {
 			InputStream inStream = getClass().getResourceAsStream("/fonts/USSR STENCIL WEBFONT.ttf");
 			Font rawFont = Font.createFont(Font.TRUETYPE_FONT, inStream);
 			font = rawFont.deriveFont(40.0f);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		currentState = INTRO;
 		loadState(currentState);
+
+		console = new Console(this);
 	}
 
 	public void setState(int state) {
@@ -43,9 +49,10 @@ public class GameStateManager {
 		currentState = state;
 		loadState(currentState);
 	}
-	
+
 	private void loadState(int state) {
-		if (state == INTRO) gameStates[state] = new Menu(this);
+		if(state == INTRO) gameStates[state] = new Menu(this);
+		if(state == CH1) gameStates[state] = new Ch1(this);
 	}
 
 	private void unloadState(int state) {
@@ -55,35 +62,45 @@ public class GameStateManager {
 	public int getState() {
 		return currentState;
 	}
+
 	public void update() {
-		if (gameStates[currentState] != null) gameStates[currentState].update();
+		console.update();
+
+		if(gameStates[currentState] != null) gameStates[currentState].update();
 	}
 
 	public void draw(Graphics2D g) {
 		// Enable anti-aliasing
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
+
 		g.setFont(font);
 		g.setColor(Color.BLACK);
-		g.fillRect(0,0,GamePanel.WIDTH,GamePanel.HEIGHT);
+		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
+
+		if(gameStates[currentState] != null) gameStates[currentState].draw(g);
 		
-		if (gameStates[currentState] != null) gameStates[currentState].draw(g);
+		console.draw(g);
 	}
 
 	public void keyPressed(int k) {
-		if (gameStates[currentState] != null) gameStates[currentState].keyPressed(k);
+		console.keyPressed(k);
+
+		if(gameStates[currentState] != null) gameStates[currentState].keyPressed(k);
 	}
 
 	public void keyReleased(int k) {
-		if (gameStates[currentState] != null) gameStates[currentState].keyReleased(k);
+		if(gameStates[currentState] != null) gameStates[currentState].keyReleased(k);
 	}
+
 	public void mousePressed(int x, int y) {
 		if(gameStates[currentState] != null) gameStates[currentState].mousePressed(x, y);
 	}
-	public  void mouseReleased(int x, int y) {
+
+	public void mouseReleased(int x, int y) {
 		if(gameStates[currentState] != null) gameStates[currentState].mouseReleased(x, y);
 	}
-	public  void mouseMoved(int x, int y) {
+
+	public void mouseMoved(int x, int y) {
 		if(gameStates[currentState] != null) gameStates[currentState].mouseMoved(x, y);
 	}
 }

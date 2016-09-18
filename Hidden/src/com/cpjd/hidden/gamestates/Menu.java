@@ -17,15 +17,16 @@ import com.cpjd.hidden.ui.Settings;
 
 public class Menu extends GameState {
 
-	ArrayList<Button> buttons = new ArrayList<Button>();
+	ArrayList<Button> buttons;
 	
 	public Menu(GameStateManager gsm) {
 		super(gsm);
-		
-		buttons.add(new Button("Play", new Play()));
-		buttons.add(new Button("Settings", new Settings()));
-		buttons.add(new Button("Credits", new Credits()));
-		buttons.add(new Button("Exit", new Exit()));
+		buttons = new ArrayList<Button>();
+		Fragment.ANY_EXPANDED = false;
+		buttons.add(new Button("Play", new Play(gsm)));
+		buttons.add(new Button("Settings", new Settings(gsm)));
+		buttons.add(new Button("Credits", new Credits(gsm)));
+		buttons.add(new Button("Exit", new Exit(gsm)));
 	}
 	
 	public void update() {
