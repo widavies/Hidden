@@ -5,15 +5,28 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
 
 public class Game {
 	
 	public static JFrame frame;
 	
 	public static void main(String[] args) {
+		
+		//mac stuff, makes it look pretty
+		if(System.getProperty("os.name").contains("OS X")){
+			System.setProperty("com.apple.mrj.application.apple.menu.about.name","Hidden");
+			System.setProperty("apple.laf.useScreenMenuBar", "true");
+			try {
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+		
 		frame = new JFrame("Hidden");
 		
-		GamePanel game = new GamePanel();
+		final GamePanel game = new GamePanel();
 		
 		frame.setLayout(null);
 		frame.setContentPane(game);

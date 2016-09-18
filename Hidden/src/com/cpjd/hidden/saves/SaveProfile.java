@@ -52,6 +52,8 @@ public class SaveProfile {
 	//save stuff
 	private final String DIVIDER = ":";
 	
+	
+	
 	// Loads initial values, should only be called once at load
 	public SaveProfile() throws Exception{
 		
@@ -91,6 +93,7 @@ public class SaveProfile {
 			}
 			
 		}
+		
 		fr.close();
 		reader.close();
 		
@@ -140,6 +143,7 @@ public class SaveProfile {
 	
 	private String getBaseDirectory() {
 		String OS = System.getProperty("os.name").toUpperCase();
+		
 	    if (OS.contains("WIN"))
 	        return System.getenv("APPDATA/Hidden");
 	    else if (OS.contains("MAC"))

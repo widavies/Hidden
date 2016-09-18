@@ -29,6 +29,10 @@ public class Sprite {
 		
 	}
 	
+	public void update(){
+		
+	}
+	
 	// draws the sprite
 	public void draw(Graphics2D g) {
 		
