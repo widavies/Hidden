@@ -7,8 +7,6 @@ import com.cpjd.hidden.map.TileMap;
 public class Player extends Sprite {
 
 	
-	//change anything in this class as need be, I dont have any long term plan with it
-	
 	public final double MOVESPEED = 2;
 	
 	public Player(TileMap tm) {

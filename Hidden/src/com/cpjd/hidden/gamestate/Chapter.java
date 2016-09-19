@@ -2,7 +2,9 @@ package com.cpjd.hidden.gamestate;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
+import com.cpjd.hidden.entities.Enemy;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.TileMap;
@@ -14,6 +16,7 @@ public class Chapter extends GameState {
 	private SaveProfile save;
 	
 	protected Player player;
+	protected List<Enemy> enemies;
 	
 	public Chapter(GameStateManager gsm) {
 		super(gsm);
