@@ -54,7 +54,6 @@ public class GameStateManager {
 		if(state == INTRO) gameStates[state] = new Menu(this);
 		if(state == CH1) gameStates[state] = new Ch1(this);
 	}
-
 	private void unloadState(int state) {
 		gameStates[state] = null;
 	}
@@ -65,7 +64,9 @@ public class GameStateManager {
 
 	public void update() {
 		console.update();
-
+		
+		if(console.isOpen()) return;
+		
 		if(gameStates[currentState] != null) gameStates[currentState].update();
 	}
 
@@ -84,11 +85,14 @@ public class GameStateManager {
 
 	public void keyPressed(int k) {
 		console.keyPressed(k);
-
+		if(console.isOpen()) return;
+		
 		if(gameStates[currentState] != null) gameStates[currentState].keyPressed(k);
 	}
 
 	public void keyReleased(int k) {
+		if(console.isOpen()) return;
+		
 		if(gameStates[currentState] != null) gameStates[currentState].keyReleased(k);
 	}
 
