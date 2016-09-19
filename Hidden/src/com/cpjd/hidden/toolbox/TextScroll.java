@@ -36,7 +36,7 @@ public class TextScroll {
 	public void update() {
 		if(complete) return;
 		
-		elapsed = (System.nanoTime() - start) / 1_000_000;
+		elapsed = (System.nanoTime() - start) / 1000000;
 		
 		if(elapsed >= delay) {
 			if(right) {
