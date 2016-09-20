@@ -10,11 +10,9 @@ import com.cpjd.hidden.chapters.Ch1;
 import com.cpjd.hidden.gamestates.Menu;
 import com.cpjd.hidden.hud.Console;
 import com.cpjd.hidden.main.GamePanel;
-import com.cpjd.hidden.saves.SaveProfile;
 
 public class GameStateManager {
 
-	private SaveProfile save;
 	private Console console;
 
 	public static final int NUM_GAME_STATES = 2;

@@ -8,13 +8,11 @@ import com.cpjd.hidden.entities.Enemy;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.TileMap;
-import com.cpjd.hidden.saves.SaveProfile;
 
 public class Chapter extends GameState {
 
 	protected TileMap tileMap;
-	private SaveProfile save;
-	
+
 	protected Player player;
 	protected List<Enemy> enemies;
 	
