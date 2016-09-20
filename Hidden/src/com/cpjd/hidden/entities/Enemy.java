@@ -62,10 +62,9 @@ public class Enemy extends Sprite{
 		height = 50;
 		cwidth = 50;
 		cheight = 50;
-		topSpeed = 10;
+		maxSpeed = 10;
 		
-		acceleration = 0.4;
-		topSpeed = 4;
+		moveSpeed = 0.4;
 	}
 	
 	public void drawSightArc(Graphics g){
