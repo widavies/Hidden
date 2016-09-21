@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.cpjd.hidden.entities.Enemy;
+import com.cpjd.hidden.entities.HUD;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.TileMap;
@@ -17,6 +18,7 @@ public class Chapter extends GameState {
 
 	protected Player player;
 	protected List<Enemy> enemies;
+	private HUD hud;
 	
 	public Chapter(GameStateManager gsm) {
 		super(gsm);
@@ -27,6 +29,8 @@ public class Chapter extends GameState {
 		//TODO hardcoding is temporary
 		enemies = new LinkedList<Enemy>();
 		enemies.add(new Enemy(tileMap));
+		
+		hud = new HUD();
 	}
 	
 	@Override
@@ -40,6 +44,8 @@ public class Chapter extends GameState {
 			enemies.get(i).update();
 			enemies.get(i).setMapPosition();
 		}
+		
+		hud.update();
 	}
 
 	@Override
@@ -59,6 +65,8 @@ public class Chapter extends GameState {
 		}
 		
 		player.draw(g);
+		
+		hud.draw(g);
 	}
 
 	@Override

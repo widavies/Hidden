@@ -37,7 +37,7 @@ public class Game {
 		
 		frame.addComponentListener(new ComponentListener() {
 			public void componentResized(ComponentEvent e) {
-				game.resizeGame(frame.getWidth(), frame.getHeight());
+				game.resizeGame(frame.getContentPane().getWidth(), frame.getContentPane().getHeight());
 			}
 			@Override
 			public void componentMoved(ComponentEvent e) {}

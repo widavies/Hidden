@@ -6,7 +6,6 @@ import com.cpjd.hidden.map.TileMap;
 
 public class Player extends Sprite {
 
-	
 	public Player(TileMap tm) {
 		super(tm);
 		
@@ -14,9 +13,9 @@ public class Player extends Sprite {
 		height = 50;
 		cwidth = 50;
 		cheight = 50;
-		maxSpeed = 10;
+		maxSpeed = 3;
 		
-		moveSpeed = 2.4;
+		moveSpeed = 0.9;
 	}
 	
 	public void keyPressed(int k) {
