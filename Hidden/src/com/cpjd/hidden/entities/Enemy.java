@@ -1,12 +1,13 @@
 package com.cpjd.hidden.entities;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.cpjd.hidden.map.Tile;
 import com.cpjd.hidden.map.TileMap;
 import com.cpjd.hidden.toolbox.MathTools;
 import com.cpjd.hidden.toolbox.Vector;
@@ -14,7 +15,6 @@ import com.cpjd.hidden.toolbox.Vector;
 public class Enemy extends Sprite{
 
 	//position and heading variables (for the current position/heading of the enemy)
-	private double x, y;
 	private double heading;
 		
 	//sight constants	
@@ -40,8 +40,8 @@ public class Enemy extends Sprite{
 		super(tm);
 		
 		waypoints = new LinkedList<Integer>();
-		waypoints.add(500);
-		waypoints.add(500);
+		waypoints.add(400);
+		waypoints.add(400);
 		waypoints.add(0);
 		waypoints.add(50);
 		waypoints.add(50);
@@ -55,8 +55,11 @@ public class Enemy extends Sprite{
 			moveToY = waypoints.get(1);
 		}
 		
-		sightRange = 100;
+		sightRange = 500;
 		fov = 100;
+		
+		x = 50;
+		y = 50;
 		
 		width = 50;
 		height = 50;
@@ -67,12 +70,12 @@ public class Enemy extends Sprite{
 		moveSpeed = 0.4;
 	}
 	
-	public void drawSightArc(Graphics g){
+	public void drawSightArc(Graphics2D g){
 		g.setColor(new Color(255, 255, 20, 100));
-		g.fillArc((int) (x - sightRange), (int) (y - sightRange), sightRange * 2, sightRange * 2, (int) (-heading + 90 - fov / 2), fov);
+		g.fillArc((int) (x + xmap - sightRange), (int) (y + ymap - sightRange), sightRange * 2, sightRange * 2, (int) (-heading + 90 - fov / 2), fov);
 	}
 	
-	public void drawSightLine(Graphics g, int targetX, int targetY){
+	public void drawSightLine(Graphics2D g, double targetX, double targetY){
 		
 		double changeX = Math.abs(targetX - x);
 		double changeY = Math.abs(targetY - y);
@@ -105,29 +108,26 @@ public class Enemy extends Sprite{
 			if(MathTools.isBetweenAngles(angle, leftMargin, rightMargin)){
 				g.setColor(Color.blue);
 				
-				List<Point> line = MathTools.BresenhamLine((int) x, (int) y, targetX, targetY);
+				List<Point> line = MathTools.BresenhamLine(x, y, targetX, targetY);
+				
+				//FIXME needs access to a list of all collision boxes of blocks
 				/*
-				for(Obstacle o : obstacles){
-					for(int i = line.size() - 1; i >= 0; i--){
-						Point p = line.get(i);
+				
+				for(int i = line.size() - 1; i >= 0; i--){
+					Point p = line.get(i);
 						
-						if(o.contains(p)){
+					for(){	//all collision boxes
+						if(r.contains(p)){
 							g.setColor(Color.red);
+							break;
 						}
-						
-						g.drawLine(p.x, p.y, p.x, p.y);
-						
 					}
+					g.drawLine(p.x, p.y, p.x, p.y);
+						
 				}
 				*/
 			}
 		}
-	}
-	
-	public void draw(Graphics2D g){
-		g.setColor(Color.yellow);
-		g.fillRect((int) (x + xmap - width / 2 + width), (int) (y + ymap - height / 2),
-				width, height);
 	}
 	
 	@Override

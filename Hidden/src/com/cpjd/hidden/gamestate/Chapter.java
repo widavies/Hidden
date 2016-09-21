@@ -1,7 +1,9 @@
 package com.cpjd.hidden.gamestate;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.cpjd.hidden.entities.Enemy;
@@ -21,6 +23,10 @@ public class Chapter extends GameState {
 		
 		tileMap = new TileMap(64);
 		tileMap.setTween(0.07);
+		
+		//TODO hardcoding is temporary
+		enemies = new LinkedList<Enemy>();
+		enemies.add(new Enemy(tileMap));
 	}
 	
 	@Override
@@ -29,11 +35,29 @@ public class Chapter extends GameState {
 		tileMap.setPosition((GamePanel.WIDTH / 2) - player.getX(), (GamePanel.HEIGHT / 2) - player.getY());
 		
 		player.setMapPosition();
+		
+		for(int i = 0; i < enemies.size(); i++){
+			enemies.get(i).update();
+			enemies.get(i).setMapPosition();
+		}
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
 		tileMap.draw(g);
+		
+		for(int i = 0; i < enemies.size(); i++){
+			enemies.get(i).drawSightArc(g);
+		}
+		
+		for(int i = 0; i < enemies.size(); i++){
+			enemies.get(i).drawSightLine(g, player.getX(), player.getY());
+		}
+		
+		for(int i = 0; i < enemies.size(); i++){
+			enemies.get(i).draw(g, Color.yellow);
+		}
+		
 		player.draw(g);
 	}
 

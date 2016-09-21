@@ -168,6 +168,10 @@ public class Sprite {
 		g.setColor(Color.RED);
 		g.fillRect((int) (x + xmap - width / 2), (int) (y + ymap - height / 2), width, height);
 	}
+	public void draw(Graphics2D g, Color c) {
+		g.setColor(c);
+		g.fillRect((int) (x + xmap - width / 2), (int) (y + ymap - height / 2), width, height);
+	}
 
 	public void setPosition(double x, double y) {
 		this.x = x;
