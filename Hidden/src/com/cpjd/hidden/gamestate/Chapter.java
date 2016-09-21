@@ -41,7 +41,7 @@ public class Chapter extends GameState {
 		player.setMapPosition();
 		
 		for(int i = 0; i < enemies.size(); i++){
-			enemies.get(i).update();
+			enemies.get(i).update(player.getX(), player.getY());
 			enemies.get(i).setMapPosition();
 		}
 		

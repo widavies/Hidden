@@ -27,8 +27,8 @@ public class Enemy extends Sprite{
 	private Vector vecToTarget;
 		
 	//constants for speed and rotation
-	private final int MAXROTATION = 5;
-	private final int SPEED = 2;
+	private final int MAXROTATION = 3;
+	private final int SPEED = 1;
 		
 	//waypoint storage
 	private List<Integer> waypoints;//stored as x, y, delay, x, y, delay, etc...
@@ -37,12 +37,12 @@ public class Enemy extends Sprite{
 	private boolean newWaypoint = true;	
 	
 	//obstacles
-	List<Rectangle> obstacles;
+	List<Point> obstacles;
 	
 	public Enemy(TileMap tm) {
 		super(tm);
 		
-		obstacles = new LinkedList<Rectangle>();
+		obstacles = new LinkedList<Point>();
 		
 		for(int x = 0; x < tm.getNumRows(); x++){
 			for(int y = 0;  y < tm.getNumCols(); y++){
@@ -50,13 +50,18 @@ public class Enemy extends Sprite{
 				int type = tm.getType(x, y);
 				if(type == Tile.BLOCKED || type == Tile.FATAL){
 					
-					obstacles.add(new Rectangle(x * tileSize, y * tileSize, tileSize, tileSize));
+					obstacles.add(new Point(y * tileSize, x * tileSize));
 				}
 			}
 		}
 		
 		waypoints = new LinkedList<Integer>();
-		
+		waypoints.add(250);
+		waypoints.add(250);
+		waypoints.add(0);
+		waypoints.add(450);
+		waypoints.add(450);
+		waypoints.add(450);
 		
 		int numWaypoints = waypoints.size() / WAYPOINT_SIZE;
 		
@@ -86,6 +91,8 @@ public class Enemy extends Sprite{
 		g.fillArc((int) (x + xmap - sightRange), (int) (y + ymap - sightRange), sightRange * 2, sightRange * 2, (int) (-heading + 90 - fov / 2), fov);
 	}
 	
+	
+	//FIXME this method is temporarily useless
 	public void drawSightLine(Graphics2D g, double targetX, double targetY){
 		
 		double changeX = Math.abs(targetX - x);
@@ -117,10 +124,11 @@ public class Enemy extends Sprite{
 			
 			
 			if(MathTools.isBetweenAngles(angle, leftMargin, rightMargin)){
+				/*this system is functional but sloooooow
 				g.setColor(Color.blue);
 				
 				List<Point> line = MathTools.BresenhamLine(x, y, targetX, targetY);
-				/*FIXME this system is functional but sloooooow
+				
 				if(obstacles.size() > 0){
 					for(Rectangle r : obstacles){
 						for(int i = line.size() - 1; i >= 0; i--){
@@ -143,12 +151,35 @@ public class Enemy extends Sprite{
 					}
 				}
 				*/
+				
 			}
 		}
 	}
 	
 	@Override
-	public void update(){
+	public void update(){}
+	
+	public void update(double targetX, double targetY){
+		
+		for(Point p : obstacles){
+			
+			Point line1_1 = new Point(p.x, p.y);
+			Point line1_2 = new Point(p.x + tileSize, p.y + tileSize);
+			
+			
+			Point line2_1 = new Point(p.x, p.y + tileSize);
+			Point line2_2 = new Point(p.x + tileSize, p.y);
+			
+			
+			Point sightLine_1 = new Point((int) x, (int) y);
+			Point sightLine_2 = new Point((int) targetX, (int) targetY);
+			
+			if(MathTools.doIntersect(sightLine_1, sightLine_2, line1_1, line1_2) || MathTools.doIntersect(sightLine_1, sightLine_2, line2_1, line2_2)){
+				System.out.println("blocked");
+			}
+		}
+		
+		
 		
 		int numWaypoints = waypoints.size() / 3;
 		
