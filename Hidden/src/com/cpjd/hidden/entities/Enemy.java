@@ -36,16 +36,26 @@ public class Enemy extends Sprite{
 	private final int WAYPOINT_SIZE = 3;	
 	private boolean newWaypoint = true;	
 	
+	//obstacles
+	List<Rectangle> obstacles;
+	
 	public Enemy(TileMap tm) {
 		super(tm);
 		
+		obstacles = new LinkedList<Rectangle>();
+		
+		for(int x = 0; x < tm.getNumRows(); x++){
+			for(int y = 0;  y < tm.getNumCols(); y++){
+				
+				int type = tm.getType(x, y);
+				if(type == Tile.BLOCKED || type == Tile.FATAL){
+					
+					obstacles.add(new Rectangle(x * tileSize, y * tileSize, tileSize, tileSize));
+				}
+			}
+		}
+		
 		waypoints = new LinkedList<Integer>();
-		waypoints.add(400);
-		waypoints.add(400);
-		waypoints.add(0);
-		waypoints.add(50);
-		waypoints.add(50);
-		waypoints.add(0);
 		
 		
 		int numWaypoints = waypoints.size() / WAYPOINT_SIZE;
@@ -58,8 +68,9 @@ public class Enemy extends Sprite{
 		sightRange = 500;
 		fov = 100;
 		
-		x = 50;
-		y = 50;
+		x = 250;
+		y = 250;
+		heading = 135;
 		
 		width = 50;
 		height = 50;
@@ -109,21 +120,27 @@ public class Enemy extends Sprite{
 				g.setColor(Color.blue);
 				
 				List<Point> line = MathTools.BresenhamLine(x, y, targetX, targetY);
-				
-				//FIXME needs access to a list of all collision boxes of blocks
-				/*
-				
-				for(int i = line.size() - 1; i >= 0; i--){
-					Point p = line.get(i);
-						
-					for(){	//all collision boxes
-						if(r.contains(p)){
-							g.setColor(Color.red);
-							break;
+				/*FIXME this system is functional but sloooooow
+				if(obstacles.size() > 0){
+					for(Rectangle r : obstacles){
+						for(int i = line.size() - 1; i >= 0; i--){
+							Point p = line.get(i);
+							
+							if(r.contains(p)){
+								g.setColor(Color.red);
+							}
+							
+							g.drawLine((int) (p.x + xmap), (int) (p.y + ymap), (int) (p.x + xmap), (int) (p.y + ymap));
+								
 						}
 					}
-					g.drawLine(p.x, p.y, p.x, p.y);
+				}else{
+					for(int i = line.size() - 1; i >= 0; i--){
+						Point p = line.get(i);
 						
+						g.drawLine((int) (p.x + xmap), (int) (p.y + ymap), (int) (p.x + xmap), (int) (p.y + ymap));
+							
+					}
 				}
 				*/
 			}

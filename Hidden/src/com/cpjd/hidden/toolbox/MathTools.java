@@ -52,7 +52,7 @@ public class MathTools {
 	    for (double x = x2; x <= targetX; x++) {
 	    	
 	        if (steep) result.add(new Point((int) y, (int) x));
-	        else result.add(new Point((int) y, (int) x));
+	        else result.add(new Point((int) x, (int) y));
 	        
 	        error += deltay;
 	        
