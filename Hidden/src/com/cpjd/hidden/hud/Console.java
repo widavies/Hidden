@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 
 import javax.swing.JOptionPane;
 
+import com.cpjd.hidden.entities.Enemy;
 import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.smartui.SmartField;
@@ -41,6 +42,7 @@ public class Console {
 	public void processCommand(String s) {
 		if(s.equalsIgnoreCase("stop")) System.exit(0);
 		else if(s.equalsIgnoreCase("reload")) gsm.setState(gsm.getState());
+		else if(s.equalsIgnoreCase("LOS Overlay")) Enemy.drawLOSOverlay = !Enemy.drawLOSOverlay;
 		else JOptionPane.showMessageDialog(null, "Command not found.");
 		
 	}

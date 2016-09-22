@@ -3,7 +3,6 @@ package com.cpjd.hidden.entities;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,7 +36,8 @@ public class Enemy extends Sprite{
 	private boolean newWaypoint = true;	
 	
 	//obstacles
-	List<Point> obstacles;
+	private List<Point> obstacles;
+	public static boolean drawLOSOverlay;
 	
 	public Enemy(TileMap tm) {
 		super(tm);
@@ -156,6 +156,29 @@ public class Enemy extends Sprite{
 		}
 	}
 	
+	public void drawLOSOverlay(Graphics2D g, double targetX, double targetY){
+		if(drawLOSOverlay){
+			
+			for(Point p : obstacles){
+				
+				Point line1_1 = new Point(p.x, p.y);
+				Point line1_2 = new Point(p.x + tileSize, p.y + tileSize);
+				
+				g.drawLine(line1_1.x + (int) xmap, line1_1.y + (int) ymap, line1_2.x + (int) xmap, line1_2.y + (int) ymap);
+				
+				Point line2_1 = new Point(p.x, p.y + tileSize);
+				Point line2_2 = new Point(p.x + tileSize, p.y);
+				
+				g.drawLine(line2_1.x + (int) xmap, line2_1.y + (int) ymap, line2_2.x + (int) xmap, line2_2.y + (int) ymap);
+				
+				Point sightLine_1 = new Point((int) x, (int) y);
+				Point sightLine_2 = new Point((int) targetX, (int) targetY);
+				
+				g.drawLine(sightLine_1.x + (int) xmap, sightLine_1.y + (int) ymap, sightLine_2.x + (int) xmap, sightLine_2.y + (int) ymap);
+			}
+		}
+	}
+	
 	@Override
 	public void update(){}
 	
@@ -173,6 +196,7 @@ public class Enemy extends Sprite{
 			
 			Point sightLine_1 = new Point((int) x, (int) y);
 			Point sightLine_2 = new Point((int) targetX, (int) targetY);
+			
 			
 			if(MathTools.doIntersect(sightLine_1, sightLine_2, line1_1, line1_2) || MathTools.doIntersect(sightLine_1, sightLine_2, line2_1, line2_2)){
 				System.out.println("blocked");

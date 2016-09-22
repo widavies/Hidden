@@ -67,6 +67,10 @@ public class Chapter extends GameState {
 		player.draw(g);
 		
 		hud.draw(g);
+		
+		if(Enemy.drawLOSOverlay){
+			enemies.get(0).drawLOSOverlay(g, player.getX(), player.getY());
+		}
 	}
 
 	@Override
