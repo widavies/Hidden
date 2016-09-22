@@ -76,6 +76,7 @@ public class Chapter extends GameState {
 	@Override
 	public void keyPressed(int k) {
 		player.keyPressed(k);
+		hud.keyPressed(k);
 		
 		if(k == KeyEvent.VK_ESCAPE) {
 			gsm.setState(GameStateManager.INTRO);
