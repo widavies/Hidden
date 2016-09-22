@@ -92,7 +92,7 @@ public class Chapter extends GameState {
 
 	@Override
 	public void mousePressed(int x, int y) {
-		
+		hud.mousePressed(x, y);
 		
 	}
 
@@ -104,7 +104,7 @@ public class Chapter extends GameState {
 
 	@Override
 	public void mouseMoved(int x, int y) {
-		
+		hud.mouseMoved(x, y);
 		
 	}
 

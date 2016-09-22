@@ -38,6 +38,9 @@ public class SaveProfile {
 	public int maxPlayerHealth; // The player's highest health upgrade
 	public int numCompletedChapters; // How many chapters the player has completed
 	
+	// Inventory
+	public String[][] items = new String[5][5];
+	
 	// Shop
 	public int invisibleCloak; // The duration of the invisibility cloak (in ms), leave at 0 for no cloak
 	public int decoy; // The amount of decoy grenades the player has purchased
