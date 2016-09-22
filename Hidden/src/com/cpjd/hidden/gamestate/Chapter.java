@@ -57,10 +57,6 @@ public class Chapter extends GameState {
 		}
 		
 		for(int i = 0; i < enemies.size(); i++){
-			enemies.get(i).drawSightLine(g, player.getX(), player.getY());
-		}
-		
-		for(int i = 0; i < enemies.size(); i++){
 			enemies.get(i).draw(g, Color.yellow);
 		}
 		

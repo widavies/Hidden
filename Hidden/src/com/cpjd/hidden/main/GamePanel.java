@@ -36,10 +36,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	// Game State Manager
 	private GameStateManager gsm;  
 	
+	//FPS
+	public static int ticks = 0;
+	private long lastSec;
+	
 	public GamePanel() {
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setFocusable(true);
 		requestFocus();
+		lastSec = System.nanoTime();
 	}
 	
 	public void addNotify() {
@@ -81,15 +86,25 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 				update();
 				draw();
 				drawToScreen();
+				ticks++;
 			}
 			elapsed = System.nanoTime() - start;
 			wait = targetTime - elapsed / 1000000;
 			if(wait < 0) wait = 0;
+			
+			if(ticks == FPS){
+				long elapsedSec = System.nanoTime() - lastSec;
+				System.out.println(FPS + " frames took " + elapsedSec / 1000000000d + " seconds");
+				ticks = 0;
+				lastSec = System.nanoTime();
+			}
+			
 			try {
 				Thread.sleep(wait);
 			} catch(Exception e) {
 				System.err.println("Thread failed to sleep");
 			}
+			
 		}
 	}
 	

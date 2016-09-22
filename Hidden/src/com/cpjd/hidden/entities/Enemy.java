@@ -91,71 +91,6 @@ public class Enemy extends Sprite{
 		g.fillArc((int) (x + xmap - sightRange), (int) (y + ymap - sightRange), sightRange * 2, sightRange * 2, (int) (-heading + 90 - fov / 2), fov);
 	}
 	
-	
-	//FIXME this method is temporarily useless
-	public void drawSightLine(Graphics2D g, double targetX, double targetY){
-		
-		double changeX = Math.abs(targetX - x);
-		double changeY = Math.abs(targetY - y);
-		
-		double distance = Math.sqrt((changeX * changeX) + (changeY * changeY));
-		
-		if(distance <= sightRange){
-			
-			double angle = Math.toDegrees(Math.atan2(Math.toRadians(x - targetX), Math.toRadians(targetY - y))) + 180;
-			
-			int leftMargin = (int) (heading + fov / 2);
-			int rightMargin = (int) (heading - fov / 2);
-			
-			if(leftMargin > rightMargin){
-				int temp = leftMargin;
-				leftMargin = rightMargin;
-				rightMargin = temp;
-			}
-			
-			if(leftMargin < 0)
-				leftMargin += 360;
-			if(leftMargin > 360)
-				leftMargin -= 360;
-			if(rightMargin < 0)
-				rightMargin += 360;
-			if(rightMargin > 360)
-				rightMargin -= 360;
-			
-			
-			if(MathTools.isBetweenAngles(angle, leftMargin, rightMargin)){
-				/*this system is functional but sloooooow
-				g.setColor(Color.blue);
-				
-				List<Point> line = MathTools.BresenhamLine(x, y, targetX, targetY);
-				
-				if(obstacles.size() > 0){
-					for(Rectangle r : obstacles){
-						for(int i = line.size() - 1; i >= 0; i--){
-							Point p = line.get(i);
-							
-							if(r.contains(p)){
-								g.setColor(Color.red);
-							}
-							
-							g.drawLine((int) (p.x + xmap), (int) (p.y + ymap), (int) (p.x + xmap), (int) (p.y + ymap));
-								
-						}
-					}
-				}else{
-					for(int i = line.size() - 1; i >= 0; i--){
-						Point p = line.get(i);
-						
-						g.drawLine((int) (p.x + xmap), (int) (p.y + ymap), (int) (p.x + xmap), (int) (p.y + ymap));
-							
-					}
-				}
-				*/
-				
-			}
-		}
-	}
-	
 	public void drawLOSOverlay(Graphics2D g, double targetX, double targetY){
 		if(drawLOSOverlay){
 			
@@ -184,26 +119,65 @@ public class Enemy extends Sprite{
 	
 	public void update(double targetX, double targetY){
 		
-		for(Point p : obstacles){
+		double changeX = Math.abs(targetX - x);
+		double changeY = Math.abs(targetY - y);
+		
+		double distance = (changeX * changeX) + (changeY * changeY);
+		
+		if(distance <= sightRange * sightRange){
 			
-			Point line1_1 = new Point(p.x, p.y);
-			Point line1_2 = new Point(p.x + tileSize, p.y + tileSize);
+			double angle = Math.toDegrees(Math.atan2(Math.toRadians(x - targetX), Math.toRadians(targetY - y))) + 180;
 			
+			int leftMargin = (int) (heading + fov / 2);
+			int rightMargin = (int) (heading - fov / 2);
 			
-			Point line2_1 = new Point(p.x, p.y + tileSize);
-			Point line2_2 = new Point(p.x + tileSize, p.y);
-			
-			
-			Point sightLine_1 = new Point((int) x, (int) y);
-			Point sightLine_2 = new Point((int) targetX, (int) targetY);
-			
-			
-			if(MathTools.doIntersect(sightLine_1, sightLine_2, line1_1, line1_2) || MathTools.doIntersect(sightLine_1, sightLine_2, line2_1, line2_2)){
-				System.out.println("blocked");
+			if(leftMargin > rightMargin){
+				int temp = leftMargin;
+				leftMargin = rightMargin;
+				rightMargin = temp;
 			}
-		}
+			
+			if(leftMargin < 0)
+				leftMargin += 360;
+			if(leftMargin > 360)
+				leftMargin -= 360;
+			if(rightMargin < 0)
+				rightMargin += 360;
+			if(rightMargin > 360)
+				rightMargin -= 360;
+			
+			
+			if(MathTools.isBetweenAngles(angle, leftMargin, rightMargin)){
 		
-		
+				boolean losBlocked = false;
+				
+				for(Point p : obstacles){
+					
+					Point line1_1 = new Point(p.x, p.y);
+					Point line1_2 = new Point(p.x + tileSize, p.y + tileSize);
+					
+					
+					Point line2_1 = new Point(p.x, p.y + tileSize);
+					Point line2_2 = new Point(p.x + tileSize, p.y);
+					
+					
+					Point sightLine_1 = new Point((int) x, (int) y);
+					Point sightLine_2 = new Point((int) targetX, (int) targetY);
+					
+					
+					if(MathTools.doIntersect(sightLine_1, sightLine_2, line1_1, line1_2) || MathTools.doIntersect(sightLine_1, sightLine_2, line2_1, line2_2)){
+						losBlocked = true;
+						break;
+					}
+				}
+				
+				if(!losBlocked){
+					
+					System.out.println("seen");
+				}
+				
+			}//isBetweenAngles
+		}//sight range
 		
 		int numWaypoints = waypoints.size() / 3;
 		
