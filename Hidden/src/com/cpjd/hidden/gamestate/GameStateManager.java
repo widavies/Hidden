@@ -8,8 +8,9 @@ import java.io.InputStream;
 
 import com.cpjd.hidden.chapters.Ch1;
 import com.cpjd.hidden.gamestates.Menu;
-import com.cpjd.hidden.hud.Console;
+import com.cpjd.hidden.gamestates.Pause;
 import com.cpjd.hidden.main.GamePanel;
+import com.cpjd.hidden.toolbox.Console;
 
 public class GameStateManager {
 
@@ -22,6 +23,8 @@ public class GameStateManager {
 	private GameState[] gameStates;
 	private int currentState;
 
+	private Pause pause;
+	
 	// The game-wide font
 	private Font font;
 
@@ -40,6 +43,7 @@ public class GameStateManager {
 		loadState(currentState);
 
 		console = new Console(this);
+		pause = new Pause(this);
 	}
 
 	public void setState(int state) {
@@ -62,8 +66,10 @@ public class GameStateManager {
 
 	public void update() {
 		console.update();
+		pause.update();
 		
-		if(console.isOpen()) return;
+		if(console.isOpen() || pause.isOpen()) return;
+		
 		
 		if(gameStates[currentState] != null) gameStates[currentState].update();
 	}
@@ -75,15 +81,17 @@ public class GameStateManager {
 		g.setFont(font);
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
-
+		
 		if(gameStates[currentState] != null) gameStates[currentState].draw(g);
 		
+		pause.draw(g);
 		console.draw(g);
 	}
 
 	public void keyPressed(int k) {
 		console.keyPressed(k);
-		if(console.isOpen()) return;
+		pause.keyPressed(k);
+		if(console.isOpen() || pause.isOpen()) return;
 		
 		if(gameStates[currentState] != null) gameStates[currentState].keyPressed(k);
 	}
@@ -95,6 +103,9 @@ public class GameStateManager {
 	}
 
 	public void mousePressed(int x, int y) {
+		pause.mousePressed(x, y);
+		
+		if(pause.isOpen()) return;
 		if(gameStates[currentState] != null) gameStates[currentState].mousePressed(x, y);
 	}
 
@@ -103,6 +114,12 @@ public class GameStateManager {
 	}
 
 	public void mouseMoved(int x, int y) {
+		pause.mouseMoved(x, y);
+		
 		if(gameStates[currentState] != null) gameStates[currentState].mouseMoved(x, y);
+	}
+	
+	public void mouseWheelMoved(int k) {
+		if(gameStates[currentState] != null) gameStates[currentState].mouseWheelMoved(k);
 	}
 }

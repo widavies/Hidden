@@ -10,6 +10,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -17,7 +19,7 @@ import javax.swing.JPanel;
 import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.hidden.toolbox.Layout;
 @SuppressWarnings("serial")
-public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener {
+public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 	
 	// Size
 	public static int WIDTH = 1600;
@@ -50,6 +52,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 			addMouseListener(this);
 			addMouseMotionListener(this);
 			addKeyListener(this);
+			addMouseWheelListener(this);
 			thread.start();
 		}
 	}
@@ -137,5 +140,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	public void mouseDragged(MouseEvent mouse) {}
 	public void mouseClicked(MouseEvent mouse) {}
 	public void mouseEntered(MouseEvent mouse) {}
-	public void mouseExited(MouseEvent mouse) {}	
+	public void mouseExited(MouseEvent mouse) {}
+	public void mouseWheelMoved(MouseWheelEvent mouse) {if(mouse != null && gsm != null && mouse.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
+		gsm.mouseWheelMoved(mouse.getUnitsToScroll());}	
+	}
 }

@@ -61,5 +61,6 @@ public class Menu extends GameState {
 			buttons.get(i).mouseMoved(x, y);
 		}
 	}
+	public void mouseWheelMoved(int k) {}
 
 }

@@ -35,6 +35,10 @@ public class Chapter extends GameState {
 	
 	@Override
 	public void update() {
+		hud.update();
+		
+		if(hud.isInventoryOpen()) return;
+		
 		player.update();
 		tileMap.setPosition((GamePanel.WIDTH / 2) - player.getX(), (GamePanel.HEIGHT / 2) - player.getY());
 		
@@ -44,8 +48,6 @@ public class Chapter extends GameState {
 			enemies.get(i).update(player.getX(), player.getY());
 			enemies.get(i).setMapPosition();
 		}
-		
-		hud.update();
 	}
 
 	@Override
@@ -77,11 +79,6 @@ public class Chapter extends GameState {
 	public void keyPressed(int k) {
 		player.keyPressed(k);
 		hud.keyPressed(k);
-		
-		if(k == KeyEvent.VK_ESCAPE) {
-			gsm.setState(GameStateManager.INTRO);
-		}
-		
 	}
 
 	@Override
@@ -105,7 +102,11 @@ public class Chapter extends GameState {
 	@Override
 	public void mouseMoved(int x, int y) {
 		hud.mouseMoved(x, y);
-		
+	}
+	
+	@Override
+	public void mouseWheelMoved(int k) {
+		hud.mouseWheelMoved(k);
 	}
 
 }

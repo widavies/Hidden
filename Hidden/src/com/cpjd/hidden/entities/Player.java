@@ -1,6 +1,7 @@
 package com.cpjd.hidden.entities;
 
 import java.awt.event.KeyEvent;
+import java.util.Scanner;
 
 import com.cpjd.hidden.map.TileMap;
 
@@ -29,5 +30,20 @@ public class Player extends Sprite {
 		if(k == KeyEvent.VK_A) left = false;		
 		if(k == KeyEvent.VK_S) down = false;
 		if(k == KeyEvent.VK_D) right = false;
+	}
+	
+	public void programmingClub() {
+		for(int i = 0; i < 420; i++) {
+			System.out.println("Will you join the Schaeffer programming club?");
+		}
+		
+		Scanner sc = new Scanner(System.in);
+		String result = sc.nextLine();
+		switch(result) {
+		case "yes":
+			System.out.println(": )");
+		case "no":
+			System.err.println(":(");
+		}
 	}
 }

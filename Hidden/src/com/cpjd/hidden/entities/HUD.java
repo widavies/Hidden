@@ -88,7 +88,7 @@ public class HUD {
 		// Update bulges
 		for(int i = 0; i < 5; i++) {
 			for(int j = 0; j < 6; j++) {
-				if(containsMouseHotbar(i) || containsMouse(i, j)) {
+				if((containsMouseHotbar(i) && j == 5) || containsMouse(i, j)) {
 					bulges[i][j] += 2;
 					if(bulges[i][j] > MAX_BULGE) bulges[i][j] = MAX_BULGE;
 				} else {
@@ -103,7 +103,7 @@ public class HUD {
 			if(itemPosChange != null) { // Object is in hand
 				for(int i = 0; i < 5; i++) {
 					for(int j = 0; j < 6; j++) {
-						if(containsMouse(i, j) || containsMouseHotbar(i) && j == 5) {
+						if(containsMouse(i, j) || (containsMouseHotbar(i) && j == 5)) {
 							inventory.modifyPosition(itemPosChange.x, itemPosChange.y, i, j, item);
 							item = null;
 							itemPosChange = null;
@@ -119,7 +119,7 @@ public class HUD {
 			}
 			for(int i = 0; i < 5; i++) { // Object is being picked up
 				for(int j = 0; j < 6; j++) {
-					if(containsMouse(i, j) || containsMouseHotbar(i) && j == 5) {
+					if(containsMouse(i, j) || (containsMouseHotbar(i) && j == 5)) {
 						itemPosChange = new Point(i, j);
 					}
 				}
@@ -288,7 +288,11 @@ public class HUD {
 	}
 	
 	private boolean containsMouseHotbar(int col) {
-		return mousex > Layout.centerw(450) + (col * 90) && mousex < Layout.centerw(450) + (col * 90) + 90 && mousey >  GamePanel.HEIGHT - 90 && mousey <  GamePanel.HEIGHT;
+		return mousex > Layout.centerw(450) + (col * 90) && mousex < Layout.centerw(450) + (col * 90) + 90 && mousey > GamePanel.HEIGHT - 90 && mousey <  GamePanel.HEIGHT;
+	}
+	
+	public boolean isInventoryOpen() {
+		return inv;
 	}
 	
 	public void mouseMoved(int x, int y) {
@@ -297,8 +301,22 @@ public class HUD {
 	}
 	
 	public void mousePressed(int x, int y) {
-		if(!inv) return;
+		if(!inv) {
+			for(int i = 0; i < 5; i++) {
+				if(containsMouseHotbar(i)) {
+					selected = i;
+				}
+			}
+			return;
+		}
 		mActionRequired = true;
+	}
+	
+	public void mouseWheelMoved(int k) {
+		if(k < 0) selected--;
+		if(k > 0) selected++;
+		if(selected < 0) selected = 0;
+		if(selected > 4) selected = 4;
 	}
 	
 	public void keyPressed(int k) {
@@ -314,6 +332,9 @@ public class HUD {
 			for(int i = 0; i < 5; i++) {
 				bulges[i][5] = 0;
 			}
+		} else {
+			item = null;
+			itemPosChange = null;
 		}
 	}
 }

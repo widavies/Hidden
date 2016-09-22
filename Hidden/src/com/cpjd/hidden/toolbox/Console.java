@@ -1,4 +1,4 @@
-package com.cpjd.hidden.hud;
+package com.cpjd.hidden.toolbox;
 
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -43,8 +43,10 @@ public class Console {
 		if(s.equalsIgnoreCase("stop")) System.exit(0);
 		else if(s.equalsIgnoreCase("reload")) gsm.setState(gsm.getState());
 		else if(s.equalsIgnoreCase("LOS Overlay")) Enemy.drawLOSOverlay = !Enemy.drawLOSOverlay;
+		else if(s.equalsIgnoreCase("menu")) gsm.setState(GameStateManager.INTRO);
 		else JOptionPane.showMessageDialog(null, "Command not found.");
 		
+		open = false;
 	}
 	
 	public void draw(Graphics2D g) {
