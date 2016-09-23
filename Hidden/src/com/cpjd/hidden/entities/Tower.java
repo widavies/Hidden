@@ -8,7 +8,7 @@ import com.cpjd.hidden.map.TileMap;
 public class Tower extends Enemy{
 
 	public Tower(TileMap tm) {
-		super(tm, 500, 800);
+		super(tm, 500, 800, 160);
 	}
 
 	@Override

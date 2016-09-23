@@ -6,11 +6,9 @@ import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.Tile;
 import com.cpjd.hidden.map.TileMap;
 import com.cpjd.hidden.toolbox.MathTools;
-import com.cpjd.hidden.toolbox.Vector;
 
 public class Enemy extends Sprite{
 
@@ -31,7 +29,7 @@ public class Enemy extends Sprite{
 	protected List<Point> obstacles;
 	public static boolean drawLOSOverlay;
 	
-	public Enemy(TileMap tm, double xPos, double yPos) {
+	public Enemy(TileMap tm, double xPos, double yPos, int fov) {
 		super(tm);
 		
 		obstacles = new LinkedList<Point>();
@@ -50,7 +48,7 @@ public class Enemy extends Sprite{
 		
 		
 		sightRange = 500;
-		fov = 100;
+		this.fov = fov;
 		
 		this.x = xPos;
 		this.y = yPos;

@@ -2,6 +2,7 @@ package com.cpjd.hidden.entities;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import com.cpjd.hidden.map.Tile;
 import com.cpjd.hidden.map.TileMap;
@@ -201,6 +202,10 @@ public class Sprite {
 
 	public double getY() {
 		return y;
+	}
+	
+	public Rectangle getCollisionBox(){
+		return new Rectangle((int) x, (int) y, width, height);
 	}
 
 }

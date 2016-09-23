@@ -31,6 +31,7 @@ public class Chapter extends GameState {
 	
 	@Override
 	public void update() {
+		
 		player.update();
 		tileMap.setPosition((GamePanel.WIDTH / 2) - player.getX(), (GamePanel.HEIGHT / 2) - player.getY());
 		
@@ -40,29 +41,38 @@ public class Chapter extends GameState {
 			enemies.get(i).update(player.getX(), player.getY());
 			enemies.get(i).setMapPosition();
 		}
-		
 		hud.update();
+		
+		for(int i = 0; i < enemies.size(); i++){
+			if(enemies.get(i).getCollisionBox().intersects(player.getCollisionBox())){
+				gsm.setState(gsm.getState());
+			}
+		}
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
+		
 		tileMap.draw(g);
+		
+		
 		
 		for(int i = 0; i < enemies.size(); i++){
 			enemies.get(i).drawSightArc(g);
 		}
-		
 		for(int i = 0; i < enemies.size(); i++){
 			enemies.get(i).draw(g);
 		}
-		
 		player.draw(g);
+		
 		
 		hud.draw(g);
 		
 		if(Enemy.drawLOSOverlay){
 			enemies.get(0).drawLOSOverlay(g, player.getX(), player.getY());
 		}
+		
+		
 	}
 
 	@Override
