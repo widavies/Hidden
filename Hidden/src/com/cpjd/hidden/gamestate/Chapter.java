@@ -26,18 +26,17 @@ public class Chapter extends GameState {
 		tileMap = new TileMap(64);
 		tileMap.setTween(0.07);
 		
-		//TODO hardcoding is temporary
-		enemies = new LinkedList<Enemy>();
-		enemies.add(new Enemy(tileMap));
-		
 		hud = new HUD();
 	}
 	
 	@Override
 	public void update() {
+<<<<<<< HEAD
 		hud.update();
 		
 		if(hud.isInventoryOpen()) return;
+=======
+>>>>>>> branch 'master' of https://github.com/techguy9984/Hidden
 		
 		player.update();
 		tileMap.setPosition((GamePanel.WIDTH / 2) - player.getX(), (GamePanel.HEIGHT / 2) - player.getY());
@@ -48,27 +47,41 @@ public class Chapter extends GameState {
 			enemies.get(i).update(player.getX(), player.getY());
 			enemies.get(i).setMapPosition();
 		}
+<<<<<<< HEAD
+=======
+		hud.update();
+		
+		for(int i = 0; i < enemies.size(); i++){
+			if(enemies.get(i).getCollisionBox().intersects(player.getCollisionBox())){
+				gsm.setState(gsm.getState());
+			}
+		}
+>>>>>>> branch 'master' of https://github.com/techguy9984/Hidden
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
+		
 		tileMap.draw(g);
+		
+		
 		
 		for(int i = 0; i < enemies.size(); i++){
 			enemies.get(i).drawSightArc(g);
 		}
-		
 		for(int i = 0; i < enemies.size(); i++){
-			enemies.get(i).draw(g, Color.yellow);
+			enemies.get(i).draw(g);
 		}
-		
 		player.draw(g);
+		
 		
 		hud.draw(g);
 		
 		if(Enemy.drawLOSOverlay){
 			enemies.get(0).drawLOSOverlay(g, player.getX(), player.getY());
 		}
+		
+		
 	}
 
 	@Override

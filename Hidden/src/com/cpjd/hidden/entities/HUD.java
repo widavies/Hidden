@@ -284,11 +284,11 @@ public class HUD {
 	}
 	
 	private boolean containsMouse(int col, int row) {
-		return mousex > Layout.centerw(450) + (col * 90) && mousex < Layout.centerw(450) + (col * 90) + 90 && mousey > Layout.centerh(450) + (row * 90) && mousey < Layout.centerh(450) + (row * 90) + 90;
+		return mousex >= Layout.centerw(450) + (col * 90) && mousex <= Layout.centerw(450) + (col * 90) + 90 && mousey >= Layout.centerh(450) + (row * 90) && mousey <= Layout.centerh(450) + (row * 90) + 90;
 	}
 	
 	private boolean containsMouseHotbar(int col) {
-		return mousex > Layout.centerw(450) + (col * 90) && mousex < Layout.centerw(450) + (col * 90) + 90 && mousey > GamePanel.HEIGHT - 90 && mousey <  GamePanel.HEIGHT;
+		return mousex >= Layout.centerw(450) + (col * 90) && mousex <= Layout.centerw(450) + (col * 90) + 90 && mousey >= GamePanel.HEIGHT - 90 && mousey <=  GamePanel.HEIGHT;
 	}
 	
 	public boolean isInventoryOpen() {
