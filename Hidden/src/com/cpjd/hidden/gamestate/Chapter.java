@@ -1,9 +1,6 @@
 package com.cpjd.hidden.gamestate;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.util.LinkedList;
 import java.util.List;
 
 import com.cpjd.hidden.entities.Enemy;
@@ -31,12 +28,10 @@ public class Chapter extends GameState {
 	
 	@Override
 	public void update() {
-<<<<<<< HEAD
+
 		hud.update();
 		
 		if(hud.isInventoryOpen()) return;
-=======
->>>>>>> branch 'master' of https://github.com/techguy9984/Hidden
 		
 		player.update();
 		tileMap.setPosition((GamePanel.WIDTH / 2) - player.getX(), (GamePanel.HEIGHT / 2) - player.getY());
@@ -47,8 +42,6 @@ public class Chapter extends GameState {
 			enemies.get(i).update(player.getX(), player.getY());
 			enemies.get(i).setMapPosition();
 		}
-<<<<<<< HEAD
-=======
 		hud.update();
 		
 		for(int i = 0; i < enemies.size(); i++){
@@ -56,7 +49,6 @@ public class Chapter extends GameState {
 				gsm.setState(gsm.getState());
 			}
 		}
->>>>>>> branch 'master' of https://github.com/techguy9984/Hidden
 	}
 
 	@Override

@@ -3,6 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="res"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/Alex/Desktop/JavaGames/CPJDTools.jar"/>
+	<classpathentry kind="lib" path="libs/CPJD Tools Library 0.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
