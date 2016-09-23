@@ -26,10 +26,6 @@ public class Chapter extends GameState {
 		tileMap = new TileMap(64);
 		tileMap.setTween(0.07);
 		
-		//TODO hardcoding is temporary
-		enemies = new LinkedList<Enemy>();
-		enemies.add(new Enemy(tileMap));
-		
 		hud = new HUD();
 	}
 	
@@ -57,7 +53,7 @@ public class Chapter extends GameState {
 		}
 		
 		for(int i = 0; i < enemies.size(); i++){
-			enemies.get(i).draw(g, Color.yellow);
+			enemies.get(i).draw(g);
 		}
 		
 		player.draw(g);

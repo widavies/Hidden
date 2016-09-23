@@ -15,44 +15,26 @@ import com.cpjd.hidden.toolbox.Vector;
 public class Enemy extends Sprite{
 
 	//position and heading variables (for the current position/heading of the enemy)
-	private double heading;
+	protected double heading;
 		
 	//sight constants	
-	private final int sightRange;
-	private final int fov;
+	protected final int sightRange;
+	protected final int fov;
 		
 	//move/rotate to
-	private double finalRotation;
-	private int moveToX, moveToY;
-	private Vector vecToTarget;
-	private long delayStartTime;
-	private boolean delayStarted = false;
+	protected double finalRotation;
 		
 	//constants for speed and rotation
-	private final int MAXROTATION = 3;
-	private final int SPEED = 1;
-		
-	//waypoint storage
-	private List<Integer> waypoints;//stored as x, y, delay, x, y, delay, etc...
-	private int currentWaypoint = 0;
-	private final int WAYPOINT_SIZE = 3;	
-	private boolean newWaypoint = true;	
+	protected final int MAXROTATION = 3;
 	
 	//obstacles
-	private List<Point> obstacles;
+	protected List<Point> obstacles;
 	public static boolean drawLOSOverlay;
 	
-	//AI
-	private boolean tracking = false;
-	private List<Point> pathToReturn;
-	private boolean returning = false;
-	private int ticksReturning = 0;
-	
-	public Enemy(TileMap tm) {
+	public Enemy(TileMap tm, double xPos, double yPos) {
 		super(tm);
 		
 		obstacles = new LinkedList<Point>();
-		pathToReturn = new LinkedList<Point>();
 		
 		for(int x = 0; x < tm.getNumRows(); x++){
 			for(int y = 0;  y < tm.getNumCols(); y++){
@@ -65,19 +47,38 @@ public class Enemy extends Sprite{
 			}
 		}
 		
-		waypoints = new LinkedList<Integer>();
-		waypoints.add(250);
-		waypoints.add(250);
-		waypoints.add(0);
-		waypoints.add(450);
-		waypoints.add(450);
-		waypoints.add(2 * 1000);
 		
-		int numWaypoints = waypoints.size() / WAYPOINT_SIZE;
 		
-		if(numWaypoints != 0){
-			moveToX = waypoints.get(0);
-			moveToY = waypoints.get(1);
+		sightRange = 500;
+		fov = 100;
+		
+		this.x = xPos;
+		this.y = yPos;
+		heading = 135;
+		
+		width = 50;
+		height = 50;
+		cwidth = 50;
+		cheight = 50;
+		maxSpeed = 10;
+		
+		moveSpeed = 0.4;
+	}
+	
+	public Enemy(TileMap tm) {
+		super(tm);
+		
+		obstacles = new LinkedList<Point>();
+		
+		for(int x = 0; x < tm.getNumRows(); x++){
+			for(int y = 0;  y < tm.getNumCols(); y++){
+				
+				int type = tm.getType(x, y);
+				if(type == Tile.BLOCKED || type == Tile.FATAL){
+					
+					obstacles.add(new Point(y * tileSize, x * tileSize));
+				}
+			}
 		}
 		
 		sightRange = 500;
@@ -94,6 +95,7 @@ public class Enemy extends Sprite{
 		maxSpeed = 10;
 		
 		moveSpeed = 0.4;
+		
 	}
 	
 	public void drawSightArc(Graphics2D g){
@@ -125,7 +127,7 @@ public class Enemy extends Sprite{
 	}
 	
 	@Override
-	public void update(){}
+	public void update(){System.err.println("Wrong enemy update method called");}
 	
 	public void update(double targetX, double targetY){
 		
@@ -185,103 +187,22 @@ public class Enemy extends Sprite{
 				}
 				
 				if(!losBlocked){
-					
-					moveToX = (int) targetX;
-					moveToY = (int) targetY;
-					
-					pathToReturn.add(new Point((int) x, (int) y));
-					
-					newWaypoint = true;
-					tracking = true;
-					returning = false;
-					sighted = true;
-					
+					sighted = true;					
 				}
 				
 			}//isBetweenAngles
 		}//sight range
 		
-		if(returning)
-			ticksReturning++;
-		else
-			ticksReturning = 0;
-		
-		if(tracking && !sighted){
-			tracking = false;
-			returning = true;
-			
-			//setting these equal triggers atTarget() to be true, so the enemy will continue to next waypoint
-			moveToX = (int) x;
-			moveToY = (int) y;
+		if(!sighted)
+			finalRotation++;
+		else{
+			finalRotation = (int) Math.toDegrees(Math.atan2(targetY - y, targetX - x)) + 90;
 		}
 		
-		int numWaypoints = waypoints.size() / 3;
-		
-		if(numWaypoints == 0)
-			return;
-		
-		if(atTarget()){
-			
-			if(!pathToReturn.isEmpty()){
-				Point last = pathToReturn.get(pathToReturn.size() - 1);
-				
-				newWaypoint = true;
-				moveToX = last.x;
-				moveToY = last.y;
-				
-				pathToReturn.remove(pathToReturn.size() - 1);
-				
-			}else{
-				returning = false;
-				
-				if(!delayStarted){
-					if(waypoints.get(currentWaypoint * WAYPOINT_SIZE + 2) != 0){
-						delayStartTime = System.nanoTime();
-						delayStarted = true;
-						return;
-					}
-				}else{
-					if(System.nanoTime() - delayStartTime < waypoints.get(currentWaypoint * WAYPOINT_SIZE + 2) * 1000000d){
-						return;
-					}else{
-						//delay finished
-						delayStarted = false;
-					}
-					
-				}		
-				
-				//at waypoint, delay then move to next one
-				if(numWaypoints > 1){
-					
-					newWaypoint = true;
-					currentWaypoint++;
-					
-					if(currentWaypoint >= numWaypoints)
-						currentWaypoint = 0;
-					moveToX = waypoints.get(currentWaypoint * WAYPOINT_SIZE);
-					moveToY = waypoints.get(currentWaypoint * WAYPOINT_SIZE + 1);
-				}else{
-					return;
-				}
-			}
-		}
-		
-		if(newWaypoint){
-			vecToTarget = new Vector(x, y, moveToX, moveToY);
-			if(!returning || (ticksReturning % (GamePanel.FPS / 4) == 0)){
-				finalRotation = (int) Math.toDegrees(Math.atan2(moveToY - y, moveToX - x)) + 90;
-			}
-			newWaypoint = false;
-			
-			if(finalRotation < 0)
-				finalRotation += 360;
-			if(finalRotation > 360)
-				finalRotation -= 360;
-		}
-		
-		x += vecToTarget.getNormalizedX() * SPEED;
-		y += vecToTarget.getNormalizedY() * SPEED;
-		
+		if(finalRotation < 0)
+			finalRotation += 360;
+		if(finalRotation > 360)
+			finalRotation -= 360;
 		
 		if(heading != finalRotation){
 			if(heading < finalRotation) {
@@ -317,15 +238,6 @@ public class Enemy extends Sprite{
 		if(heading > 360)
 			heading -= 360;
 		
-	}
-
-	private boolean atTarget() {
-		
-		final int MARGIN = 5;
-		
-		if(x > moveToX - MARGIN && x < moveToX + MARGIN && y > moveToY - MARGIN && y < moveToY + MARGIN)
-			return true;
-		return false;
 	}
 
 }
