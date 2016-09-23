@@ -110,4 +110,22 @@ public class Chapter extends GameState {
 		hud.mouseWheelMoved(k);
 	}
 
+	public void sendSightMessage(double x, double y, int messageRange) {
+		
+		double distance;
+		double changeX;
+		double changeY;
+		
+		for(int i = 0; i < enemies.size(); i++){
+			changeX = enemies.get(i).getX() - x;
+			changeY = enemies.get(i).getY() - y;
+			distance = changeX * changeX + changeY * changeY;
+			
+			
+			if(distance <= messageRange * messageRange){
+				enemies.get(i).recievePlayerLocationMessage(player.getX(), player.getY());
+			}
+		}
+	}
+
 }

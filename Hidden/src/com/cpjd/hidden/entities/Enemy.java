@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.map.Tile;
 import com.cpjd.hidden.map.TileMap;
 import com.cpjd.hidden.toolbox.MathTools;
@@ -29,8 +30,15 @@ public class Enemy extends Sprite{
 	protected List<Point> obstacles;
 	public static boolean drawLOSOverlay;
 	
-	public Enemy(TileMap tm, double xPos, double yPos, int fov) {
+	//broadcast player location
+	private Chapter chapter;
+	private int messageRange;
+	
+	public Enemy(TileMap tm, double xPos, double yPos, int fov, Chapter chapter) {
 		super(tm);
+		
+		this.chapter = chapter;
+		messageRange = 200;
 		
 		obstacles = new LinkedList<Point>();
 		
@@ -63,8 +71,11 @@ public class Enemy extends Sprite{
 		moveSpeed = 0.4;
 	}
 	
-	public Enemy(TileMap tm) {
+	public Enemy(TileMap tm, Chapter chapter) {
 		super(tm);
+		
+		this.chapter = chapter;
+		messageRange = 200;
 		
 		obstacles = new LinkedList<Point>();
 		
@@ -185,7 +196,8 @@ public class Enemy extends Sprite{
 				}
 				
 				if(!losBlocked){
-					sighted = true;					
+					sighted = true;
+					chapter.sendSightMessage(x, y, messageRange);
 				}
 				
 			}//isBetweenAngles
@@ -238,4 +250,7 @@ public class Enemy extends Sprite{
 		
 	}
 
+	public void recievePlayerLocationMessage(double x, double y) {
+		//TODO message reception
+	}
 }

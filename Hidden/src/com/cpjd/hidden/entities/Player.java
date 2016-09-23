@@ -39,11 +39,10 @@ public class Player extends Sprite {
 		
 		Scanner sc = new Scanner(System.in);
 		String result = sc.nextLine();
-		switch(result) {
-		case "yes":
+		if(result.equals("yes"))
 			System.out.println(": )");
-		case "no":
+		if(result.equals("no"))
 			System.err.println(":(");
-		}
+		
 	}
 }

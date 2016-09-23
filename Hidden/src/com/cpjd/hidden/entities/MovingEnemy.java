@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.TileMap;
 import com.cpjd.hidden.toolbox.MathTools;
@@ -30,8 +31,8 @@ public class MovingEnemy extends Enemy{
 	protected boolean returning = false;
 	protected int ticksReturning = 0;
 	
-	public MovingEnemy(TileMap tm) {
-		super(tm);
+	public MovingEnemy(TileMap tm, Chapter ch) {
+		super(tm, ch);
 		
 		pathToReturn = new LinkedList<Point>();
 		

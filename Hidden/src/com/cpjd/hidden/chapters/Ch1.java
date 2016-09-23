@@ -22,7 +22,7 @@ public class Ch1 extends Chapter {
 		player.setPosition(100, 100);
 		
 		enemies = new LinkedList<Enemy>();
-		enemies.add(new BasicEnemy(tileMap));
-		enemies.add(new Tower(tileMap));
+		enemies.add(new BasicEnemy(tileMap, this));
+		enemies.add(new Tower(tileMap, this));
 	}
 }
