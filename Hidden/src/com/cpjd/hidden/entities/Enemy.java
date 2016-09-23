@@ -25,6 +25,8 @@ public class Enemy extends Sprite{
 	private double finalRotation;
 	private int moveToX, moveToY;
 	private Vector vecToTarget;
+	private long delayStartTime;
+	private boolean delayStarted = false;
 		
 	//constants for speed and rotation
 	private final int MAXROTATION = 3;
@@ -69,7 +71,7 @@ public class Enemy extends Sprite{
 		waypoints.add(0);
 		waypoints.add(450);
 		waypoints.add(450);
-		waypoints.add(450);
+		waypoints.add(2 * 1000);
 		
 		int numWaypoints = waypoints.size() / WAYPOINT_SIZE;
 		
@@ -231,7 +233,24 @@ public class Enemy extends Sprite{
 				
 			}else{
 				returning = false;
-				//at waypoint, move to next one
+				
+				if(!delayStarted){
+					if(waypoints.get(currentWaypoint * WAYPOINT_SIZE + 2) != 0){
+						delayStartTime = System.nanoTime();
+						delayStarted = true;
+						return;
+					}
+				}else{
+					if(System.nanoTime() - delayStartTime < waypoints.get(currentWaypoint * WAYPOINT_SIZE + 2) * 1000000d){
+						return;
+					}else{
+						//delay finished
+						delayStarted = false;
+					}
+					
+				}		
+				
+				//at waypoint, delay then move to next one
 				if(numWaypoints > 1){
 					
 					newWaypoint = true;
