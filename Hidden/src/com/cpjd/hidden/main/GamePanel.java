@@ -91,14 +91,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 			elapsed = System.nanoTime() - start;
 			wait = targetTime - elapsed / 1000000;
 			if(wait < 0) wait = 0;
-			
+	/*		
 			if(ticks == FPS){
 				long elapsedSec = System.nanoTime() - lastSec;
 				System.out.println(FPS + " frames took " + elapsedSec / 1000000000d + " seconds");
 				ticks = 0;
 				lastSec = System.nanoTime();
 			}
-			
+		*/	
 			try {
 				Thread.sleep(wait);
 			} catch(Exception e) {

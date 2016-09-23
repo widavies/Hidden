@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.Tile;
 import com.cpjd.hidden.map.TileMap;
 import com.cpjd.hidden.toolbox.MathTools;
@@ -39,10 +40,17 @@ public class Enemy extends Sprite{
 	private List<Point> obstacles;
 	public static boolean drawLOSOverlay;
 	
+	//AI
+	private boolean tracking = false;
+	private List<Point> pathToReturn;
+	private boolean returning = false;
+	private int ticksReturning = 0;
+	
 	public Enemy(TileMap tm) {
 		super(tm);
 		
 		obstacles = new LinkedList<Point>();
+		pathToReturn = new LinkedList<Point>();
 		
 		for(int x = 0; x < tm.getNumRows(); x++){
 			for(int y = 0;  y < tm.getNumCols(); y++){
@@ -119,6 +127,9 @@ public class Enemy extends Sprite{
 	
 	public void update(double targetX, double targetY){
 		
+		//AI
+		boolean sighted = false;
+		
 		double changeX = Math.abs(targetX - x);
 		double changeY = Math.abs(targetY - y);
 		
@@ -173,11 +184,34 @@ public class Enemy extends Sprite{
 				
 				if(!losBlocked){
 					
-					System.out.println("seen");
+					moveToX = (int) targetX;
+					moveToY = (int) targetY;
+					
+					pathToReturn.add(new Point((int) x, (int) y));
+					
+					newWaypoint = true;
+					tracking = true;
+					returning = false;
+					sighted = true;
+					
 				}
 				
 			}//isBetweenAngles
 		}//sight range
+		
+		if(returning)
+			ticksReturning++;
+		else
+			ticksReturning = 0;
+		
+		if(tracking && !sighted){
+			tracking = false;
+			returning = true;
+			
+			//setting these equal triggers atTarget() to be true, so the enemy will continue to next waypoint
+			moveToX = (int) x;
+			moveToY = (int) y;
+		}
 		
 		int numWaypoints = waypoints.size() / 3;
 		
@@ -186,23 +220,38 @@ public class Enemy extends Sprite{
 		
 		if(atTarget()){
 			
-			if(numWaypoints > 1){
-			
-				newWaypoint = true;
-				currentWaypoint++;
+			if(!pathToReturn.isEmpty()){
+				Point last = pathToReturn.get(pathToReturn.size() - 1);
 				
-				if(currentWaypoint >= numWaypoints)
-					currentWaypoint = 0;
-				moveToX = waypoints.get(currentWaypoint * WAYPOINT_SIZE);
-				moveToY = waypoints.get(currentWaypoint * WAYPOINT_SIZE + 1);
+				newWaypoint = true;
+				moveToX = last.x;
+				moveToY = last.y;
+				
+				pathToReturn.remove(pathToReturn.size() - 1);
+				
 			}else{
-				return;
+				returning = false;
+				//at waypoint, move to next one
+				if(numWaypoints > 1){
+					
+					newWaypoint = true;
+					currentWaypoint++;
+					
+					if(currentWaypoint >= numWaypoints)
+						currentWaypoint = 0;
+					moveToX = waypoints.get(currentWaypoint * WAYPOINT_SIZE);
+					moveToY = waypoints.get(currentWaypoint * WAYPOINT_SIZE + 1);
+				}else{
+					return;
+				}
 			}
 		}
 		
 		if(newWaypoint){
 			vecToTarget = new Vector(x, y, moveToX, moveToY);
-			finalRotation = (int) Math.toDegrees(Math.atan2(moveToY - y, moveToX - x)) + 90;
+			if(!returning || (ticksReturning % (GamePanel.FPS / 4) == 0)){
+				finalRotation = (int) Math.toDegrees(Math.atan2(moveToY - y, moveToX - x)) + 90;
+			}
 			newWaypoint = false;
 			
 			if(finalRotation < 0)
