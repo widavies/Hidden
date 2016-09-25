@@ -1,4 +1,4 @@
-package com.cpjd.hidden.entities;
+package com.cpjd.hidden.ui.hud;
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;

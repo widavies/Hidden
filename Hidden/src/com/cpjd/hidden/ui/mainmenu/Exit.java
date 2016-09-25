@@ -1,4 +1,4 @@
-package com.cpjd.hidden.ui;
+package com.cpjd.hidden.ui.mainmenu;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

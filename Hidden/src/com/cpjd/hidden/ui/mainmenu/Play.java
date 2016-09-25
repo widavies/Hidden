@@ -1,4 +1,4 @@
-package com.cpjd.hidden.ui;
+package com.cpjd.hidden.ui.mainmenu;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -43,7 +43,7 @@ public class Play extends Fragment {
 		centeredx = Layout.getObjectCenter(buttonx, buttonWidth + expand, (getButtonX(9) + 134) - getButtonX(0));
 		
 		for(int i = 0; i < levelButtons.size(); i++) {
-			if(levelButtons.get(i).isClicked()) {
+			if(levelButtons.get(i).isClicked() && expanded) {
 				gsm.setState(1);
 				return;
 			}

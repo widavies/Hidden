@@ -1,4 +1,4 @@
-package com.cpjd.hidden.ui;
+package com.cpjd.hidden.ui.mainmenu;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -36,13 +36,14 @@ public class FragmentButton extends Button {
 		if(hover) {
 			g.setColor(Color.BLACK);
 			if(flip) {
-				g.setColor(Color.WHITE);
-				g.fillRect(x, y - height + PADDING - 20, width + (TOTAL_WIDTH - 20 - width) , height + 20);
+				g.setColor(Color.BLACK);
+				if(text.equalsIgnoreCase("resume")) g.fillRect(x, y - height + PADDING - 5, width + (TOTAL_WIDTH - 20 - width) , height + 10);
+				else g.fillRect(x, y - height + PADDING - 10, width + (TOTAL_WIDTH - 20 - width) , height + 15);
 			} else g.fillRect(x, y - height + PADDING, width + (TOTAL_WIDTH - width) , height);
 		}
 	 
 		g.setColor(Color.BLACK);
-		if(flip) g.setColor(Color.WHITE);
+		if(flip) g.setColor(Color.BLACK);
 		if(hover) g.setColor(Color.WHITE);
 		if(hover && flip) g.setColor(Color.BLACK);
 		g.drawString(text, x, y);

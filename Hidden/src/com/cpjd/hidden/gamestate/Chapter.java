@@ -4,10 +4,10 @@ import java.awt.Graphics2D;
 import java.util.List;
 
 import com.cpjd.hidden.entities.Enemy;
-import com.cpjd.hidden.entities.HUD;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.TileMap;
+import com.cpjd.hidden.ui.hud.HUD;
 
 public class Chapter extends GameState {
 
@@ -56,8 +56,6 @@ public class Chapter extends GameState {
 		
 		tileMap.draw(g);
 		
-		
-		
 		for(int i = 0; i < enemies.size(); i++){
 			enemies.get(i).drawSightArc(g);
 		}
@@ -66,8 +64,7 @@ public class Chapter extends GameState {
 		}
 		player.draw(g);
 		
-		
-		hud.draw(g);
+		if(!gsm.isPaused()) hud.draw(g);
 		
 		if(Enemy.drawLOSOverlay){
 			enemies.get(0).drawLOSOverlay(g, player.getX(), player.getY());

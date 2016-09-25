@@ -1,5 +1,6 @@
 package com.cpjd.hidden.gamestate;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -8,9 +9,11 @@ import java.io.InputStream;
 
 import com.cpjd.hidden.chapters.Ch1;
 import com.cpjd.hidden.gamestates.Menu;
+import com.cpjd.hidden.gamestates.Options;
 import com.cpjd.hidden.gamestates.Pause;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.Console;
+import com.cpjd.tools.Usage;
 
 public class GameStateManager {
 
@@ -27,7 +30,11 @@ public class GameStateManager {
 	
 	// The game-wide font
 	private Font font;
-
+	private AlphaComposite composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.10f);
+	private AlphaComposite defaultComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f);
+	
+	private int ticks = 0; // TEMPORARY
+	
 	public GameStateManager() {
 		gameStates = new GameState[NUM_GAME_STATES];
 
@@ -59,17 +66,20 @@ public class GameStateManager {
 	private void unloadState(int state) {
 		gameStates[state] = null;
 	}
-
+	public boolean isPaused() {
+		return pause.isOpen();
+	}
 	public int getState() {
 		return currentState;
 	}
-
 	public void update() {
 		console.update();
 		pause.update();
 		
-		if(console.isOpen() || pause.isOpen()) return;
+		ticks++;
+		if(ticks % 120 == 0 && Console.showMemory) System.out.println(Usage.calcMemory());
 		
+		if(console.isOpen() || pause.isOpen()) return;
 		
 		if(gameStates[currentState] != null) gameStates[currentState].update();
 	}
@@ -82,12 +92,16 @@ public class GameStateManager {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		
-		if(gameStates[currentState] != null) gameStates[currentState].draw(g);
+		if(gameStates[currentState] != null) {
+			if(pause.isOpen()) g.setComposite(composite);
+			else if(g.getComposite() != defaultComposite) g.setComposite(defaultComposite);
+			gameStates[currentState].draw(g);
+		}
 		
 		pause.draw(g);
 		console.draw(g);
 	}
-
+	
 	public void keyPressed(int k) {
 		console.keyPressed(k);
 		pause.keyPressed(k);

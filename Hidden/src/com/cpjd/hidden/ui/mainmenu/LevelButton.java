@@ -1,5 +1,6 @@
-package com.cpjd.hidden.ui;
+package com.cpjd.hidden.ui.mainmenu;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -37,7 +38,7 @@ public class LevelButton {
 		this.x = x;
 		this.y = y;
 		
-		if(completed) g.setColor(Color.GREEN);
+		if(completed) g.setColor(Color.BLACK);
 		if(!completed) g.setColor(Color.RED);
 		g.fillRect(x, y, 50, 50);
 		g.setColor(Color.WHITE);
@@ -47,7 +48,6 @@ public class LevelButton {
 		if(hover && completed) g.setColor(Color.WHITE);
 		g.drawString(text, Layout.getStringCenter(x + 5, x + 5 + 40, text, g), y - 7 + fm.getHeight());
 	}
-	
 	public void reset(int index) {
 		current = THRESHOLD * index;
 	}
@@ -70,6 +70,8 @@ public class LevelButton {
 		else hover = false;
 	}
 	public void mousePressed(int x, int y) {
+		if(current != 0) return;
+		
 		Rectangle bounds = new Rectangle(this.x, this.y, 40, 40);
 		if(bounds.contains(x, y)) clicked = true;
 	}

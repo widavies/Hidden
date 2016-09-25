@@ -17,6 +17,8 @@ public class Console {
 	private GameStateManager gsm;
 	private SmartField field;
 	
+	public static boolean showMemory; // A temporary thing
+	
 	public Console(GameStateManager gsm) {
 		this.gsm = gsm;
 		
@@ -44,6 +46,7 @@ public class Console {
 		else if(s.equalsIgnoreCase("reload")) gsm.setState(gsm.getState());
 		else if(s.equalsIgnoreCase("LOS Overlay")) Enemy.drawLOSOverlay = !Enemy.drawLOSOverlay;
 		else if(s.equalsIgnoreCase("menu")) gsm.setState(GameStateManager.INTRO);
+		else if(s.equalsIgnoreCase("mem")) showMemory = !showMemory;
 		else JOptionPane.showMessageDialog(null, "Command not found.");
 		
 		open = false;
