@@ -66,11 +66,8 @@ public class Chapter extends GameState {
 		
 		if(!gsm.isPaused()) hud.draw(g);
 		
-		if(Enemy.drawLOSOverlay){
-			enemies.get(0).drawLOSOverlay(g, player.getX(), player.getY());
-		}
-		
-		
+		if(enemies.size() > 0 && enemies.get(0) != null)
+			enemies.get(0).drawOverlays(g, player.getX(), player.getY());	
 	}
 
 	@Override
@@ -107,13 +104,18 @@ public class Chapter extends GameState {
 		hud.mouseWheelMoved(k);
 	}
 
-	public void sendSightMessage(double x, double y, int messageRange) {
+	public void sendSightMessage(double x, double y, int messageRange, Enemy sender) {
+		
+		int senderIndex = enemies.indexOf(sender);
 		
 		double distance;
 		double changeX;
 		double changeY;
 		
 		for(int i = 0; i < enemies.size(); i++){
+			
+			if(i == senderIndex) continue;
+			
 			changeX = enemies.get(i).getX() - x;
 			changeY = enemies.get(i).getY() - y;
 			distance = changeX * changeX + changeY * changeY;

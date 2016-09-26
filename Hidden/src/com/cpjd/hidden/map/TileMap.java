@@ -12,6 +12,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import com.cpjd.hidden.main.GamePanel;
+import com.cpjd.hidden.toolbox.MathTools;
 import com.cpjd.hidden.toolbox.pathfind.Node;
 
 public class TileMap {
@@ -232,17 +233,20 @@ public class TileMap {
 			
 			for (int x=-1;x<2;x++) {
 				for (int y=-1;y<2;y++) {
-					if ((x == 0 && y == 0) || (x != 0 && y != 0)) {
+					if (x == 0 && y == 0) {
 						continue;
 					}
-
+					
 					int xp = x + currentX;
 					int yp = y + currentY;
-
-					int type = tiles[xp][yp].getType();
 					
-					if (type != Tile.BLOCKED && type != Tile.FATAL) {	
-						int nextStepCost = nodes[currentX][currentY].cost + 10;
+					if(xp > getNumCols() || yp > getNumRows() || xp < 0 || yp < 0)
+						continue;
+					
+					int type = getType(yp, xp);
+					
+					if (type != Tile.BLOCKED && type != Tile.FATAL) {
+						int nextStepCost = nodes[currentX][currentY].cost + MathTools.getMoveCost(currentX, currentY, xp, yp);
 						
 						Node neighbor = nodes[xp][yp];
 						Point neighborPoint = new Point(xp, yp);
@@ -260,6 +264,7 @@ public class TileMap {
 						if (!openSet.contains(neighborPoint) && !closedSet.contains(neighborPoint)) {
 							neighbor.cost = nextStepCost;
 							neighbor.heuristic = Math.abs(xp - blockEndX) + Math.abs(yp - blockEndY);
+							neighbor.parent = new Point(currentX, currentY);
 							openSet.add(neighborPoint);
 						}
 					}
@@ -276,11 +281,12 @@ public class TileMap {
 		Point target = new Point(blockEndX, blockEndY);
 		Point start = new Point(blockStartX, blockStartY);
 		
-		while (target != start) {
+		while (target != start && target != null) {
 			path.add(0, new Point(target.x, target.y));
 			target = nodes[target.x][target.y].parent;
 		}
-		path.add(0, start);
+		//path.add(0, start);
+		path.remove(0);//to remove starting tile from list
 
 		// thats it, we have our path 
 		return path;

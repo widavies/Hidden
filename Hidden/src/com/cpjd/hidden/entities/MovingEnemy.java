@@ -27,19 +27,15 @@ public class MovingEnemy extends Enemy{
 
 	//AI
 	protected boolean tracking = false;
-	protected List<Point> pathToReturn;
-	protected boolean returning = false;
-	protected int ticksReturning = 0;
 	
 	public MovingEnemy(TileMap tm, Chapter ch) {
 		super(tm, ch);
 		
-		pathToReturn = new LinkedList<Point>();
 		
 		waypoints = new LinkedList<Integer>();
 		waypoints.add(250);
 		waypoints.add(250);
-		waypoints.add(0);
+		waypoints.add(0 * 1000);
 		waypoints.add(450);
 		waypoints.add(450);
 		waypoints.add(2 * 1000);
@@ -115,26 +111,20 @@ public class MovingEnemy extends Enemy{
 					moveToX = (int) targetX;
 					moveToY = (int) targetY;
 					
-					pathToReturn.add(new Point((int) x, (int) y));
 					
 					newWaypoint = true;
 					tracking = true;
-					returning = false;
 					sighted = true;
 					
+					super.chapter.sendSightMessage(x, y, messageRange, this);
+					pathfindRoute.clear();
 				}
 				
 			}//isBetweenAngles
 		}//sight range
 		
-		if(returning)
-			ticksReturning++;
-		else
-			ticksReturning = 0;
-		
 		if(tracking && !sighted){
 			tracking = false;
-			returning = true;
 			
 			//setting these equal triggers atTarget() to be true, so the enemy will continue to next waypoint
 			moveToX = (int) x;
@@ -143,22 +133,32 @@ public class MovingEnemy extends Enemy{
 		
 		int numWaypoints = waypoints.size() / 3;
 		
-		if(numWaypoints == 0)
+		if(numWaypoints == 0){
 			return;
+		}
 		
 		if(atTarget()){
-			
-			if(!pathToReturn.isEmpty()){
-				Point last = pathToReturn.get(pathToReturn.size() - 1);
-				
-				newWaypoint = true;
-				moveToX = last.x;
-				moveToY = last.y;
-				
-				pathToReturn.remove(pathToReturn.size() - 1);
-				
+			if(!pathfindRoute.isEmpty()){
+				while(true){
+					
+					Point moveToTile = pathfindRoute.get(0);
+					
+					if(moveToTile.x == x / tileSize && moveToTile.y == y / tileSize){
+						//on this tile already
+						pathfindRoute.remove(0);
+						continue;
+					}
+					
+					moveToX = moveToTile.x * tileSize + tileSize / 2;
+					moveToY = moveToTile.y * tileSize + tileSize / 2;
+					newWaypoint = true;
+					
+					delayStarted = false;
+					
+					pathfindRoute.remove(0);
+					break;
+				}
 			}else{
-				returning = false;
 				
 				if(!delayStarted){
 					if(waypoints.get(currentWaypoint * WAYPOINT_SIZE + 2) != 0){
@@ -184,19 +184,17 @@ public class MovingEnemy extends Enemy{
 					
 					if(currentWaypoint >= numWaypoints)
 						currentWaypoint = 0;
-					moveToX = waypoints.get(currentWaypoint * WAYPOINT_SIZE);
-					moveToY = waypoints.get(currentWaypoint * WAYPOINT_SIZE + 1);
-				}else{
-					return;
+					
+					pathfindRoute = tm.pathfind(x, y, waypoints.get(currentWaypoint * WAYPOINT_SIZE), waypoints.get(currentWaypoint * WAYPOINT_SIZE + 1));
+					moveToX = pathfindRoute.get(0).x * tileSize + tileSize / 2;
+					moveToY = pathfindRoute.get(0).y * tileSize + tileSize / 2;
 				}
 			}
 		}
 		
 		if(newWaypoint){
 			vecToTarget = new Vector(x, y, moveToX, moveToY);
-			if(!returning || (ticksReturning % (GamePanel.FPS / 4) == 0)){
-				finalRotation = (int) Math.toDegrees(Math.atan2(moveToY - y, moveToX - x)) + 90;
-			}
+			finalRotation = (int) Math.toDegrees(Math.atan2(moveToY - y, moveToX - x)) + 90;
 			newWaypoint = false;
 			
 			if(finalRotation < 0)
@@ -205,10 +203,11 @@ public class MovingEnemy extends Enemy{
 				finalRotation -= 360;
 		}
 		
+		//move
 		x += vecToTarget.getNormalizedX() * SPEED;
 		y += vecToTarget.getNormalizedY() * SPEED;
 		
-		
+		//change heading		
 		if(heading != finalRotation){
 			if(heading < finalRotation) {
 			    if(Math.abs(heading - finalRotation) < 180){
@@ -245,6 +244,13 @@ public class MovingEnemy extends Enemy{
 		
 	}
 
+	@Override
+	public void recievePlayerLocationMessage(double playerX, double playerY) {
+		
+		pathfindRoute = tm.pathfind(x, y, playerX, playerY);
+		
+	}
+	
 	private boolean atTarget() {
 		
 		final int MARGIN = 5;
