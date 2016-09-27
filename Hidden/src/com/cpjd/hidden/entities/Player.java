@@ -73,6 +73,7 @@ public class Player extends Sprite {
 				currentAction = IDLE;
 				animation.setFrames(sprites.get(IDLE));
 				animation.setDelay(500);
+				// test
 			}
 		}
 		animation.update();
