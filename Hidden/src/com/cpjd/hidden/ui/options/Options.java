@@ -1,4 +1,4 @@
-package com.cpjd.hidden.gamestates;
+package com.cpjd.hidden.ui.options;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -7,7 +7,6 @@ import java.awt.Rectangle;
 
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.Layout;
-import com.cpjd.tools.Usage;
 
 public class Options {
 	
@@ -16,6 +15,10 @@ public class Options {
 	public static final int CLOSING = 2;
 	public static final int OPENED = 3;
 	
+	// Tab
+	private GraphicsTab graphicsTab;
+	
+	// Technical
 	private int expand;
 	private int mode;
 	private boolean hover;
@@ -26,6 +29,8 @@ public class Options {
 	
 	public Options() {
 		tab[0] = true;
+		
+		graphicsTab = new GraphicsTab();
 	}
 	
 	public void update() {
@@ -43,6 +48,8 @@ public class Options {
 				mode = 0;
 			}
 		}
+		
+		if(tab[2]) graphicsTab.update();
 	}
 	
 	public void setMode(int mode) {
@@ -62,17 +69,8 @@ public class Options {
 			
 			drawFoundation(g);
 			drawTabs(g);
-			drawGraphics(g);
+			if(tab[2]) graphicsTab.draw(g, Layout.centerw(GamePanel.WIDTH / 2) - expand + 5,Layout.centerh(GamePanel.HEIGHT / 2) - expand + 80);
 		}
-	}
-	
-	private void drawGraphics(Graphics2D g) {
-		if(!tab[2]) return;
-		Font font = g.getFont();
-		font = font.deriveFont(22f);
-		g.setFont(font);
-		g.setColor(Color.DARK_GRAY);
-		g.drawString("Brightness:", (Layout.centerw(GamePanel.WIDTH / 2) - expand) + 5, Layout.centerh(GamePanel.HEIGHT / 2) - expand + 120);
 	}
 	
 	private void drawTabs(Graphics2D g) {
@@ -111,6 +109,8 @@ public class Options {
 			if(col.contains(x, y)) tabHover[i] = true;
 			else tabHover[i] = false;		
 		}
+		
+		if(tab[2]) graphicsTab.mouseMoved(x, y);
 	}
 	
 	public void mousePressed(int x, int y) {
@@ -128,8 +128,11 @@ public class Options {
 					tab[j] = false;
 				}
 				tab[i] = true;
+				return;
 			}
 		}
+		
+		if(tab[2]) graphicsTab.mousePressed(x, y);
 	}
 	
 }

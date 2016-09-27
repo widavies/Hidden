@@ -13,6 +13,7 @@ import com.cpjd.hidden.ui.mainmenu.Credits;
 import com.cpjd.hidden.ui.mainmenu.Exit;
 import com.cpjd.hidden.ui.mainmenu.Fragment;
 import com.cpjd.hidden.ui.mainmenu.Play;
+import com.cpjd.hidden.ui.options.Options;
 
 public class Menu extends GameState {
 

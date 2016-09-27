@@ -9,10 +9,10 @@ import java.io.InputStream;
 
 import com.cpjd.hidden.chapters.Ch1;
 import com.cpjd.hidden.gamestates.Menu;
-import com.cpjd.hidden.gamestates.Options;
 import com.cpjd.hidden.gamestates.Pause;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.Console;
+import com.cpjd.hidden.ui.options.Options;
 import com.cpjd.tools.Usage;
 
 public class GameStateManager {

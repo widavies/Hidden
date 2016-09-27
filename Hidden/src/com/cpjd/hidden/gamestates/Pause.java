@@ -11,6 +11,7 @@ import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.Layout;
 import com.cpjd.hidden.ui.mainmenu.FragmentButton;
+import com.cpjd.hidden.ui.options.Options;
 
 public class Pause extends GameState {
 

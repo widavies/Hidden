@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 
 import com.cpjd.hidden.map.Tile;
 import com.cpjd.hidden.map.TileMap;
+import com.cpjd.tools.Animation;
 
 public class Sprite {
 
@@ -45,6 +46,9 @@ public class Sprite {
 	protected boolean bottomLeft, bottomRight, topLeft, topRight;
 	protected int tileSize;
 
+	// animation
+	protected Animation animation;
+	
 	public Sprite(TileMap tm) {
 		this.tm = tm;
 		this.tileSize = tm.getTileSize();
@@ -167,7 +171,7 @@ public class Sprite {
 	// draws the sprite
 	public void draw(Graphics2D g) {
 		g.setColor(Color.RED);
-		g.fillRect((int) (x + xmap - width / 2), (int) (y + ymap - height / 2), width, height);
+		g.drawImage(animation.getImage(), (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), width, height, null);
 	}
 	public void draw(Graphics2D g, Color c) {
 		g.setColor(c);
