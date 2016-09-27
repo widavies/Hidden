@@ -28,18 +28,21 @@ public class Enemy extends Sprite{
 	
 	//obstacles
 	protected List<Point> obstacles;
-	public static boolean drawLOSOverlay;
+	public static boolean drawLOSOverlay, drawPathFindOverlay;
 	
 	//broadcast player location
-	private Chapter chapter;
-	private int messageRange;
+	protected Chapter chapter;
+	protected int messageRange;
+	
+	protected List<Point> pathfindRoute;//in this class instead of MovingEnemy so that the drawOverlays() method can use it
 	
 	public Enemy(TileMap tm, double xPos, double yPos, int fov, Chapter chapter) {
 		super(tm);
 		
 		this.chapter = chapter;
-		messageRange = 200;
+		messageRange = 200000;
 		
+		pathfindRoute = new LinkedList<Point>();
 		obstacles = new LinkedList<Point>();
 		
 		for(int x = 0; x < tm.getNumRows(); x++){
@@ -75,8 +78,9 @@ public class Enemy extends Sprite{
 		super(tm);
 		
 		this.chapter = chapter;
-		messageRange = 200;
+		messageRange = 200000;
 		
+		pathfindRoute = new LinkedList<Point>();
 		obstacles = new LinkedList<Point>();
 		
 		for(int x = 0; x < tm.getNumRows(); x++){
@@ -112,7 +116,10 @@ public class Enemy extends Sprite{
 		g.fillArc((int) (x + xmap - sightRange), (int) (y + ymap - sightRange), sightRange * 2, sightRange * 2, (int) (-heading + 90 - fov / 2), fov);
 	}
 	
-	public void drawLOSOverlay(Graphics2D g, double targetX, double targetY){
+	public void drawOverlays(Graphics2D g, double targetX, double targetY){
+		
+		g.setColor(Color.white);
+		
 		if(drawLOSOverlay){
 			
 			for(Point p : obstacles){
@@ -131,6 +138,13 @@ public class Enemy extends Sprite{
 				Point sightLine_2 = new Point((int) targetX, (int) targetY);
 				
 				g.drawLine(sightLine_1.x + (int) xmap, sightLine_1.y + (int) ymap, sightLine_2.x + (int) xmap, sightLine_2.y + (int) ymap);
+			}
+		}
+		
+		if(drawPathFindOverlay){
+			if(pathfindRoute.size() > 0){
+				for(int i = 0; i < pathfindRoute.size() - 1; i++)
+					g.drawLine(pathfindRoute.get(i).x * tileSize + (int) xmap + tileSize / 2, pathfindRoute.get(i).y * tileSize + (int) ymap + tileSize / 2, pathfindRoute.get(i + 1).x * tileSize + (int) xmap + tileSize / 2, pathfindRoute.get(i + 1).y * tileSize + (int) ymap + tileSize / 2);
 			}
 		}
 	}
@@ -197,7 +211,7 @@ public class Enemy extends Sprite{
 				
 				if(!losBlocked){
 					sighted = true;
-					chapter.sendSightMessage(x, y, messageRange);
+					chapter.sendSightMessage(x, y, messageRange, this);
 				}
 				
 			}//isBetweenAngles
@@ -228,7 +242,7 @@ public class Enemy extends Sprite{
 			    	else
 			    		heading = finalRotation;
 			    }
-			}else {				
+			}else {
 			    if(Math.abs(heading - finalRotation) < 180){
 			    	if(Math.abs(heading - finalRotation) > MAXROTATION)
 			    		heading -= MAXROTATION;
@@ -250,7 +264,14 @@ public class Enemy extends Sprite{
 		
 	}
 
-	public void recievePlayerLocationMessage(double x, double y) {
-		//TODO message reception
+	public void recievePlayerLocationMessage(double playerX, double playerY) {
+		double changeX = Math.abs(playerX - x);
+		double changeY = Math.abs(playerY - y);
+		
+		double distance = (changeX * changeX) + (changeY * changeY);
+		
+		if(distance < sightRange * sightRange){
+			finalRotation = (int) Math.toDegrees(Math.atan2(playerY - y, playerX - x)) + 90;
+		}
 	}
 }

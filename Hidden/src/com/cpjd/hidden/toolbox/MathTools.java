@@ -71,4 +71,19 @@ public class MathTools {
 	 
 	    return (val > 0) ? 1: 2; // clock or counterclock wise
 	}
+
+	public static int getMoveCost(int x1, int y1, int x2, int y2) {
+		
+		int change = Math.abs(x1 - x2) + Math.abs(y1 - y2);
+		
+		if(change == 1)
+			return 10;
+		else if(change == 2)
+			return 14;
+		else{
+			System.err.println("block distance unrecognized in MathTools getMoveCost() " + x1 + ", " + y1 + "\t" + x2 + ", " + y2);
+			System.exit(1);
+		}
+		return -1;
+	}
 }

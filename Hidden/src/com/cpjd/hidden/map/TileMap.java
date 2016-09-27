@@ -1,14 +1,19 @@
 package com.cpjd.hidden.map;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import com.cpjd.hidden.main.GamePanel;
+import com.cpjd.hidden.toolbox.MathTools;
+import com.cpjd.hidden.toolbox.pathfind.Node;
 
 public class TileMap {
 	
@@ -189,5 +194,101 @@ public class TileMap {
 				g.drawImage(tiles[r][c].getImage(),(int)x + col * tileSize,(int)y + row * tileSize,null);
 			}
 		}		
+	}
+	
+	public List<Point> pathfind(double startX, double startY, double endX, double endY){
+		
+		int blockStartX = (int) (startX / tileSize);
+		int blockStartY = (int) (startY / tileSize);
+		
+		int blockEndX = (int) (endX / tileSize);
+		int blockEndY = (int) (endY / tileSize);
+		
+		List<Point> closedSet = new LinkedList<Point>();
+		List<Point> openSet = new LinkedList<Point>();
+		
+		openSet.add(new Point(blockStartX, blockStartY));
+		
+		Node[][] nodes = new Node[getNumRows()][getNumCols()];
+		
+		for(int x = 0; x < nodes.length; x++){
+			for(int y = 0; y < nodes[0].length; y++){
+				nodes[x][y] = new Node();
+			}
+		}
+		
+		nodes[blockEndX][blockEndY].parent = null;
+		
+		while(!openSet.isEmpty()){
+			
+			int currentX = openSet.get(0).x;
+			int currentY = openSet.get(0).y;
+			
+			if(currentX == blockEndX && currentY == blockEndY){
+				break;
+			}
+			
+			closedSet.add(openSet.get(0));
+			openSet.remove(0);
+			
+			for (int x=-1;x<2;x++) {
+				for (int y=-1;y<2;y++) {
+					if (x == 0 && y == 0) {
+						continue;
+					}
+					
+					int xp = x + currentX;
+					int yp = y + currentY;
+					
+					if(xp > getNumCols() || yp > getNumRows() || xp < 0 || yp < 0)
+						continue;
+					
+					int type = getType(yp, xp);
+					
+					if (type != Tile.BLOCKED && type != Tile.FATAL) {
+						int nextStepCost = nodes[currentX][currentY].cost + MathTools.getMoveCost(currentX, currentY, xp, yp);
+						
+						Node neighbor = nodes[xp][yp];
+						Point neighborPoint = new Point(xp, yp);
+
+						if (nextStepCost < neighbor.cost) {
+							
+							if (openSet.contains(neighborPoint)) {
+								openSet.remove(openSet.indexOf(neighborPoint));
+							}
+							if (closedSet.contains(neighborPoint)) {
+								closedSet.remove(closedSet.indexOf(neighborPoint));
+							}
+						}
+
+						if (!openSet.contains(neighborPoint) && !closedSet.contains(neighborPoint)) {
+							neighbor.cost = nextStepCost;
+							neighbor.heuristic = Math.abs(xp - blockEndX) + Math.abs(yp - blockEndY);
+							neighbor.parent = new Point(currentX, currentY);
+							openSet.add(neighborPoint);
+						}
+					}
+				}
+			}
+		}
+		
+		if(nodes[blockEndX][blockEndY].parent == null){
+			System.err.println("No Path Found");
+			return null;
+		}
+		
+		List<Point> path = new LinkedList<Point>();
+		Point target = new Point(blockEndX, blockEndY);
+		Point start = new Point(blockStartX, blockStartY);
+		
+		while (target != start && target != null) {
+			path.add(0, new Point(target.x, target.y));
+			target = nodes[target.x][target.y].parent;
+		}
+		//path.add(0, start);
+		path.remove(0);//to remove starting tile from list
+
+		// thats it, we have our path 
+		return path;
 	}
 }
