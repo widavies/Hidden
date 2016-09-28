@@ -17,7 +17,7 @@ public class Ch1 extends Chapter {
 		tileMap.setPosition(0, 0);
 		
 		player = new Player(tileMap);
-		player.setPosition(100, 100);
+		player.setPosition(400, 400);
 		
 		enemies = new LinkedList<Enemy>();
 		//enemies.add(new BasicEnemy(tileMap, this));

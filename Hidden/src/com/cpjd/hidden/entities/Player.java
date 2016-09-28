@@ -1,9 +1,11 @@
 package com.cpjd.hidden.entities;
 
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
@@ -12,20 +14,23 @@ import com.cpjd.tools.Animation;
 
 public class Player extends Sprite {
 
+	private final int SCALE = 3;
+	
 	// Animation
 	private static final int IDLE = 0;
 	private static final int WALKING = 1;
 	private int currentAction;
 	private ArrayList<BufferedImage[]> sprites;
 	private final int[] numFrames = { 2, 8};
-	
+	private BufferedImage rotation;
+
 	public Player(TileMap tm) {
 		super(tm);
 		
 		width = 32;
 		height = 32;
-		cwidth = 32;
-		cheight = 32;
+		cwidth = 32 * SCALE;
+		cheight = 32 * SCALE;
 		maxSpeed = 3;
 		
 		moveSpeed = 0.9;
@@ -40,6 +45,8 @@ public class Player extends Sprite {
 		currentAction = IDLE;
 		animation.setFrames(sprites.get(IDLE));
 		animation.setDelay(500);
+		
+		rotation = animation.getImage();
 	}
 	
 	private void loadAnimation() throws Exception {
@@ -57,6 +64,23 @@ public class Player extends Sprite {
 	}
 	
 	@Override
+	public void draw(Graphics2D g) {
+		g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), width * SCALE, height * SCALE, null);
+	}
+	
+	private BufferedImage calculateRotation(BufferedImage toRotate, int degrees) {
+		double rotationRequired = Math.toRadians (degrees);
+		
+		double locX, locY;
+		locX = toRotate.getWidth() / 2;
+		locY = toRotate.getHeight() / 2;
+		AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locX, locY);
+		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+		toRotate = op.filter(toRotate, null);
+		return toRotate;
+	}
+
+	@Override
 	public void update() {
 		super.update();
 		
@@ -65,7 +89,7 @@ public class Player extends Sprite {
 			if(currentAction != WALKING) {
 				currentAction = WALKING;
 				animation.setFrames(sprites.get(WALKING));
-				animation.setDelay(40);
+				animation.setDelay(100);
 			}
 		}
 		else if(!left && !right && !down && !up) {
@@ -76,6 +100,17 @@ public class Player extends Sprite {
 			}
 		}
 		animation.update();
+		
+		// Manage image update
+		if(left && up) rotation = calculateRotation(animation.getImage(), 135);
+		else if(right && up) rotation = calculateRotation(animation.getImage(), -135);
+		else if(left && down) rotation = calculateRotation(animation.getImage(), 45);
+		else if(right && down) rotation = calculateRotation(animation.getImage(), -45);
+		else if(left) rotation = calculateRotation(animation.getImage(), 90);
+		else if(right) rotation = calculateRotation(animation.getImage(), -90);
+		else if(up) rotation = calculateRotation(animation.getImage(), 180);
+		else if(down) rotation = calculateRotation(animation.getImage(), 0);
+		
 	}
 	
 	public void keyPressed(int k) {

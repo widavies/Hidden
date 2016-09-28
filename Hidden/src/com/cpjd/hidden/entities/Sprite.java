@@ -170,7 +170,6 @@ public class Sprite {
 
 	// draws the sprite
 	public void draw(Graphics2D g) {
-		g.setColor(Color.RED);
 		g.drawImage(animation.getImage(), (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), width, height, null);
 	}
 	public void draw(Graphics2D g, Color c) {
