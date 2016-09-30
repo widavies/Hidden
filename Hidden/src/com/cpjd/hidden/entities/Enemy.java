@@ -142,7 +142,7 @@ public class Enemy extends Sprite{
 		}
 		
 		if(drawPathFindOverlay){
-			if(pathfindRoute.size() > 0){
+			if(pathfindRoute != null && pathfindRoute.size() > 0){
 				for(int i = 0; i < pathfindRoute.size() - 1; i++)
 					g.drawLine(pathfindRoute.get(i).x * tileSize + (int) xmap + tileSize / 2, pathfindRoute.get(i).y * tileSize + (int) ymap + tileSize / 2, pathfindRoute.get(i + 1).x * tileSize + (int) xmap + tileSize / 2, pathfindRoute.get(i + 1).y * tileSize + (int) ymap + tileSize / 2);
 			}

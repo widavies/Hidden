@@ -221,6 +221,7 @@ public class TileMap {
 		
 		while(!openSet.isEmpty()){
 			
+			
 			int currentX = openSet.get(0).x;
 			int currentY = openSet.get(0).y;
 			
@@ -233,9 +234,14 @@ public class TileMap {
 			
 			for (int x=-1;x<2;x++) {
 				for (int y=-1;y<2;y++) {
+					
+					//ignore this block if...
+					
+					//if it is the same as currentX, Y
 					if (x == 0 && y == 0) {
 						continue;
 					}
+					
 					
 					int xp = x + currentX;
 					int yp = y + currentY;
@@ -288,7 +294,6 @@ public class TileMap {
 		//path.add(0, start);
 		path.remove(0);//to remove starting tile from list
 
-		// thats it, we have our path 
 		return path;
 	}
 }
