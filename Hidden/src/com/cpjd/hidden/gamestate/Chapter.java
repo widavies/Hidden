@@ -1,6 +1,7 @@
 package com.cpjd.hidden.gamestate;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.List;
 
 import com.cpjd.hidden.entities.Enemy;
@@ -17,6 +18,8 @@ public class Chapter extends GameState {
 	protected List<Enemy> enemies;
 	private HUD hud;
 	
+	private Rectangle winBox = new Rectangle(19 * 64 - 10, 21 * 64 - 10, 64 + 10, 64 + 10);
+	
 	public Chapter(GameStateManager gsm) {
 		super(gsm);
 		
@@ -29,6 +32,18 @@ public class Chapter extends GameState {
 	@Override
 	public void update() {
 
+		for(int i = 0; i < enemies.size(); i++){
+			if(enemies.get(i).getCollisionBox().intersects(player.getCollisionBox())){
+				gsm.setState(gsm.getState());
+				System.out.println("you got caught");
+			}
+		}
+		
+		if(player.getCollisionBox().intersects(winBox)){
+			System.out.println("you won");
+			gsm.setState(gsm.getState());
+		}
+		
 		hud.update();
 		
 		if(hud.isInventoryOpen()) return;
@@ -44,11 +59,6 @@ public class Chapter extends GameState {
 		}
 		hud.update();
 		
-		for(int i = 0; i < enemies.size(); i++){
-			if(enemies.get(i).getCollisionBox().intersects(player.getCollisionBox())){
-				gsm.setState(gsm.getState());
-			}
-		}
 	}
 
 	@Override

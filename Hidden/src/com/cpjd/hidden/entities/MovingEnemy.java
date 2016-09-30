@@ -33,12 +33,18 @@ public class MovingEnemy extends Enemy{
 		
 		
 		waypoints = new LinkedList<Integer>();
-		waypoints.add(250);
-		waypoints.add(250);
+		waypoints.add(10 * tileSize);
+		waypoints.add(10 * tileSize);
 		waypoints.add(0 * 1000);
-		waypoints.add(450);
-		waypoints.add(450);
-		waypoints.add(2 * 1000);
+		waypoints.add(8 * tileSize);
+		waypoints.add(13 * tileSize);
+		waypoints.add(0 * 1000);
+		waypoints.add(10 * tileSize);
+		waypoints.add(10 * tileSize);
+		waypoints.add(0 * 1000);
+		waypoints.add(19 * tileSize);
+		waypoints.add(18 * tileSize);
+		waypoints.add(0 * 1000);
 		
 		int numWaypoints = waypoints.size() / WAYPOINT_SIZE;
 		

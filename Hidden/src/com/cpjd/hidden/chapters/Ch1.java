@@ -2,8 +2,10 @@ package com.cpjd.hidden.chapters;
 
 import java.util.LinkedList;
 
+import com.cpjd.hidden.entities.BasicEnemy;
 import com.cpjd.hidden.entities.Enemy;
 import com.cpjd.hidden.entities.Player;
+import com.cpjd.hidden.entities.Tower;
 import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.gamestate.GameStateManager;
 
@@ -20,7 +22,7 @@ public class Ch1 extends Chapter {
 		player.setPosition(400, 400);
 		
 		enemies = new LinkedList<Enemy>();
-		//enemies.add(new BasicEnemy(tileMap, this));
-		//enemies.add(new Tower(tileMap, this));
+		enemies.add(new BasicEnemy(tileMap, this));
+		enemies.add(new Tower(tileMap, this));
 	}
 }

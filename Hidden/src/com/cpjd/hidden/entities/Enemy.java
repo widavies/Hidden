@@ -97,8 +97,8 @@ public class Enemy extends Sprite{
 		sightRange = 500;
 		fov = 100;
 		
-		x = 250;
-		y = 250;
+		x = 19 * tileSize;
+		y = 18 * tileSize;
 		heading = 135;
 		
 		width = 50;
