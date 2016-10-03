@@ -17,7 +17,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 import com.cpjd.hidden.gamestate.GameStateManager;
-import com.cpjd.hidden.toolbox.Layout;
+import com.cpjd.tools.Layout;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 	
@@ -47,6 +47,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		setFocusable(true);
 		requestFocus();
 		lastSec = System.nanoTime();
+		
+		Toolkit.getDefaultToolkit().setDynamicLayout(false); 
 	}
 	
 	public void addNotify() {
@@ -123,6 +125,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	
 	private void drawToScreen() {
 		Graphics g2 = getGraphics();
+		if(g2 == null) return;
+		
 		g2.drawImage(image, 0, 0, WIDTH, HEIGHT, null);
 		g2.dispose();
 	}

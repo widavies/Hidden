@@ -74,8 +74,6 @@ public class Chapter extends GameState {
 		}
 		player.draw(g);
 		
-		if(!gsm.isPaused()) hud.draw(g);
-		
 		if(enemies.size() > 0 && enemies.get(0) != null)
 			enemies.get(0).drawOverlays(g, player.getX(), player.getY());	
 	}

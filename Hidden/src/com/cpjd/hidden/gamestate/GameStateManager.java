@@ -9,10 +9,8 @@ import java.io.InputStream;
 
 import com.cpjd.hidden.chapters.Ch1;
 import com.cpjd.hidden.gamestates.Menu;
-import com.cpjd.hidden.gamestates.Pause;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.Console;
-import com.cpjd.hidden.ui.options.Options;
 import com.cpjd.tools.Usage;
 
 public class GameStateManager {
@@ -26,13 +24,9 @@ public class GameStateManager {
 	private GameState[] gameStates;
 	private int currentState;
 
-	private Pause pause;
-	
 	// The game-wide font
-	private Font font;
-	private AlphaComposite composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.10f);
-	private AlphaComposite defaultComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f);
-	
+	public static Font font;
+
 	private int ticks = 0; // TEMPORARY
 	
 	public GameStateManager() {
@@ -50,7 +44,6 @@ public class GameStateManager {
 		loadState(currentState);
 
 		console = new Console(this);
-		pause = new Pause(this);
 	}
 
 	public void setState(int state) {
@@ -66,20 +59,16 @@ public class GameStateManager {
 	private void unloadState(int state) {
 		gameStates[state] = null;
 	}
-	public boolean isPaused() {
-		return pause.isOpen();
-	}
 	public int getState() {
 		return currentState;
 	}
 	public void update() {
 		console.update();
-		pause.update();
-		
+
 		ticks++;
 		if(ticks % 120 == 0 && Console.showMemory) System.out.println(Usage.calcMemory());
 		
-		if(console.isOpen() || pause.isOpen()) return;
+		if(console.isOpen()) return;
 		
 		if(gameStates[currentState] != null) gameStates[currentState].update();
 	}
@@ -93,19 +82,14 @@ public class GameStateManager {
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		
 		if(gameStates[currentState] != null) {
-			if(pause.isOpen()) g.setComposite(composite);
-			else if(g.getComposite() != defaultComposite) g.setComposite(defaultComposite);
 			gameStates[currentState].draw(g);
 		}
 		
-		pause.draw(g);
 		console.draw(g);
 	}
 	
 	public void keyPressed(int k) {
 		console.keyPressed(k);
-		pause.keyPressed(k);
-		if(console.isOpen() || pause.isOpen()) return;
 		
 		if(gameStates[currentState] != null) gameStates[currentState].keyPressed(k);
 	}
@@ -117,9 +101,6 @@ public class GameStateManager {
 	}
 
 	public void mousePressed(int x, int y) {
-		pause.mousePressed(x, y);
-		
-		if(pause.isOpen()) return;
 		if(gameStates[currentState] != null) gameStates[currentState].mousePressed(x, y);
 	}
 
@@ -128,8 +109,6 @@ public class GameStateManager {
 	}
 
 	public void mouseMoved(int x, int y) {
-		pause.mouseMoved(x, y);
-		
 		if(gameStates[currentState] != null) gameStates[currentState].mouseMoved(x, y);
 	}
 	

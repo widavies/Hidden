@@ -1,82 +1,161 @@
 package com.cpjd.hidden.gamestates;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 
 import com.cpjd.hidden.gamestate.GameState;
 import com.cpjd.hidden.gamestate.GameStateManager;
-import com.cpjd.hidden.toolbox.Layout;
-import com.cpjd.hidden.ui.mainmenu.Button;
-import com.cpjd.hidden.ui.mainmenu.Credits;
-import com.cpjd.hidden.ui.mainmenu.Exit;
-import com.cpjd.hidden.ui.mainmenu.Fragment;
-import com.cpjd.hidden.ui.mainmenu.Play;
-import com.cpjd.hidden.ui.options.Options;
+import com.cpjd.hidden.ui.UIListener;
+import com.cpjd.hidden.ui.content.CreditsWindow;
+import com.cpjd.hidden.ui.content.OptionsWindow;
+import com.cpjd.hidden.ui.elements.UIButton;
+import com.cpjd.hidden.ui.elements.UICheckbox;
+import com.cpjd.hidden.ui.windows.UIDialog;
+import com.cpjd.hidden.ui.windows.UIWindow;
+import com.cpjd.tools.Layout;
 
-public class Menu extends GameState {
-
-	private ArrayList<Button> buttons;
-	private Options options;
+public class Menu extends GameState implements UIListener {
+	private UIButton play, options, credits, exit;
+	private UIWindow playWindow;
+	private CreditsWindow creditsWindow;
+	private OptionsWindow optionsWindow;
+	private UIDialog exitDialog;
 	
 	public Menu(GameStateManager gsm) {
 		super(gsm);
-		buttons = new ArrayList<Button>();
-		Fragment.ANY_EXPANDED = false;
-		buttons.add(new Button("Play", new Play(gsm)));
-		buttons.add(new Button("Options", null));
-		buttons.add(new Button("Credits", new Credits(gsm)));
-		buttons.add(new Button("Exit", new Exit(gsm)));
+
+		play = new UIButton("Play");
+		options = new UIButton("Options");
+		credits = new UIButton("Credits");
+		exit = new UIButton("Exit");
 		
-		options = new Options();
+		play.addUIListener(this);
+		options.addUIListener(this);
+		credits.addUIListener(this);
+		exit.addUIListener(this);
 	}
 	
 	public void update() {
-		for(int i = 0; i < buttons.size(); i++) {
-			buttons.get(i).update();
-		}
+		play.setLocation(Layout.alignx(5), Layout.aligny(40));
+		options.setLocation(Layout.alignx(5), Layout.aligny(50));
+		credits.setLocation(Layout.alignx(5), Layout.aligny(60));
+		exit.setLocation(Layout.alignx(5), Layout.aligny(70));
 		
-		options.update();
-		
-		if(buttons.get(1).isClicked()) {
-			options.setMode(Options.OPENING);
-			buttons.get(1).setClicked(false);
-		}
+		if(optionsWindow != null) optionsWindow.update();
+		if(playWindow != null) playWindow.update();
+		if(creditsWindow != null) creditsWindow.update();
+		if(exitDialog != null) exitDialog.update();
+
 	}
 	public void draw(Graphics2D g) {
-		for(int i = 0; i < buttons.size(); i++) {
-			buttons.get(i).draw(g, Layout.alignx(5), Layout.aligny((i + 6) * 7));
-		}
-		
-		if(Fragment.ANY_EXPANDED) return;
-		
-		Font font = g.getFont();
-		font = font.deriveFont(font.getSize() * 10);
-		g.setFont(font);
-		g.setColor(Color.WHITE);
-		g.drawString("HIDDEN", Layout.alignx(5), Layout.aligny(20));
-		
+		play.draw(g);
 		options.draw(g);
+		credits.draw(g);
+		exit.draw(g);
 		
+		if(optionsWindow != null) optionsWindow.draw(g);
+		if(playWindow != null) playWindow.draw(g);
+		if(creditsWindow != null) creditsWindow.draw(g);
+		if(exitDialog != null) exitDialog.draw(g);
+		
+		g.setColor(Color.WHITE);
+		g.setFont(g.getFont().deriveFont(40f));
+		g.drawString("HIDDEN", Layout.alignx(5), Layout.aligny(10));
 	}
 	public void keyPressed(int k) {}
 	public void keyReleased(int k) {}
 	public void mousePressed(int x, int y) {
-		for(int i = 0; i < buttons.size(); i++) {
-			buttons.get(i).mousePressed(x, y);
-		}
-		
+		play.mousePressed(x, y);
 		options.mousePressed(x, y);
+		credits.mousePressed(x, y);
+		exit.mousePressed(x, y);
+		
+		if(optionsWindow != null) optionsWindow.mousePressed(x, y);
+		if(playWindow != null) playWindow.mousePressed(x, y);
+		if(creditsWindow != null) creditsWindow.mousePressed(x, y);
+		if(exitDialog != null) exitDialog.mousePressed(x, y);
 	}
 	public void mouseReleased(int x, int y) {}
 	public void mouseMoved(int x, int y) {
-		for(int i = 0; i < buttons.size();i++) {
-			buttons.get(i).mouseMoved(x, y);
-		}
-		
+		play.mouseMoved(x, y);
 		options.mouseMoved(x, y);
+		credits.mouseMoved(x, y);
+		exit.mouseMoved(x, y);
+		if(optionsWindow != null) optionsWindow.mouseMoved(x, y);
+		if(playWindow != null) playWindow.mouseMoved(x, y);
+		if(creditsWindow != null) creditsWindow.mouseMoved(x, y);
+		if(exitDialog != null) exitDialog.mouseMoved(x, y);
 	}
 	public void mouseWheelMoved(int k) {}
+
+	@Override
+	public void buttonPressed(UIButton button) {
+		if(options == button) {
+			optionsWindow = new OptionsWindow();
+			optionsWindow.center((int)(Layout.WIDTH / 1.5), (int)(Layout.HEIGHT / 1.5));
+			optionsWindow.addUIListener(this);
+			play.setFocus(false);
+			options.setFocus(false);
+			credits.setFocus(false);
+			exit.setFocus(false);
+		}
+		if(play == button) {
+			gsm.setState(GameStateManager.CH1);
+		}
+		if(credits == button) {
+			creditsWindow = new CreditsWindow();
+			creditsWindow.center(Layout.WIDTH, Layout.HEIGHT);
+			creditsWindow.addUIListener(this);
+			play.setFocus(false);
+			options.setFocus(false);
+			credits.setFocus(false);
+			exit.setFocus(false);
+		}
+		if(exit == button) {
+			exitDialog = new UIDialog();
+			exitDialog.addUIListener(this);
+			play.setFocus(false);
+			options.setFocus(false);
+			credits.setFocus(false);
+			exit.setFocus(false);
+		}
+	}
+
+	@Override
+	public void viewClosed(UIWindow window) {
+		if(window == optionsWindow) {
+			optionsWindow = null;
+			play.setFocus(true);
+			options.setFocus(true);
+			credits.setFocus(true);
+			exit.setFocus(true);
+		}
+		if(window == playWindow) {
+			playWindow = null;
+			play.setFocus(true);
+			options.setFocus(true);
+			credits.setFocus(true);
+			exit.setFocus(true);
+		}
+		if(window == creditsWindow) {
+			creditsWindow = null;
+			play.setFocus(true);
+			options.setFocus(true);
+			credits.setFocus(true);
+			exit.setFocus(true);
+		}
+		if(window == exitDialog) {
+			exitDialog = null;
+			play.setFocus(true);
+			options.setFocus(true);
+			credits.setFocus(true);
+			exit.setFocus(true);
+		}
+	}
+
+	@Override
+	public void checkBoxPressed(UICheckbox checkBox, boolean checked) {
+		
+	}
 
 }

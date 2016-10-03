@@ -15,7 +15,7 @@ import com.cpjd.hidden.effects.Effect.EffectInfo;
 import com.cpjd.hidden.items.Inventory;
 import com.cpjd.hidden.items.Inventory.Item;
 import com.cpjd.hidden.main.GamePanel;
-import com.cpjd.hidden.toolbox.Layout;
+import com.cpjd.tools.Layout;
 
 public class HUD {
 

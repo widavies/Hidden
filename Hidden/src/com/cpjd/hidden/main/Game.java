@@ -1,6 +1,10 @@
 package com.cpjd.hidden.main;
 
+import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
@@ -10,6 +14,8 @@ import javax.swing.UIManager;
 public class Game {
 	
 	public static JFrame frame;
+	private static GraphicsDevice d;
+	private static GamePanel game;
 	
 	public static void main(String[] args) {
 		
@@ -26,7 +32,7 @@ public class Game {
 		
 		frame = new JFrame("Hidden");
 		
-		final GamePanel game = new GamePanel();
+		game = new GamePanel();
 		
 		frame.setLayout(null);
 		frame.setContentPane(game);
@@ -50,6 +56,31 @@ public class Game {
 		//frame.setIconImage(new ImageIcon(Game.class.getResource("/CPJD/small-illuminati.png")).getImage());
 				
 		frame.setVisible(true);
+		
+
+		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		d = env.getDefaultScreenDevice();
+	}
+	
+	public static void setFullscreen(boolean fullscreen) {
+		if(fullscreen) {
+			frame.dispose();
+			frame.setUndecorated(true);
+			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			frame.setVisible(true);
+		
+			Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+			game.resizeGame((int)d.getWidth(), (int)d.getHeight());
+		} else {
+			frame.dispose();
+			frame.setUndecorated(false);
+			frame.setExtendedState(JFrame.NORMAL);
+			frame.setSize(1600, 900);
+			frame.setLocationRelativeTo(null);
+			frame.setVisible(true);
+		
+			game.resizeGame(1600, 900);
+		}
 		
 	}
 }

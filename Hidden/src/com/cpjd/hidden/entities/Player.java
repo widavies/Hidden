@@ -27,8 +27,8 @@ public class Player extends Sprite {
 	public Player(TileMap tm) {
 		super(tm);
 		
-		width = 32;
-		height = 32;
+		width = 32 * SCALE;
+		height = 32 * SCALE;
 		cwidth = 32 * SCALE;
 		cheight = 32 * SCALE;
 		maxSpeed = 3;
@@ -57,7 +57,7 @@ public class Player extends Sprite {
 			BufferedImage[] bi = new BufferedImage[numFrames[i]];
 
 			for (int j = 0; j < numFrames[i]; j++) {
-				bi[j] = spritesheet.getSubimage(j * width, i * height, width, height);
+				bi[j] = spritesheet.getSubimage(j * 32, i * 32, 32, 32);
 			}
 			sprites.add(bi);
 		}
@@ -65,7 +65,7 @@ public class Player extends Sprite {
 	
 	@Override
 	public void draw(Graphics2D g) {
-		g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), width * SCALE, height * SCALE, null);
+		g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), width, height, null);
 	}
 	
 	private BufferedImage calculateRotation(BufferedImage toRotate, int degrees) {
