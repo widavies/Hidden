@@ -64,7 +64,7 @@ public class GameStateManager {
 	}
 	public void update() {
 		console.update();
-
+		
 		ticks++;
 		if(ticks % 120 == 0 && Console.showMemory) System.out.println(Usage.calcMemory());
 		
@@ -89,9 +89,8 @@ public class GameStateManager {
 	}
 	
 	public void keyPressed(int k) {
-		console.keyPressed(k);
-		
-		if(gameStates[currentState] != null) gameStates[currentState].keyPressed(k);
+		if(!console.keyPressed(k))		
+			if(gameStates[currentState] != null) gameStates[currentState].keyPressed(k);
 	}
 
 	public void keyReleased(int k) {

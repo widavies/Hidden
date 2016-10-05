@@ -17,6 +17,8 @@ import com.cpjd.hidden.toolbox.pathfind.Node;
 
 public class TileMap {
 	
+	public static int tileSize = 64;
+	
 	private double x;
 	private double y;
 	
@@ -28,7 +30,7 @@ public class TileMap {
 	private double tween;
 	
 	private int[][] map;
-	private int tileSize;
+	
 	private int numRows;
 	private int numCols;
 	private int width;
@@ -44,7 +46,7 @@ public class TileMap {
 	private int numColsToDraw;
 	
 	public TileMap(int tileSize) {
-		this.tileSize = tileSize;
+		TileMap.tileSize = tileSize;
 		numRowsToDraw = GamePanel.HEIGHT / tileSize + 2;
 		numColsToDraw = GamePanel.WIDTH / tileSize + 2;
 		tween = 0.07;

@@ -59,10 +59,12 @@ public class Console {
 		field.draw(g);
 	}
 	
-	public void keyPressed(int k) {
+	public boolean keyPressed(int k) {
 		if(k == 192) open = !open;
-		if(!open) return;
+		if(!open) return false;
 		field.keyPressed(k);
+		return true;
+		//returns whether key was used
 	}
 	
 	public boolean isOpen() {

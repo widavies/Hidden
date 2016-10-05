@@ -31,7 +31,7 @@ public class Chapter extends GameState {
 	
 	@Override
 	public void update() {
-
+		
 		for(int i = 0; i < enemies.size(); i++){
 			if(enemies.get(i).getCollisionBox().intersects(player.getCollisionBox())){
 				gsm.setState(gsm.getState());

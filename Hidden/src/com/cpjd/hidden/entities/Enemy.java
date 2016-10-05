@@ -216,7 +216,7 @@ public class Enemy extends Sprite{
 				
 			}//isBetweenAngles
 		}//sight range
-		
+		/*
 		if(!sighted)
 			finalRotation++;
 		else{
@@ -261,7 +261,7 @@ public class Enemy extends Sprite{
 			heading += 360;
 		if(heading > 360)
 			heading -= 360;
-		
+		*/
 	}
 
 	public void recievePlayerLocationMessage(double playerX, double playerY) {

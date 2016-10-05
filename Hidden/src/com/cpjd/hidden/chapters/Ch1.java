@@ -25,6 +25,6 @@ public class Ch1 extends Chapter {
 		enemies = new LinkedList<Enemy>();
 		enemies.add(new BasicEnemy(tileMap, this));
 		enemies.add(new Tower(tileMap, this));
-		//enemies.add(new Camera(tileMap, 500, 500, 200, Camera.EAST, this));
+		enemies.add(new Camera(tileMap, 10, 0, 270, 160, Camera.WEST, this));
 	}
 }
