@@ -11,12 +11,20 @@ import com.cpjd.hidden.chapters.Ch1;
 import com.cpjd.hidden.gamestates.Menu;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.Console;
+import com.cpjd.hidden.ui.UIListener;
+import com.cpjd.hidden.ui.content.PauseWindow;
+import com.cpjd.hidden.ui.elements.UIButton;
+import com.cpjd.hidden.ui.elements.UICheckbox;
+import com.cpjd.hidden.ui.windows.UIWindow;
+import com.cpjd.tools.Layout;
 import com.cpjd.tools.Usage;
+import com.sun.glass.events.KeyEvent;
 
-public class GameStateManager {
+public class GameStateManager implements UIListener {
 
 	private Console console;
-
+	private PauseWindow pauseWindow;
+	
 	public static final int NUM_GAME_STATES = 2;
 	public static final int INTRO = 0;
 	public static final int CH1 = 1;
@@ -29,9 +37,11 @@ public class GameStateManager {
 
 	private int ticks = 0; // TEMPORARY
 	
+	private AlphaComposite defaultComposite, composite;
+	
 	public GameStateManager() {
 		gameStates = new GameState[NUM_GAME_STATES];
-
+		
 		try {
 			InputStream inStream = getClass().getResourceAsStream("/fonts/USSR STENCIL WEBFONT.ttf");
 			Font rawFont = Font.createFont(Font.TRUETYPE_FONT, inStream);
@@ -44,6 +54,9 @@ public class GameStateManager {
 		loadState(currentState);
 
 		console = new Console(this);
+		
+		composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.20f);
+		defaultComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f);
 	}
 
 	public void setState(int state) {
@@ -64,9 +77,14 @@ public class GameStateManager {
 	}
 	public void update() {
 		console.update();
-		
+	
 		ticks++;
 		if(ticks % 120 == 0 && Console.showMemory) System.out.println(Usage.calcMemory());
+		
+		if(pauseWindow != null) {
+			pauseWindow.update();
+			return;
+		}
 		
 		if(console.isOpen()) return;
 		
@@ -85,12 +103,24 @@ public class GameStateManager {
 			gameStates[currentState].draw(g);
 		}
 		
+		if(pauseWindow != null) {
+			g.setComposite(defaultComposite);
+			pauseWindow.draw(g);
+		}
+		
 		console.draw(g);
 	}
 	
 	public void keyPressed(int k) {
-		if(!console.keyPressed(k))		
-			if(gameStates[currentState] != null) gameStates[currentState].keyPressed(k);
+		if(console.keyPressed(k)) return;
+		
+		if(k == KeyEvent.VK_ESCAPE && currentState > INTRO && pauseWindow == null) {
+			pauseWindow = new PauseWindow();
+			pauseWindow.center((int)(Layout.WIDTH / 4), (int)(Layout.HEIGHT / 2));
+			pauseWindow.addUIListener(this);
+		}
+		
+		if(gameStates[currentState] != null) gameStates[currentState].keyPressed(k);
 	}
 
 	public void keyReleased(int k) {
@@ -100,6 +130,8 @@ public class GameStateManager {
 	}
 
 	public void mousePressed(int x, int y) {
+		if(pauseWindow != null) pauseWindow.mousePressed(x, y);
+		
 		if(gameStates[currentState] != null) gameStates[currentState].mousePressed(x, y);
 	}
 
@@ -108,10 +140,30 @@ public class GameStateManager {
 	}
 
 	public void mouseMoved(int x, int y) {
+		if(pauseWindow != null) pauseWindow.mouseMoved(x, y);
+		
 		if(gameStates[currentState] != null) gameStates[currentState].mouseMoved(x, y);
 	}
 	
 	public void mouseWheelMoved(int k) {
 		if(gameStates[currentState] != null) gameStates[currentState].mouseWheelMoved(k);
+	}
+
+	@Override
+	public void buttonPressed(UIButton button) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void checkBoxPressed(UICheckbox checkBox, boolean checked) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void viewClosed(UIWindow window) {
+		if(window == pauseWindow) pauseWindow = null;
+		
 	}
 }
