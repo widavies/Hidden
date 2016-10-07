@@ -13,6 +13,8 @@ import com.cpjd.hidden.toolbox.MathTools;
 
 public class Enemy extends Sprite{
 
+	public static final int NORTH = 0, WEST = 1, EAST = 2, SOUTH = 3;
+	
 	//position and heading variables (for the current position/heading of the enemy)
 	protected double heading;
 		

@@ -7,6 +7,7 @@ import com.cpjd.hidden.entities.Camera;
 import com.cpjd.hidden.entities.Enemy;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.entities.Tower;
+import com.cpjd.hidden.entities.Tripwire;
 import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.gamestate.GameStateManager;
 
@@ -25,6 +26,7 @@ public class Ch1 extends Chapter {
 		enemies = new LinkedList<Enemy>();
 		enemies.add(new BasicEnemy(tileMap, this));
 		enemies.add(new Tower(tileMap, this));
-		enemies.add(new Camera(tileMap, 10, 0, 270, 160, Camera.WEST, this));
+		enemies.add(new Camera(tileMap, 10, 0, 270, 160, Enemy.WEST, this));
+		enemies.add(new Tripwire(tileMap, this, 1, 5, Enemy.EAST, 2));
 	}
 }

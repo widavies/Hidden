@@ -7,8 +7,6 @@ import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.map.TileMap;
 
 public class Camera extends Enemy {
-
-	public static final int NORTH = 0, WEST = 1, EAST = 2, SOUTH = 3;
 	
 	private int facing;
 	private int tileX, tileY;
