@@ -12,25 +12,27 @@ import com.cpjd.tools.Layout;
 
 public abstract class UIWindow extends View implements UIListener {
 	
+	protected int animationSpeed;
 	protected int ext;
-	private boolean hover;
+	protected boolean hover;
 	protected boolean closing;
 	
 	private double orgWidth, orgHeight;
 	
-	private ArrayList<UIButton> buttons;
+	protected ArrayList<UIButton> buttons;
 	
 	public UIWindow() {
 		super();	
 		
 		ext = 100;
+		animationSpeed = 5;
 		
 		buttons = new ArrayList<UIButton>();
 	}
 	
 	public void update() {
-		if(!closing) ext-=5;
-		if(closing) ext+=5;
+		if(!closing) ext-=animationSpeed;
+		if(closing) ext+=animationSpeed;
 		if(ext < 0) ext = 0;
 		if(ext >= 100) listener.viewClosed(this);
 		
@@ -63,12 +65,14 @@ public abstract class UIWindow extends View implements UIListener {
 		}
 	}
 	
-	public void addButton(String text, int x, int y) {
+	public void addButton(String text, int x, int y, int hoverWidth, boolean hiddenUntilOpen) {
 		UIButton button = new UIButton(text);
 		button.setOriginalLocation(x, y);
 		button.setColorMode(UIButton.BLACK_TEXT);
 		button.addUIListener(this);
+		button.setHoverWidth(hoverWidth);
 		buttons.add(button);
+		button.setVisible(!hiddenUntilOpen);
 	}
 	
 	public void mouseMoved(int x, int y) {
@@ -97,7 +101,9 @@ public abstract class UIWindow extends View implements UIListener {
 		orgWidth = Layout.WIDTH / width;
 		orgHeight = Layout.HEIGHT / height;
 	}
-	
+	public void setAnimationSpeed(int speed) {
+		this.animationSpeed = speed;
+	}
 	private boolean intersects(int mousex, int mousey) {
 		return mousex >= this.x + ext + width - 50 && mousex <= this.x + ext + width - 50 + 40 && mousey >= this.y + ext + 10 && mousey <= this.y + ext + 10 + 40;
 	}

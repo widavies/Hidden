@@ -10,7 +10,7 @@ import com.cpjd.hidden.ui.View;
 public class UIButton extends View {
 	
 	// Constants
-	private static final int HOVER_WIDTH = 400; // The width of the hovering highlights
+	private int HOVER_WIDTH; // The width of the hovering highlights
 	public static final int WHITE_TEXT = 0;
 	public static final int BLACK_TEXT = 1;
 	
@@ -29,6 +29,7 @@ public class UIButton extends View {
 		this.text = text;
 		
 		colorMode = WHITE_TEXT;
+		HOVER_WIDTH = 400;
 		
 		visible = true;
 	}
@@ -36,7 +37,12 @@ public class UIButton extends View {
 	public void setText(String text) {
 		this.text = text;
 	}
-	
+	public void setHoverWidth(int width) {
+		this.HOVER_WIDTH = width;
+	}
+	public int getHoverWidth() {
+		return HOVER_WIDTH;
+	}
 	public void draw(Graphics2D g) {
 		if(!visible) return;
 		

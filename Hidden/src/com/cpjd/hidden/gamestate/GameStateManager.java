@@ -26,7 +26,7 @@ public class GameStateManager implements UIListener {
 	private PauseWindow pauseWindow;
 	
 	public static final int NUM_GAME_STATES = 2;
-	public static final int INTRO = 0;
+	public static final int MENU = 0;
 	public static final int CH1 = 1;
 
 	private GameState[] gameStates;
@@ -36,8 +36,6 @@ public class GameStateManager implements UIListener {
 	public static Font font;
 
 	private int ticks = 0; // TEMPORARY
-	
-	private AlphaComposite defaultComposite, composite;
 	
 	public GameStateManager() {
 		gameStates = new GameState[NUM_GAME_STATES];
@@ -50,13 +48,10 @@ public class GameStateManager implements UIListener {
 			e.printStackTrace();
 		}
 
-		currentState = INTRO;
+		currentState = MENU;
 		loadState(currentState);
 
 		console = new Console(this);
-		
-		composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.20f);
-		defaultComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f);
 	}
 
 	public void setState(int state) {
@@ -66,7 +61,7 @@ public class GameStateManager implements UIListener {
 	}
 
 	private void loadState(int state) {
-		if(state == INTRO) gameStates[state] = new Menu(this);
+		if(state == MENU) gameStates[state] = new Menu(this);
 		if(state == CH1) gameStates[state] = new Ch1(this);
 	}
 	private void unloadState(int state) {
@@ -92,20 +87,17 @@ public class GameStateManager implements UIListener {
 	}
 
 	public void draw(Graphics2D g) {
-		// Enable anti-aliasing
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		g.setFont(font);
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		
-		if(gameStates[currentState] != null) {
-			gameStates[currentState].draw(g);
-		}
-		
+		if(pauseWindow != null) g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.15f));
+		if(gameStates[currentState] != null) gameStates[currentState].draw(g);
 		if(pauseWindow != null) {
-			g.setComposite(defaultComposite);
 			pauseWindow.draw(g);
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 		}
 		
 		console.draw(g);
@@ -114,9 +106,9 @@ public class GameStateManager implements UIListener {
 	public void keyPressed(int k) {
 		if(console.keyPressed(k)) return;
 		
-		if(k == KeyEvent.VK_ESCAPE && currentState > INTRO && pauseWindow == null) {
-			pauseWindow = new PauseWindow();
-			pauseWindow.center((int)(Layout.WIDTH / 4), (int)(Layout.HEIGHT / 2));
+		if(k == KeyEvent.VK_ESCAPE && currentState > MENU && pauseWindow == null) {
+			pauseWindow = new PauseWindow(this);
+			pauseWindow.center((int)(Layout.WIDTH / 4), (int)(Layout.HEIGHT / 4.5));
 			pauseWindow.addUIListener(this);
 		}
 		
