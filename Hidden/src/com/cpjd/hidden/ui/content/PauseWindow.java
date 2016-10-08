@@ -76,7 +76,7 @@ public class PauseWindow extends UIWindow {
 			optionsWindow = new OptionsWindow();
 			optionsWindow.center((int)(Layout.WIDTH / 1.5), (int)(Layout.HEIGHT / 1.5));
 			optionsWindow.addUIListener(this);
-			optionsWindow.setAnimationSpeed(10);
+			optionsWindow.setAnimationSpeed(12);
 		}
 	}
 	

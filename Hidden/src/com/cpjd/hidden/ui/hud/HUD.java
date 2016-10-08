@@ -147,12 +147,12 @@ public class HUD {
 	private void drawInventory(Graphics2D g) {
 		// Player stats
 		g.setColor(Color.WHITE);
-		g.fillRect(Layout.centerw(450) - 200, Layout.centerh(450), 200, 300);
+		g.fillRect(Layout.centerw(450) - 250, Layout.centerh(450), 250, 90 * 4);
 		g.setColor(Color.DARK_GRAY);
-		g.fillRect(Layout.centerw(450) - 200, Layout.centerh(450), 200 - 64, 175);
+		g.fillRect(Layout.centerw(450) - 250, Layout.centerh(450), 250 - 120, 175);
 		for (int i = 0; i < 4; i++) {
 			g.setColor(Color.BLACK);
-			g.drawRect(Layout.centerw(450) - 64, Layout.centerh(450) + (i * 64), 64, 64);
+			g.drawRect(Layout.centerw(450) - 90, Layout.centerh(450) + (i * 90), 90, 90);
 		}
 
 		// Inventory
@@ -160,7 +160,7 @@ public class HUD {
 		g.fillRect(Layout.centerw(450), Layout.centerh(450), 450, 450);
 		g.setColor(Color.BLACK);
 		g.drawRect(Layout.centerw(450), Layout.centerh(450), 450, 450);
-		g.drawRect(Layout.centerw(450) - 200, Layout.centerh(450), 200, 300);
+		g.drawRect(Layout.centerw(450) - 250, Layout.centerh(450), 250, 90 * 4);
 		// Inventory slots
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {

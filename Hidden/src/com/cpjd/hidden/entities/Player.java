@@ -14,8 +14,6 @@ import com.cpjd.tools.Animation;
 
 public class Player extends Sprite {
 
-	private final int SCALE = 3;
-	
 	// Animation
 	private static final int IDLE = 0;
 	private static final int WALKING = 1;
@@ -27,10 +25,10 @@ public class Player extends Sprite {
 	public Player(TileMap tm) {
 		super(tm);
 		
-		width = 32 * SCALE;
-		height = 32 * SCALE;
-		cwidth = 32 * SCALE;
-		cheight = 32 * SCALE;
+		width = 32;
+		height = 32;
+		cwidth = 32;
+		cheight = 32;;
 		maxSpeed = 3;
 		
 		moveSpeed = 0.9;
@@ -57,7 +55,7 @@ public class Player extends Sprite {
 			BufferedImage[] bi = new BufferedImage[numFrames[i]];
 
 			for (int j = 0; j < numFrames[i]; j++) {
-				bi[j] = spritesheet.getSubimage(j * 32, i * 32, 32, 32);
+				bi[j] = spritesheet.getSubimage(j * width, i * height, width, height);
 			}
 			sprites.add(bi);
 		}

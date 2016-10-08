@@ -85,7 +85,9 @@ public class GameStateManager implements UIListener {
 		
 		if(gameStates[currentState] != null) gameStates[currentState].update();
 	}
-
+	public boolean isPaused() {
+		return pauseWindow != null;
+	}
 	public void draw(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
