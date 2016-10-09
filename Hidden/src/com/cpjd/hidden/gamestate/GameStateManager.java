@@ -39,7 +39,6 @@ public class GameStateManager implements UIListener {
 	
 	public GameStateManager() {
 		gameStates = new GameState[NUM_GAME_STATES];
-		
 		try {
 			InputStream inStream = getClass().getResourceAsStream("/fonts/USSR STENCIL WEBFONT.ttf");
 			Font rawFont = Font.createFont(Font.TRUETYPE_FONT, inStream);

@@ -16,7 +16,7 @@ public class Camera extends Enemy {
 	private int camWidth = 5, camLength = 20;
 	
 	public Camera(TileMap tm, int xTile, int yTile, int heading, int fov, int facing, Chapter chapter) {
-		super(tm, xTile * TileMap.tileSize, yTile * TileMap.tileSize, fov, chapter);
+		super(tm, xTile * tm.getTileSize(), yTile * tm.getTileSize(), fov, chapter);
 		
 		this.facing = facing;
 		this.tileX = xTile;

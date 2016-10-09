@@ -17,7 +17,7 @@ import com.cpjd.hidden.toolbox.pathfind.Node;
 
 public class TileMap {
 	
-	public static int tileSize = 64;
+	private int tileSize;
 	
 	private double x;
 	private double y;
@@ -46,8 +46,8 @@ public class TileMap {
 	private int numColsToDraw;
 	
 	public TileMap(int tileSize) {
-		TileMap.tileSize = tileSize;
-		numRowsToDraw = GamePanel.HEIGHT / tileSize + 2;
+		this.tileSize =  tileSize;
+		numRowsToDraw = GamePanel.HEIGHT  / tileSize + 2;
 		numColsToDraw = GamePanel.WIDTH / tileSize + 2;
 		tween = 0.07;
 
@@ -169,7 +169,7 @@ public class TileMap {
 
 		colOffset = (int)-this.x / tileSize;
 		rowOffset = (int)-this.y / tileSize;
-		
+		System.out.println(xmax);
 	}
 	
 	private void fixBounds() {

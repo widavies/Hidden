@@ -27,11 +27,11 @@ public class Player extends Sprite {
 		
 		width = 32;
 		height = 32;
-		cwidth = 32;
-		cheight = 32;;
-		maxSpeed = 3;
+		cwidth = 16;
+		cheight = 16;
+		maxSpeed = 1;
 		
-		moveSpeed = 0.9;
+		moveSpeed = 0.3;
 		
 		try {
 			loadAnimation();
@@ -107,8 +107,7 @@ public class Player extends Sprite {
 		else if(left) rotation = calculateRotation(animation.getImage(), 90);
 		else if(right) rotation = calculateRotation(animation.getImage(), -90);
 		else if(up) rotation = calculateRotation(animation.getImage(), 180);
-		else if(down) rotation = calculateRotation(animation.getImage(), 0);
-		
+		else if(down) rotation = calculateRotation(animation.getImage(), 0);	
 	}
 	
 	public void keyPressed(int k) {
@@ -119,7 +118,7 @@ public class Player extends Sprite {
 	}
 	public void keyReleased(int k) {
 		if(k == KeyEvent.VK_W) up = false;
-		if(k == KeyEvent.VK_A) left = false;		
+		if(k == KeyEvent.VK_A) left = false;
 		if(k == KeyEvent.VK_S) down = false;
 		if(k == KeyEvent.VK_D) right = false;
 	}
