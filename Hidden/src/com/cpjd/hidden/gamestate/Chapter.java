@@ -22,17 +22,10 @@ public class Chapter extends GameState {
 	
 	private Rectangle winBox = new Rectangle(19 * 64 - 10, 21 * 64 - 10, 64 + 10, 64 + 10);
 	
-	// Scaled, game play drawing
-	public static final int SCALE = 4;
-	private BufferedImage gameImage;
-	private Graphics2D gameGraphics; // Game graphics should be drawn to gameGraphics.draw() instead of g.draw()
-	
 	public Chapter(GameStateManager gsm) {
 		super(gsm);
-		gameImage = new BufferedImage(Layout.WIDTH, Layout.HEIGHT, BufferedImage.TYPE_INT_RGB);
-		gameGraphics = (Graphics2D) gameImage.getGraphics();
 		
-		tileMap = new TileMap(16);
+		tileMap = new TileMap(64);
 		tileMap.setTween(0.07);
 		
 		hud = new HUD();
@@ -57,6 +50,7 @@ public class Chapter extends GameState {
 		if(hud.isInventoryOpen()) return;
 		player.update();
 		tileMap.setPosition((GamePanel.WIDTH / 2) - player.getX(), (GamePanel.HEIGHT / 2) - player.getY());
+
 		
 		player.setMapPosition();
 		
@@ -71,21 +65,18 @@ public class Chapter extends GameState {
 	@Override
 	public void draw(Graphics2D g) {
 		
-		tileMap.draw(gameGraphics);
+		tileMap.draw(g);
 		
 		for(int i = 0; i < enemies.size(); i++){
-			enemies.get(i).drawSightArc(gameGraphics);
+			//enemies.get(i).drawSightArc(g);
 		}
 		for(int i = 0; i < enemies.size(); i++){
-			enemies.get(i).draw(gameGraphics);
+			//enemies.get(i).draw(g);
 		}
-		player.draw(gameGraphics);
+		player.draw(g);
 		
 		if(enemies.size() > 0 && enemies.get(0) != null)
-			enemies.get(0).drawOverlays(gameGraphics, player.getX(), player.getY());
-		
-		// Draw the gameplay image to the screen
-		g.drawImage(gameImage, 0, 0, gameImage.getWidth() * SCALE, gameImage.getHeight() * SCALE, null);
+			//enemies.get(0).drawOverlays(g, player.getX(), player.getY());
 		
 		if(!gsm.isPaused()) hud.draw(g);
 	}

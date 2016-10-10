@@ -21,7 +21,9 @@ public class CreditsWindow extends UIWindow {
 			"AI and Gameplay - Alex H.#30",
 			"Level Design and Artwork - Daniel P.#30",
 			"",
-			""
+			"",
+			"Artwork#30",
+			"Tileset Art - Thomas Bruno, http://opengameart.org/content/1950s-scifi-setting-indoor-tileset-with-kitchen-appliances"
 	};
 	
 	public CreditsWindow() {

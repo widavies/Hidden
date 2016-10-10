@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.MathTools;
 import com.cpjd.hidden.toolbox.pathfind.Node;
@@ -164,12 +165,11 @@ public class TileMap {
 	public void setPosition(double x, double y) {
 		this.x += (x - this.x) * tween;
 		this.y += (y - this.y) * tween;
-		
 		fixBounds();
 
 		colOffset = (int)-this.x / tileSize;
 		rowOffset = (int)-this.y / tileSize;
-		System.out.println(xmax);
+		
 	}
 	
 	private void fixBounds() {
@@ -177,7 +177,6 @@ public class TileMap {
 		if(x > xmax) x = xmax;
 		if(y < ymin) y = ymin;
 		if(y > ymax) y = ymax;
-		
 	}
 	
 	public void draw(Graphics2D g) {
