@@ -82,19 +82,18 @@ public class Chapter extends GameState {
 		player.draw(gameGraphics);
 		
 		for(int i = 0; i < enemies.size(); i++){
-			//enemies.get(i).drawSightArc(g);
+			//enemies.get(i).drawSightArc(gameGraphics);
 		}
 		for(int i = 0; i < enemies.size(); i++){
-			//enemies.get(i).draw(g);
+			enemies.get(i).draw(gameGraphics);
 		}
 
 		if(enemies.size() > 0 && enemies.get(0) != null)
-			//enemies.get(0).drawOverlays(g, player.getX(), player.getY());
-		
-		if(!gsm.isPaused()) hud.draw(g);
+			enemies.get(0).drawOverlays(gameGraphics, player.getX(), player.getY());
 		
 		g.drawImage(gameImage, 0, 0, gameImage.getWidth() * SCALE, gameImage.getHeight() * SCALE, null);
 
+		if(!gsm.isPaused()) hud.draw(g);
 		
 	}
 

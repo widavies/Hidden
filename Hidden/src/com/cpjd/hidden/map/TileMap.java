@@ -98,9 +98,9 @@ public class TileMap {
 				br.readLine();
 			}
 			
-			xmin = GamePanel.WIDTH - width * 4;
+			xmin = GamePanel.WIDTH - width * Chapter.SCALE;
 			xmax = 0;
-			ymin = GamePanel.HEIGHT - height * 4;
+			ymin = GamePanel.HEIGHT - height * Chapter.SCALE;
 			ymax = 0;
 			
 			String delims = ",";
@@ -164,12 +164,11 @@ public class TileMap {
 	}
 	
 	public void setPosition(double x, double y) {
+		this.x += (x - (Layout.HEIGHT / 1.6) - this.x) * tween;
 
-		this.x += (x - (Layout.WIDTH / 2.6) - this.x) * tween;
 		this.y += (y - (Layout.HEIGHT / 2.6) - this.y) * tween;
 
 		fixBounds();
-		
 		colOffset = (int)-this.x / tileSize;
 		rowOffset = (int)-this.y / tileSize;
 	}
