@@ -8,10 +8,10 @@ import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.map.TileMap;
 import com.cpjd.hidden.toolbox.MathTools;
 
-public class Tower extends Enemy{
+public class Tower extends EnemyWithSight{
 
-	public Tower(TileMap tm, Chapter ch) {
-		super(tm, 20 * 64, 5 * 64, 160, ch);
+	public Tower(TileMap tm, int xTile, int yTile, int fov, Chapter ch) {
+		super(tm, xTile * tileSize, yTile * tileSize, fov, ch);
 	}
 
 	@Override
@@ -128,6 +128,7 @@ public class Tower extends Enemy{
 	@Override
 	public void draw(Graphics2D g){
 		super.draw(g, Color.blue);
+		super.draw(g);
 	}
 	
 }

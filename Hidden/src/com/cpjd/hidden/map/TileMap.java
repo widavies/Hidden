@@ -19,7 +19,7 @@ import com.cpjd.tools.Layout;
 
 public class TileMap {
 	
-	private int tileSize;
+	public static int tileSize;
 	
 	private double x;
 	private double y;

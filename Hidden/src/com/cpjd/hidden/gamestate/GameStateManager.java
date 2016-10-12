@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.KeyEvent;
 import java.io.InputStream;
 
 import com.cpjd.hidden.chapters.Ch1;
@@ -18,7 +19,6 @@ import com.cpjd.hidden.ui.elements.UICheckbox;
 import com.cpjd.hidden.ui.windows.UIWindow;
 import com.cpjd.tools.Layout;
 import com.cpjd.tools.Usage;
-import com.sun.glass.events.KeyEvent;
 
 public class GameStateManager implements UIListener {
 
