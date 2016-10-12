@@ -15,6 +15,7 @@ import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.MathTools;
 import com.cpjd.hidden.toolbox.pathfind.Node;
+import com.cpjd.tools.Layout;
 
 public class TileMap {
 	
@@ -97,9 +98,9 @@ public class TileMap {
 				br.readLine();
 			}
 			
-			xmin = GamePanel.WIDTH - width;
+			xmin = GamePanel.WIDTH - width * 4;
 			xmax = 0;
-			ymin = GamePanel.HEIGHT - height;
+			ymin = GamePanel.HEIGHT - height * 4;
 			ymax = 0;
 			
 			String delims = ",";
@@ -163,13 +164,14 @@ public class TileMap {
 	}
 	
 	public void setPosition(double x, double y) {
-		this.x += (x - this.x) * tween;
-		this.y += (y - this.y) * tween;
-		fixBounds();
 
+		this.x += (x - (Layout.WIDTH / 2.6) - this.x) * tween;
+		this.y += (y - (Layout.HEIGHT / 2.6) - this.y) * tween;
+
+		fixBounds();
+		
 		colOffset = (int)-this.x / tileSize;
 		rowOffset = (int)-this.y / tileSize;
-		
 	}
 	
 	private void fixBounds() {

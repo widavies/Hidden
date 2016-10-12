@@ -27,9 +27,9 @@ public class Player extends Sprite {
 		
 		width = 32;
 		height = 32;
-		cwidth = 32;
-		cheight = 32;
-		maxSpeed = 2;
+		cwidth = 16;
+		cheight = 16;
+		maxSpeed = 0.8;
 		
 		moveSpeed = 0.3;
 		
@@ -63,7 +63,7 @@ public class Player extends Sprite {
 	
 	@Override
 	public void draw(Graphics2D g) {
-		g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), width * 3, height * 3, null);
+		g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), null);
 	}
 	
 	private BufferedImage calculateRotation(BufferedImage toRotate, int degrees) {

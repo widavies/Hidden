@@ -1,5 +1,6 @@
 package com.cpjd.hidden.gamestate;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -22,13 +23,21 @@ public class Chapter extends GameState {
 	
 	private Rectangle winBox = new Rectangle(19 * 64 - 10, 21 * 64 - 10, 64 + 10, 64 + 10);
 	
+	// Scaling gameplay drawing
+	public static final int SCALE = 4;
+	private Graphics2D gameGraphics;
+	private BufferedImage gameImage;
+	
 	public Chapter(GameStateManager gsm) {
 		super(gsm);
 		
-		tileMap = new TileMap(64);
+		tileMap = new TileMap(16);
 		tileMap.setTween(0.07);
 		
 		hud = new HUD();
+		
+		gameImage = new BufferedImage(Layout.WIDTH, Layout.HEIGHT, BufferedImage.TYPE_INT_RGB);
+		gameGraphics = (Graphics2D) gameImage.getGraphics();
 	}
 	
 	@Override
@@ -65,7 +74,12 @@ public class Chapter extends GameState {
 	@Override
 	public void draw(Graphics2D g) {
 		
-		tileMap.draw(g);
+		gameGraphics.setColor(Color.BLACK);
+		gameGraphics.fillRect(0, 0, gameImage.getWidth(), gameImage.getHeight());
+		
+		tileMap.draw(gameGraphics);
+		
+		player.draw(gameGraphics);
 		
 		for(int i = 0; i < enemies.size(); i++){
 			//enemies.get(i).drawSightArc(g);
@@ -73,12 +87,15 @@ public class Chapter extends GameState {
 		for(int i = 0; i < enemies.size(); i++){
 			//enemies.get(i).draw(g);
 		}
-		player.draw(g);
-		
+
 		if(enemies.size() > 0 && enemies.get(0) != null)
 			//enemies.get(0).drawOverlays(g, player.getX(), player.getY());
 		
 		if(!gsm.isPaused()) hud.draw(g);
+		
+		g.drawImage(gameImage, 0, 0, gameImage.getWidth() * SCALE, gameImage.getHeight() * SCALE, null);
+
+		
 	}
 
 	@Override
