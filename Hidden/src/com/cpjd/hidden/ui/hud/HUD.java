@@ -217,17 +217,17 @@ public class HUD {
 			font = font.deriveFont(20f);
 			g.setFont(font);
 			g.setColor(Color.WHITE);
-			g.fillRect(Layout.centerw(450) + (i * 90), GamePanel.HEIGHT - 90, 90, 90);
+			g.fillRect(Layout.centerw(450) + (i * 90), Layout.HEIGHT - 90, 90, 90);
 			g.setColor(Color.BLACK);
 			if(i == selected) {
 				g.setStroke(new BasicStroke(6));
-				g.drawRect(Layout.centerw(450) + (i * 90 + 2), GamePanel.HEIGHT - 88, 86, 86);
+				g.drawRect(Layout.centerw(450) + (i * 90 + 2), Layout.HEIGHT - 88, 86, 86);
 			} else {
 				g.setStroke(new BasicStroke(1));
-				g.drawRect(Layout.centerw(450) + (i * 90), GamePanel.HEIGHT - 90, 90, 90);
+				g.drawRect(Layout.centerw(450) + (i * 90), Layout.HEIGHT - 90, 90, 90);
 			}
 
-			g.drawString("" + (i + 1), Layout.centerw(256) + (i * 90) - 90, GamePanel.HEIGHT - 90 + 20);
+			g.drawString("" + (i + 1), Layout.centerw(256) + (i * 90) - 90, Layout.HEIGHT - 90 + 20);
 			g.setStroke(new BasicStroke(1));
 		}
 		
@@ -235,7 +235,7 @@ public class HUD {
 		for(int i = 0; i < 5; i++) {
 			Item item = inventory.getItem(i, 5);
 			if(item != null) {
-				g.drawImage(item.image, Layout.centerw(450) + (i * 90) - (bulges[i][5] / 2), GamePanel.HEIGHT - 88 - (bulges[i][5] / 2), item.image.getWidth() + bulges[i][5], item.image.getHeight() + bulges[i][5], null);
+				g.drawImage(item.image, Layout.centerw(450) + (i * 90) - (bulges[i][5] / 2), Layout.HEIGHT - 88 - (bulges[i][5] / 2), item.image.getWidth() + bulges[i][5], item.image.getHeight() + bulges[i][5], null);
 			}
 		}
 		
@@ -244,12 +244,12 @@ public class HUD {
 	private void drawEffects(Graphics2D g) {
 		for(int i = 0; i < effects.size(); i++) {
 			g.setColor(Color.WHITE);
-			g.fillRect(GamePanel.WIDTH - ((i + 1) * 100), 10, 90, 90);
+			g.fillRect(Layout.WIDTH - ((i + 1) * 100), 10, 90, 90);
 			g.setColor(Color.BLACK);
-			g.drawRect(GamePanel.WIDTH - ((i + 1) * 100), 10, 90, 90);
+			g.drawRect(Layout.WIDTH - ((i + 1) * 100), 10, 90, 90);
 			g.setColor(Color.BLACK);
 			double percent = effects.get(i).duration / effects.get(i).maxDuration;
-			g.fillRect(GamePanel.WIDTH - ((i + 1) * 100) + 1, (int)(10 + (90 - (percent * 90))) + 1, 89, (int)(percent * 90));
+			g.fillRect(Layout.WIDTH - ((i + 1) * 100) + 1, (int)(10 + (90 - (percent * 90))) + 1, 89, (int)(percent * 90));
 		}
 	}
 	

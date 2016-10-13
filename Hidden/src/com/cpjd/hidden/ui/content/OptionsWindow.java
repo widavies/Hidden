@@ -31,7 +31,6 @@ public class OptionsWindow extends UIWindow {
 	@Override
 	public void update() {
 		super.update();
-		
 		fullscreen.setLocation(Layout.alignPoints(1, x + ext, x + ext + width), Layout.alignPoints(15, y + ext, y + ext + height));
 	}
 	
@@ -107,5 +106,4 @@ public class OptionsWindow extends UIWindow {
 	public void checkBoxPressed(UICheckbox checkBox, boolean checked) {
 		Game.setFullscreen(checked);
 	}
-	
 }

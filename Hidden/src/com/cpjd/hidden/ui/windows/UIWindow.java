@@ -35,7 +35,7 @@ public abstract class UIWindow extends View implements UIListener {
 		if(closing) ext+=animationSpeed;
 		if(ext < 0) ext = 0;
 		if(ext >= 100) listener.viewClosed(this);
-		
+
 		for(int i = 0; i < buttons.size(); i++) {
 			buttons.get(i).setLocation(this.x + buttons.get(i).getOriginalX() + ext, this.y + buttons.get(i).getOriginalY() + ext);
 			if(closing && ext >= 50) {
@@ -107,7 +107,6 @@ public abstract class UIWindow extends View implements UIListener {
 	private boolean intersects(int mousex, int mousey) {
 		return mousex >= this.x + ext + width - 50 && mousex <= this.x + ext + width - 50 + 40 && mousey >= this.y + ext + 10 && mousey <= this.y + ext + 10 + 40;
 	}
-
 	@Override
 	public void buttonPressed(UIButton button) {}
 	@Override

@@ -1,8 +1,6 @@
 package com.cpjd.hidden.main;
 
 import java.awt.Dimension;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;
@@ -14,7 +12,6 @@ import javax.swing.UIManager;
 public class Game {
 	
 	public static JFrame frame;
-	private static GraphicsDevice d;
 	private static GamePanel game;
 	
 	public static void main(String[] args) {
@@ -36,11 +33,11 @@ public class Game {
 		
 		frame.setLayout(null);
 		frame.setContentPane(game);
+
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame.setLocationRelativeTo(null);
 		frame.setLocation(new Point(2100, 50));
-		
 		frame.addComponentListener(new ComponentListener() {
 			public void componentResized(ComponentEvent e) {
 				game.resizeGame(frame.getContentPane().getWidth(), frame.getContentPane().getHeight());
@@ -56,10 +53,6 @@ public class Game {
 		//frame.setIconImage(new ImageIcon(Game.class.getResource("/CPJD/small-illuminati.png")).getImage());
 				
 		frame.setVisible(true);
-		
-
-		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		d = env.getDefaultScreenDevice();
 	}
 	
 	public static void setFullscreen(boolean fullscreen) {

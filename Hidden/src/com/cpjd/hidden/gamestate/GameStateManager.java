@@ -4,7 +4,7 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
 import com.cpjd.hidden.chapters.Ch1;
@@ -37,7 +37,13 @@ public class GameStateManager implements UIListener {
 
 	private int ticks = 0; // TEMPORARY
 	
+	Graphics2D g2;
+	BufferedImage image;
+	
 	public GameStateManager() {
+		image = new BufferedImage(GamePanel.WIDTH,GamePanel.HEIGHT,BufferedImage.TYPE_INT_RGB);
+		g2 = (Graphics2D) image.getGraphics();
+		
 		gameStates = new GameState[NUM_GAME_STATES];
 		try {
 			InputStream inStream = getClass().getResourceAsStream("/fonts/USSR STENCIL WEBFONT.ttf");
@@ -47,7 +53,7 @@ public class GameStateManager implements UIListener {
 			e.printStackTrace();
 		}
 
-		currentState = MENU;
+		currentState = CH1;
 		loadState(currentState);
 
 		console = new Console(this);
@@ -88,22 +94,22 @@ public class GameStateManager implements UIListener {
 		return pauseWindow != null;
 	}
 	public void draw(Graphics2D g) {
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
 		g.setFont(font);
 		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
+		g.fillRect(0, 0, Layout.WIDTH, Layout.HEIGHT);
+		
+		g2.setFont(font);
+		g2.setColor(Color.BLACK);
+		g2.fillRect(0, 0, Layout.WIDTH, Layout.HEIGHT);
 		
 		if(pauseWindow != null) g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.15f));
-		if(gameStates[currentState] != null) gameStates[currentState].draw(g);
-		if(pauseWindow != null) {
-			pauseWindow.draw(g);
-			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-		}
-		
+		if(gameStates[currentState] != null) gameStates[currentState].draw(g2);
+		if(currentState >= CH1) g.drawImage(image, 0, 0,GamePanel.WIDTH * GamePanel.SCALE, GamePanel.HEIGHT * GamePanel.SCALE, null);
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+		if(gameStates[currentState] != null) gameStates[currentState].drawGUI(g);
+		if(pauseWindow != null) pauseWindow.draw(g);
 		console.draw(g);
 	}
-	
 	public void keyPressed(int k) {
 		if(console.keyPressed(k)) return;
 		

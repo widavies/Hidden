@@ -11,11 +11,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.MathTools;
 import com.cpjd.hidden.toolbox.pathfind.Node;
-import com.cpjd.tools.Layout;
 
 public class TileMap {
 	
@@ -49,8 +47,8 @@ public class TileMap {
 	
 	public TileMap(int tileSize) {
 		this.tileSize =  tileSize;
-		numRowsToDraw = GamePanel.HEIGHT  / tileSize + 2;
-		numColsToDraw = GamePanel.WIDTH / tileSize + 2;
+		numRowsToDraw = (GamePanel.HEIGHT )  / tileSize + 2;
+		numColsToDraw = (GamePanel.WIDTH ) / tileSize + 2;
 		tween = 0.07;
 
 	}
@@ -98,9 +96,9 @@ public class TileMap {
 				br.readLine();
 			}
 			
-			xmin = GamePanel.WIDTH - width * Chapter.SCALE;
+			xmin = (GamePanel.WIDTH ) - width;
 			xmax = 0;
-			ymin = GamePanel.HEIGHT - height * Chapter.SCALE;
+			ymin = (GamePanel.HEIGHT ) - height;
 			ymax = 0;
 			
 			String delims = ",";
@@ -164,16 +162,21 @@ public class TileMap {
 	}
 	
 	public void setPosition(double x, double y) {
-		this.x += (x - (Layout.HEIGHT / 1.6) - this.x) * tween;
-
-		this.y += (y - (Layout.HEIGHT / 2.6) - this.y) * tween;
+		this.x += (x - this.x) * tween;
+		this.y += (y - this.y) * tween;
 
 		fixBounds();
+		
 		colOffset = (int)-this.x / tileSize;
 		rowOffset = (int)-this.y / tileSize;
 	}
 	
 	private void fixBounds() {
+		xmin = GamePanel.WIDTH - width;
+		ymin = GamePanel.HEIGHT - height;
+		numRowsToDraw = GamePanel.HEIGHT  * 4/ tileSize + 2;
+		numColsToDraw = GamePanel.WIDTH * 4 / tileSize + 2;
+		
 		if(x < xmin) x = xmin;
 		if(x > xmax) x = xmax;
 		if(y < ymin) y = ymin;

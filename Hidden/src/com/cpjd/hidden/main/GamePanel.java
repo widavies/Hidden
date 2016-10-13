@@ -22,9 +22,10 @@ import com.cpjd.tools.Layout;
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 	
 	// Size
-	public static int WIDTH = 1600;
-	public static int HEIGHT = 900;
-	
+	public static int SCALE = 4; // Applied to game only - not interface or hud
+	public static int WIDTH = 1600 / SCALE;
+	public static int HEIGHT = 900 / SCALE;
+
 	// Thread
 	private Thread thread;
 	private volatile boolean running;
@@ -34,19 +35,18 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	// Image
 	private BufferedImage image;
 	private Graphics2D g;
-
+	
 	// Game State Manager
 	private GameStateManager gsm;  
 	
-	//FPS
+	//FP
 	public static int ticks = 0;
-	private long lastSec;
+
 	
 	public GamePanel() {
-		setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
 		setFocusable(true);
 		requestFocus();
-		lastSec = System.nanoTime();
 		
 		Toolkit.getDefaultToolkit().setDynamicLayout(false); 
 	}
@@ -65,16 +65,16 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	}
 	
 	public void init() {
-		image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
+		Layout.WIDTH = WIDTH / SCALE;
+		Layout.HEIGHT = HEIGHT / SCALE;
 		
+		image = new BufferedImage(Layout.WIDTH,Layout.HEIGHT ,BufferedImage.TYPE_INT_RGB);
+
 		g = (Graphics2D) image.getGraphics();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
+
 		running = true;
-		
-		Layout.WIDTH = WIDTH;
-		Layout.HEIGHT = HEIGHT;
-		
+
 		gsm = new GameStateManager();
 	}
 	
@@ -119,26 +119,27 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	
 	private void draw() {
 		gsm.draw(g);
-		
+
 		Toolkit.getDefaultToolkit().sync();
 	}
 	
-	private void drawToScreen() {
+	public void drawToScreen() {
 		Graphics g2 = getGraphics();
 		if(g2 == null) return;
-		
-		g2.drawImage(image, 0, 0, WIDTH, HEIGHT, null);
+		g2.drawImage(image, 0, 0, Layout.WIDTH, Layout.HEIGHT, null);
 		g2.dispose();
+		//System.out.println(WIDTH * SCALE);
+		//g2.drawImage(GUIImage, 0, 0, WIDTH, HEIGHT, null);
 	}
 
 	// Resizes the window
 	public void resizeGame(int width, int height) {
-		WIDTH = width; HEIGHT = height;
+		WIDTH = width / SCALE; HEIGHT = height / SCALE;
 		
-		Layout.WIDTH = WIDTH;
-		Layout.HEIGHT = HEIGHT;
+		Layout.WIDTH = width;
+		Layout.HEIGHT = height;
 		
-		image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
+		image = new BufferedImage(Layout.WIDTH,Layout.HEIGHT,BufferedImage.TYPE_INT_RGB);
 		
 		g = (Graphics2D) image.getGraphics();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

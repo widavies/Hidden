@@ -47,7 +47,7 @@ public class PauseWindow extends UIWindow {
 	@Override
 	public void update() {
 		super.update();
-	
+		
 		for(int i = 0; i < buttons.size(); i++) {
 			if(ext <= 0) buttons.get(i).setVisible(true);
 		}

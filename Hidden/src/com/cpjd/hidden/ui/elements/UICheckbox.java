@@ -97,6 +97,4 @@ public class UICheckbox extends View {
 	private boolean intersects(int mousex, int mousey) {
 		return mousex >= x && mousex <= x + 25 && mousey >= y && mousey <= y + 25;
 	}
-
-	
 }

@@ -23,7 +23,7 @@ public class CreditsWindow extends UIWindow {
 			"",
 			"",
 			"Artwork#30",
-			"Tileset Art - Thomas Bruno, http://opengameart.org/content/1950s-scifi-setting-indoor-tileset-with-kitchen-appliances"
+			"Tileset Art - Thomas Bruno, http://opengameart.org/content/1950s-scifi-setting-indoor-tileset-with-kitchen-appliances#15"
 	};
 	
 	public CreditsWindow() {

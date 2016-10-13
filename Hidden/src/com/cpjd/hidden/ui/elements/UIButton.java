@@ -93,4 +93,5 @@ public class UIButton extends View {
 		if(metrics == null) return false;
 		return mousex >= this.x && mousex <= this.x + this.width && mousey >= this.y - (int)(metrics.getHeight() * .75) && mousey <= this.y - (int)(metrics.getHeight() * .75) + this.height;
 	}
+
 }
