@@ -20,9 +20,8 @@ import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.tools.Layout;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
-	//dd
 	// Size
-	public static int SCALE = 4; // Applied to game only - not interface or hud
+	public final static int SCALE = 4; // Applied to game only - not interface or hud
 	public static int WIDTH = 1600 / SCALE;
 	public static int HEIGHT = 900 / SCALE;
 
