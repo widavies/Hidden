@@ -4,12 +4,8 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-<<<<<<< HEAD
-import java.awt.image.BufferedImage;
-=======
-import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
->>>>>>> branch 'master' of https://github.com/techguy9984/Hidden
+import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
 import com.cpjd.hidden.chapters.Ch1;

@@ -173,8 +173,8 @@ public class TileMap {
 	
 	private void fixBounds() {
 		xmin = GamePanel.WIDTH - width;
-		ymin = GamePanel.HEIGHT - height;
-		numRowsToDraw = GamePanel.HEIGHT  * 4/ tileSize + 2;
+		ymin = (int)(GamePanel.HEIGHT / 1.12) - height;
+		numRowsToDraw = GamePanel.HEIGHT  * 4 / tileSize + 2;
 		numColsToDraw = GamePanel.WIDTH * 4 / tileSize + 2;
 		
 		if(x < xmin) x = xmin;

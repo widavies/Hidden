@@ -14,8 +14,6 @@ import com.cpjd.tools.Animation;
 
 public class Player extends Sprite {
 
-	private final int SCALE = 3;
-	
 	// Animation
 	private static final int IDLE = 0;
 	private static final int WALKING = 1;
@@ -32,13 +30,13 @@ public class Player extends Sprite {
 	public Player(TileMap tm) {
 		super(tm);
 		
-		width = 32 * SCALE;
-		height = 32 * SCALE;
-		cwidth = 32 * SCALE;
-		cheight = 32 * SCALE;
-		maxSpeed = 3;
+		width = 32;
+		height = 32;
+		cwidth = 32;
+		cheight = 32;
+		maxSpeed = 0.8;
 		
-		moveSpeed = 0.9;
+		moveSpeed = 0.2;
 		
 		try {
 			loadAnimation();
