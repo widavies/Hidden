@@ -17,7 +17,7 @@ import com.cpjd.hidden.toolbox.pathfind.Node;
 
 public class TileMap {
 	
-	private int tileSize;
+	public static int tileSize;
 	
 	private double x;
 	private double y;

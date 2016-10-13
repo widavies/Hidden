@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.map.TileMap;
 
-public class Camera extends Enemy {
+public class Camera extends EnemyWithSight {
 	
 	private int facing;
 	private int tileX, tileY;
@@ -16,7 +16,7 @@ public class Camera extends Enemy {
 	private int camWidth = 5, camLength = 20;
 	
 	public Camera(TileMap tm, int xTile, int yTile, int heading, int fov, int facing, Chapter chapter) {
-		super(tm, xTile * tm.getTileSize(), yTile * tm.getTileSize(), fov, chapter);
+		super(tm, xTile * TileMap.tileSize, yTile * TileMap.tileSize, fov, chapter);
 		
 		this.facing = facing;
 		this.tileX = xTile;
@@ -56,6 +56,9 @@ public class Camera extends Enemy {
 	
 	@Override
 	public void draw(Graphics2D g){
+		
+		drawSightArc(g);
+		
 		g.setColor(Color.ORANGE);
 		
 		switch(facing){
@@ -79,8 +82,7 @@ public class Camera extends Enemy {
 		}
 	}
 	
-	@Override
-	public void drawSightArc(Graphics2D g){
+	private void drawSightArc(Graphics2D g){
 		g.setColor(new Color(255, 255, 20, 100));
 		g.fillArc((int) (drawX + xmap - sightRange), (int) (drawY + ymap - sightRange), sightRange * 2, sightRange * 2, (int) (-heading + 90 - fov / 2), fov);
 	}

@@ -14,6 +14,8 @@ import com.cpjd.tools.Animation;
 
 public class Player extends Sprite {
 
+	private final int SCALE = 3;
+	
 	// Animation
 	private static final int IDLE = 0;
 	private static final int WALKING = 1;
@@ -22,21 +24,27 @@ public class Player extends Sprite {
 	private final int[] numFrames = { 2, 8};
 	private BufferedImage rotation;
 
+	// physics
+	private double moveSpeed; // How fast the object will gain momentum
+	private double maxSpeed; // The max speed the object can go
+	private boolean left, right, up, down;
+	
 	public Player(TileMap tm) {
 		super(tm);
 		
-		width = 32;
-		height = 32;
-		cwidth = 16;
-		cheight = 16;
-		maxSpeed = 0.8;
+		width = 32 * SCALE;
+		height = 32 * SCALE;
+		cwidth = 32 * SCALE;
+		cheight = 32 * SCALE;
+		maxSpeed = 3;
 		
-		moveSpeed = 0.3;
+		moveSpeed = 0.9;
 		
 		try {
 			loadAnimation();
 		} catch(Exception e) {
 			System.err.println("Couldn't load player animations");
+			e.printStackTrace();
 		}
 		
 		animation = new Animation();
@@ -55,7 +63,7 @@ public class Player extends Sprite {
 			BufferedImage[] bi = new BufferedImage[numFrames[i]];
 
 			for (int j = 0; j < numFrames[i]; j++) {
-				bi[j] = spritesheet.getSubimage(j * width, i * height, width, height);
+				bi[j] = spritesheet.getSubimage(j * 32, i * 32, 32, 32);
 			}
 			sprites.add(bi);
 		}
@@ -63,7 +71,7 @@ public class Player extends Sprite {
 	
 	@Override
 	public void draw(Graphics2D g) {
-		g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), null);
+		g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), width, height, null);
 	}
 	
 	private BufferedImage calculateRotation(BufferedImage toRotate, int degrees) {
@@ -80,7 +88,9 @@ public class Player extends Sprite {
 
 	@Override
 	public void update() {
-		super.update();
+		getNextPosition();
+		checkTileMapCollision();
+		setPosition(xtemp, ytemp);
 		
 		// Manage animation update
 		if(left || right || down || up) {
@@ -107,7 +117,99 @@ public class Player extends Sprite {
 		else if(left) rotation = calculateRotation(animation.getImage(), 90);
 		else if(right) rotation = calculateRotation(animation.getImage(), -90);
 		else if(up) rotation = calculateRotation(animation.getImage(), 180);
-		else if(down) rotation = calculateRotation(animation.getImage(), 0);	
+		else if(down) rotation = calculateRotation(animation.getImage(), 0);
+		
+	}
+	
+	private void getNextPosition() {
+
+		// movement
+		if(left) {
+			dx -= moveSpeed;
+			if(dx < -maxSpeed) {
+				dx = -maxSpeed;
+			}
+		}
+		if(right) {
+			dx += moveSpeed;
+			if(dx > maxSpeed) {
+				dx = maxSpeed;
+			}
+		}
+		if(up) {
+			dy -= moveSpeed;
+			if(dy < -maxSpeed) dy = -maxSpeed;
+
+		}
+		if(down) {
+			dy += moveSpeed;
+			if(dy > maxSpeed) {
+				dy = maxSpeed;
+			}
+		}
+		if(!left && !right) {
+			dx = 0;
+		}
+		if(!up && !down) {
+			dy = 0;
+		}
+
+	}
+	
+	public void checkTileMapCollision() {
+		currCol = (int) x / tileSize; // Location in tilesize
+		currRow = (int) y / tileSize;
+		xdest = x + dx; // Destination position
+		ydest = y + dy;
+
+		xtemp = x; // Keep track of original x
+		ytemp = y;
+
+		calculateCorners(x, ydest); // Four cornered method - in y direction
+		if(dy < 0) { // Going upwards
+			if(topLeft || topRight) { // Top too corners
+				dy = 0; // STop it from moving
+				ytemp = currRow * tileSize + cheight / 2; // Set's us right
+															// below tile we
+															// bumped our head
+															// into
+			} else {
+				ytemp += dy; // If nothing is stopping us, keep going up
+			}
+		}
+		if(dy > 0) { // Landed on a tile
+			if(bottomLeft || bottomRight) {
+				dy = 0;
+				ytemp = (currRow + 1) * tileSize - cheight / 2;
+			} else {
+				ytemp += dy; // Keep falling if there is nothing there
+			}
+
+		}
+
+		calculateCorners(xdest, y);
+		if(dx < 0) { // We are going left
+			if(topLeft || bottomLeft) {
+				dx = 0;
+				xtemp = currCol * tileSize + cwidth / 2;
+			} else {
+				xtemp += dx;
+			}
+		}
+		if(dx > 0) { // Moving to the right
+			if(topRight || bottomRight) {
+				dx = 0;
+				xtemp = (currCol + 1) * tileSize - cwidth / 2; // Sets us just
+																// to the left
+			} else {
+				xtemp += dx;
+			}
+		}
+	}
+	
+	public void setPosition(double x, double y) {
+		this.x = x;
+		this.y = y;
 	}
 	
 	public void keyPressed(int k) {
@@ -118,7 +220,7 @@ public class Player extends Sprite {
 	}
 	public void keyReleased(int k) {
 		if(k == KeyEvent.VK_W) up = false;
-		if(k == KeyEvent.VK_A) left = false;
+		if(k == KeyEvent.VK_A) left = false;		
 		if(k == KeyEvent.VK_S) down = false;
 		if(k == KeyEvent.VK_D) right = false;
 	}

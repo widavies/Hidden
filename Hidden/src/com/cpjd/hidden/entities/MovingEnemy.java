@@ -1,16 +1,16 @@
 package com.cpjd.hidden.entities;
 
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.cpjd.hidden.gamestate.Chapter;
-import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.TileMap;
 import com.cpjd.hidden.toolbox.MathTools;
 import com.cpjd.hidden.toolbox.Vector;
 
-public class MovingEnemy extends Enemy{
+public class MovingEnemy extends EnemyWithSight{
 	
 	//move
 	protected int moveToX, moveToY;
@@ -28,8 +28,8 @@ public class MovingEnemy extends Enemy{
 	//AI
 	protected boolean tracking = false;
 	
-	public MovingEnemy(TileMap tm, Chapter ch) {
-		super(tm, ch);
+	public MovingEnemy(TileMap tm, double xPos, double yPos, int fov, Chapter ch) {
+		super(tm, xPos, yPos, fov, ch);
 		
 		
 		waypoints = new LinkedList<Integer>();
@@ -52,6 +52,11 @@ public class MovingEnemy extends Enemy{
 			moveToX = waypoints.get(0);
 			moveToY = waypoints.get(1);
 		}
+	}
+	
+	@Override
+	public void draw(Graphics2D g){
+		super.draw(g);
 	}
 	
 	@Override
