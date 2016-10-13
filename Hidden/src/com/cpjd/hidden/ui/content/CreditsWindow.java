@@ -22,8 +22,11 @@ public class CreditsWindow extends UIWindow {
 			"Level Design and Artwork - Daniel P.#30",
 			"",
 			"",
-			"Artwork#30",
-			"Tileset Art - Thomas Bruno, http://opengameart.org/content/1950s-scifi-setting-indoor-tileset-with-kitchen-appliances#15"
+			"Artwork Attributions#30",
+			"Tileset Art - Thomas Bruno, http://opengameart.org/content/1950s-scifi-setting-indoor-tileset-with-kitchen-appliances#15",
+			"",
+			"Sound Attributions#30",
+			"Menu sound - strange_dragoon, https://www.freesound.org/people/strange_dragoon/sounds/271139/#15"
 	};
 	
 	public CreditsWindow() {

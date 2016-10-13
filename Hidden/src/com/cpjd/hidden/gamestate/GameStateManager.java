@@ -34,8 +34,7 @@ public class GameStateManager implements UIListener {
 
 	// The game-wide font
 	public static Font font;
-
-	private int ticks = 0; // TEMPORARY
+	public static int ticks = 0;
 	
 	Graphics2D g2;
 	BufferedImage image;
@@ -53,7 +52,7 @@ public class GameStateManager implements UIListener {
 			e.printStackTrace();
 		}
 
-		currentState = CH1;
+		currentState = MENU;
 		loadState(currentState);
 
 		console = new Console(this);
@@ -77,7 +76,6 @@ public class GameStateManager implements UIListener {
 	}
 	public void update() {
 		console.update();
-	
 		ticks++;
 		if(ticks % 120 == 0 && Console.showMemory) System.out.println(Usage.calcMemory());
 		

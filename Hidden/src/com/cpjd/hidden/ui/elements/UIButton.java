@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+import com.cpjd.hidden.gamestate.GameStateManager;
+import com.cpjd.hidden.sound.SoundKeys;
+import com.cpjd.hidden.sound.SoundPlayer;
 import com.cpjd.hidden.ui.View;
 
 public class UIButton extends View {
@@ -22,6 +25,8 @@ public class UIButton extends View {
 	private boolean hover;
 	private Point original;
 	private boolean visible;
+	private long lastSound;
+	private boolean hadHover;
 	
 	public UIButton(String text) {
 		super();
@@ -33,7 +38,6 @@ public class UIButton extends View {
 		
 		visible = true;
 	}
-	
 	public void setText(String text) {
 		this.text = text;
 	}
@@ -61,7 +65,16 @@ public class UIButton extends View {
 		this.colorMode = mode;
 	}
 	public void mouseMoved(int x, int y) {
-		hover = intersects(x, y) && focus; 
+		hover = intersects(x, y) && focus;
+		if(hover && !hadHover) {
+			if(GameStateManager.ticks - lastSound >= 30) {
+				SoundPlayer.playSound(SoundKeys.MENU_HOVER);
+				lastSound = GameStateManager.ticks;
+				hadHover = true;
+			}
+		}
+		if(!hover) hadHover = false;
+		
 	}
 	public void setOriginalLocation(int x, int y) {
 		original = new Point(x, y);

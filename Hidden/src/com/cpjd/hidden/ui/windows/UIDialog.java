@@ -3,6 +3,8 @@ package com.cpjd.hidden.ui.windows;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import org.lwjgl.openal.AL;
+
 import com.cpjd.hidden.ui.elements.UIButton;
 import com.cpjd.tools.Layout;
 
@@ -37,7 +39,10 @@ public class UIDialog extends UIWindow {
 	public void buttonPressed(UIButton button) {
 		super.buttonPressed(button);
 		
-		if(button.getText().equals("Exit")) System.exit(0);
+		if(button.getText().equals("Exit")) {
+			AL.destroy();
+			System.exit(0);
+		}
 		else if(button.getText().equals("Cancel")) closing = true;
 
 	}

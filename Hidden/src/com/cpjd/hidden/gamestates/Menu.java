@@ -5,6 +5,10 @@ import java.awt.Graphics2D;
 
 import com.cpjd.hidden.gamestate.GameState;
 import com.cpjd.hidden.gamestate.GameStateManager;
+import com.cpjd.hidden.sound.SoundKeys;
+import com.cpjd.hidden.sound.SoundLoader;
+import com.cpjd.hidden.sound.SoundPlayer;
+import com.cpjd.hidden.sound.SoundRequest;
 import com.cpjd.hidden.ui.UIListener;
 import com.cpjd.hidden.ui.content.CreditsWindow;
 import com.cpjd.hidden.ui.content.OptionsWindow;
@@ -13,6 +17,8 @@ import com.cpjd.hidden.ui.elements.UICheckbox;
 import com.cpjd.hidden.ui.windows.UIDialog;
 import com.cpjd.hidden.ui.windows.UIWindow;
 import com.cpjd.tools.Layout;
+
+import sun.audio.AudioPlayer;
 
 public class Menu extends GameState implements UIListener {
 	private UIButton play, options, credits, exit;
@@ -33,6 +39,10 @@ public class Menu extends GameState implements UIListener {
 		options.addUIListener(this);
 		credits.addUIListener(this);
 		exit.addUIListener(this);
+		
+		// Load sound
+		String[] sounds = { SoundKeys.MENU_HOVER};
+		new SoundLoader(new SoundRequest(sounds, null)).load();
 	}
 	
 	public void update() {
