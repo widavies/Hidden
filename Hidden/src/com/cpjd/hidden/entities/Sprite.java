@@ -22,8 +22,6 @@ public class Sprite {
 	protected int width;
 	protected int height;
 
-	
-
 	// health & damage
 	protected double damage;
 	protected double maxHealth;
@@ -48,7 +46,7 @@ public class Sprite {
 	
 	public Sprite(TileMap tm) {
 		this.tm = tm;
-		this.tileSize = tm.getTileSize();
+		Sprite.tileSize = tm.getTileSize();
 	}
 
 	public void update() {
