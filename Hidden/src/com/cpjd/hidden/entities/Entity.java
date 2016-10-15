@@ -8,7 +8,7 @@ import com.cpjd.hidden.map.Tile;
 import com.cpjd.hidden.map.TileMap;
 import com.cpjd.tools.Animation;
 
-public class Sprite {
+public class Entity {
 
 	protected TileMap tm;
 	protected double xmap;
@@ -44,9 +44,9 @@ public class Sprite {
 	// animation
 	protected Animation animation;
 	
-	public Sprite(TileMap tm) {
+	public Entity(TileMap tm) {
 		this.tm = tm;
-		Sprite.tileSize = tm.getTileSize();
+		Entity.tileSize = tm.getTileSize();
 	}
 
 	public void update() {

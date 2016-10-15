@@ -1,19 +1,23 @@
 package com.cpjd.hidden.entities;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import com.cpjd.hidden.map.TileMap;
 import com.cpjd.tools.Animation;
 
-public class Player extends Entity {
-
+public class NewEnemy extends Entity{
+	
+	
 	// Animation
 	private static final int IDLE = 0;
 	private static final int WALKING = 1;
@@ -27,7 +31,26 @@ public class Player extends Entity {
 	private double maxSpeed; // The max speed the object can go
 	private boolean left, right, up, down;
 	
-	public Player(TileMap tm) {
+	//position and heading variables (for the current position/heading of the enemy)
+	protected double heading;
+			
+	//sight constants	
+	protected final int sightRange;
+	protected final int fov;
+		
+	//move/rotate to
+	protected double finalRotation;
+			
+	//constants for speed and rotation
+	protected final int MAXROTATION = 3;
+		
+	//obstacles
+	protected List<Point> obstacles;
+		
+		
+	protected List<Point> pathfindRoute;//in this class instead of MovingEnemy so that the drawOverlays() method can use it
+	
+	public NewEnemy(TileMap tm) {
 		super(tm);
 		
 		width = 32;
@@ -37,6 +60,9 @@ public class Player extends Entity {
 		maxSpeed = 0.8;
 		
 		moveSpeed = 0.2;
+		
+		sightRange = 150;
+		fov = 150;
 		
 		try {
 			loadAnimation();
@@ -70,6 +96,9 @@ public class Player extends Entity {
 	@Override
 	public void draw(Graphics2D g) {
 		g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), width, height, null);
+		
+		g.setColor(new Color(255, 255, 20, 100));
+		g.fillArc((int) (x + xmap - sightRange), (int) (y + ymap - sightRange), sightRange * 2, sightRange * 2, (int) (-heading + 90 - fov / 2), fov);
 	}
 	
 	private BufferedImage calculateRotation(BufferedImage toRotate, int degrees) {
@@ -222,4 +251,8 @@ public class Player extends Entity {
 		if(k == KeyEvent.VK_S) down = false;
 		if(k == KeyEvent.VK_D) right = false;
 	}
+	
 }
+
+	
+
