@@ -18,14 +18,13 @@ import com.cpjd.hidden.ui.windows.UIDialog;
 import com.cpjd.hidden.ui.windows.UIWindow;
 import com.cpjd.tools.Layout;
 
-import sun.audio.AudioPlayer;
-
 public class Menu extends GameState implements UIListener {
 	private UIButton play, options, credits, exit;
 	private UIWindow playWindow;
 	private CreditsWindow creditsWindow;
 	private OptionsWindow optionsWindow;
 	private UIDialog exitDialog;
+	private SoundLoader soundLoader;
 	
 	public Menu(GameStateManager gsm) {
 		super(gsm);
@@ -41,8 +40,10 @@ public class Menu extends GameState implements UIListener {
 		exit.addUIListener(this);
 		
 		// Load sound
-		String[] sounds = { SoundKeys.MENU_HOVER};
-		new SoundLoader(new SoundRequest(sounds, null)).load();
+		String[] sounds = {SoundKeys.MENU_HOVER};
+		String[] music = {SoundKeys.CREDITS_MUSIC};
+		soundLoader = new SoundLoader(new SoundRequest(sounds, music));
+		soundLoader.load();
 	}
 	
 	public void update() {
@@ -115,6 +116,8 @@ public class Menu extends GameState implements UIListener {
 		}
 		if(play == button) {
 			gsm.setState(GameStateManager.CH1);
+			//soundLoader.release();
+			
 		}
 		if(credits == button) {
 			creditsWindow = new CreditsWindow();
@@ -124,6 +127,7 @@ public class Menu extends GameState implements UIListener {
 			options.setFocus(false);
 			credits.setFocus(false);
 			exit.setFocus(false);
+			SoundPlayer.playMusic(SoundKeys.CREDITS_MUSIC);
 		}
 		if(exit == button) {
 			exitDialog = new UIDialog();
@@ -157,6 +161,7 @@ public class Menu extends GameState implements UIListener {
 			options.setFocus(true);
 			credits.setFocus(true);
 			exit.setFocus(true);
+			SoundPlayer.stopMusic(SoundKeys.CREDITS_MUSIC);
 		}
 		if(window == exitDialog) {
 			exitDialog = null;

@@ -64,8 +64,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	}
 	
 	public void init() {
-		Layout.WIDTH = WIDTH / SCALE;
-		Layout.HEIGHT = HEIGHT / SCALE;
+		Layout.WIDTH = WIDTH;
+		Layout.HEIGHT = HEIGHT;
 		
 		image = new BufferedImage(Layout.WIDTH,Layout.HEIGHT ,BufferedImage.TYPE_INT_RGB);
 

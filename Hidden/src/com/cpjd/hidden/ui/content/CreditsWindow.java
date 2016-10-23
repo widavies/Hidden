@@ -17,9 +17,9 @@ public class CreditsWindow extends UIWindow {
 			"",
 			"",
 			"Team#30",
-			"Engine and UI Programmer - Will D.#30",
-			"AI and Gameplay - Alex H.#30",
-			"Level Design and Artwork - Daniel P.#30",
+			"Lead Programmer                            Will D.#30",
+			"Programmer                                      Alex H.#30",
+			"Level Design and Artwork             Daniel P.#30",
 			"",
 			"",
 			"Artwork Attributions#30",
@@ -55,7 +55,9 @@ public class CreditsWindow extends UIWindow {
 			g.setFont(font.deriveFont(Float.parseFloat(CREDITS[i].split("#")[1])));
 			
 			metrics = g.getFontMetrics();
-			g.drawString(CREDITS[i].split("#")[0], Layout.centerw(metrics.stringWidth(CREDITS[i].split("#")[0])), (int)ext + (i * 50));
+			//Layout.centerw(metrics.stringWidth(CREDITS[i].split("#")[0]))
+
+			g.drawString(CREDITS[i].split("#")[0], Layout.alignx(15) , (int)ext + (i * 50));
 		}
 	}
 }

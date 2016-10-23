@@ -30,13 +30,13 @@ public class Player extends Entity {
 	public Player(TileMap tm) {
 		super(tm);
 		
-		width = 32;
-		height = 32;
-		cwidth = 32;
-		cheight = 32;
-		maxSpeed = 0.8;
+		width = 28;
+		height = 28;
+		cwidth = 16;
+		cheight = 16;
+		maxSpeed = .9;
 		
-		moveSpeed = 0.2;
+		moveSpeed = .1;
 		
 		try {
 			loadAnimation();
@@ -74,6 +74,10 @@ public class Player extends Entity {
 	
 	private BufferedImage calculateRotation(BufferedImage toRotate, int degrees) {
 		double rotationRequired = Math.toRadians (degrees);
+		
+		AffineTransform trans = new AffineTransform();
+		trans.setTransform(new AffineTransform());
+		
 		
 		double locX, locY;
 		locX = toRotate.getWidth() / 2;

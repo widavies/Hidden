@@ -43,7 +43,7 @@ public class Console {
 	
 	public void processCommand(String s) {
 		if(s.equalsIgnoreCase("stop")) System.exit(0);
-		else if(s.equalsIgnoreCase("reload")) gsm.setState(gsm.getState());
+		else if(s.equalsIgnoreCase("reload") || s.equalsIgnoreCase("r")) gsm.setState(gsm.getState());
 		else if(s.equalsIgnoreCase("los overlay")) Enemy.drawLOSOverlay = !Enemy.drawLOSOverlay;
 		else if(s.equalsIgnoreCase("pathfind overlay")) Enemy.drawPathFindOverlay = !Enemy.drawPathFindOverlay;
 		else if(s.equalsIgnoreCase("menu")) gsm.setState(GameStateManager.MENU);

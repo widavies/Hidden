@@ -116,7 +116,22 @@ public class TileMap {
 		}
 		
 	}
-	
+	public void setMap(int[][] generatedMap,int tileWidth,int tileHeight) {
+		numRows = tileHeight;
+		numCols = tileWidth;
+		height = numRows * tileSize;
+		width = numCols * tileSize;
+		
+		xmin = (GamePanel.WIDTH ) - width;
+		xmax = 0;
+		ymin = (GamePanel.HEIGHT ) - height;
+		ymax = 0;
+		
+		numRowsToDraw = GamePanel.HEIGHT  * 4 / tileSize + 2;
+		numColsToDraw = GamePanel.WIDTH * 4 / tileSize + 2;
+		
+		map = generatedMap;
+	}
 	public int getTileSize() {
 		return tileSize;
 	}
@@ -162,7 +177,7 @@ public class TileMap {
 	}
 	
 	public void setPosition(double x, double y) {
-		this.x += (x - this.x) * tween;
+		this.x += (x - this.x - GamePanel.WIDTH / 12) * tween;
 		this.y += (y - this.y) * tween;
 
 		fixBounds();
@@ -172,8 +187,8 @@ public class TileMap {
 	}
 	
 	private void fixBounds() {
-		xmin = GamePanel.WIDTH - width;
-		ymin = (int)(GamePanel.HEIGHT / 1.12) - height;
+		xmin = GamePanel.WIDTH - width * 2;
+		ymin = GamePanel.HEIGHT - height * 2;
 		numRowsToDraw = GamePanel.HEIGHT  * 4 / tileSize + 2;
 		numColsToDraw = GamePanel.WIDTH * 4 / tileSize + 2;
 		
@@ -190,6 +205,7 @@ public class TileMap {
 			
 			for(int col = colOffset; col < colOffset + numColsToDraw; col++) {
 				if(col >= numCols) break;
+				try{
 				
 				if(map[row][col] == 0) continue;
 				
@@ -197,6 +213,7 @@ public class TileMap {
 				int r = rc / numTilesAcross; 
 				int c = rc % numTilesAcross;
 				g.drawImage(tiles[r][c].getImage(),(int)x + col * tileSize,(int)y + row * tileSize,null);
+				} catch(Exception e) {}
 			}
 		}		
 	}

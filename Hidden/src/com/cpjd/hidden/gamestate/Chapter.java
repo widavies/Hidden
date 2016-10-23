@@ -79,7 +79,7 @@ public class Chapter extends GameState {
 	}
 	@Override
 	public void drawGUI(Graphics2D g) {
-		if(!gsm.isPaused()) hud.draw(g);
+		//if(!gsm.isPaused()) hud.draw(g);
 	}
 	@Override
 	public void keyPressed(int k) {
