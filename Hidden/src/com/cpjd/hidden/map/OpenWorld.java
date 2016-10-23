@@ -11,13 +11,20 @@ public class OpenWorld implements Runnable {
 	
 	// Tile ids
 	public static final int GRASS_1 = 4;
-	public static final int GRASS_2 = 4;
-	public static final int GRASS_3 = 4;
-	public static final int GRASS_4 = 4;
+	public static final int GRASS_2 = 5;
+	public static final int GRASS_3 = 6;
+	public static final int GRASS_4 = 7;
+	public static final int GRASS_5 = 8;
+	public static final int GRASS_6 = 9;
+	
 	public static final int TREE = 3;
 	public static final int WATER = 31;
 	public static final int STONE = 1;
-	public static final int FOREST = 3;
+	public static final int FOREST_1 = 34;
+	public static final int FOREST_2 = 35;
+	public static final int FOREST_3 = 36;
+	public static final int FOREST_4 = 37;
+	
 	
 	// Vars
 	private double progress;
@@ -97,8 +104,8 @@ public class OpenWorld implements Runnable {
 		// Precalculate forest locations
 		for(int i = 0; i < tileHeight; i++) {
 			for(int j = 0; j < tileWidth; j++) {
-				if(r.nextInt(3000) <= 1) forestLocations.add(new Point(j, i));
-				if(r.nextInt(2000) <= 1) poolLocations.add(new Point(j, i));
+				if(r.nextInt(2000) <= 1) forestLocations.add(new Point(j, i));
+				if(r.nextInt(1000) <= 1) poolLocations.add(new Point(j, i));
 			}				
 		}
 		
@@ -107,9 +114,9 @@ public class OpenWorld implements Runnable {
 				progress++;
 				
 				if(shouldGenOcean(tileWidth, tileHeight, i, j)) generation[i][j] = WATER;
-				else if(shouldGenForest(generation, tileWidth, tileHeight, i, j)) generation[i][j] = FOREST;
+				else if(shouldGenForest(generation, tileWidth, tileHeight, i, j)) generation[i][j] = getForestVariation();
 				else if(shouldGenPool(generation, tileWidth, tileHeight, i, j)) generation[i][j] = WATER;
-				else generation[i][j] = GRASS_1;
+				else generation[i][j] = getGrassVariation();
 			}
 		}
 		
@@ -134,7 +141,14 @@ public class OpenWorld implements Runnable {
 		if(row <= r.nextInt(WATER_MARGIN) || col <= r.nextInt(WATER_MARGIN)) return true;
 		return false;
 	}
-	
+	private int getGrassVariation() {
+		int prob = r.nextInt(100);
+		if(prob <= 25) return GRASS_1;
+		if(prob > 25 && prob <= 50) return GRASS_2;
+		if(prob > 50 && prob <= 75) return GRASS_3;
+		if(prob > 75 && prob <= 76) return GRASS_5;
+		else return GRASS_4;
+	}
 	private boolean shouldGenForest(int[][] map, int tileWidth, int tileHeight, int row, int col) {
 		if(map[row][col] == WATER) return false;
 		
@@ -150,6 +164,14 @@ public class OpenWorld implements Runnable {
 		
 		return false;
 	}
+	private int getForestVariation() {
+		int prob = r.nextInt(100);
+		if(prob <= 75) return FOREST_1;
+		if(prob > 75 && prob <= 90) return FOREST_2;
+		if(prob > 90 && prob <= 98) return FOREST_3;
+		else return FOREST_4;
+	}
+	
 	private boolean shouldGenPool(int[][] map, int tileWidth, int tileHeight, int row, int col) {
 		for(int i = 0; i < poolLocations.size(); i++) {
 			double range = Math.hypot(poolLocations.get(i).x - col, poolLocations.get(i).y - row);
