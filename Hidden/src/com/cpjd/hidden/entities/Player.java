@@ -34,9 +34,9 @@ public class Player extends Entity {
 		height = 28;
 		cwidth = 14;
 		cheight = 14;
-		maxSpeed = .5;
+		maxSpeed = 1.00;
 		
-		moveSpeed = .1;
+		moveSpeed = .6;
 		
 		try {
 			loadAnimation();
@@ -99,7 +99,7 @@ public class Player extends Entity {
 			if(currentAction != WALKING) {
 				currentAction = WALKING;
 				animation.setFrames(sprites.get(WALKING));
-				animation.setDelay(100);
+				animation.setDelay(90);
 			}
 		}
 		else if(!left && !right && !down && !up) {
