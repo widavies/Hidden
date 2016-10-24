@@ -32,7 +32,6 @@ public class Ch1 extends Chapter {
 			tileMap.setMap(world.getWorld(), 200, 200);	
 			player = new Player(tileMap);
 			player.setPosition(world.getSpawn());
-			System.out.println(world.getSpawn());
 			finishedGen = true;
 		}
 		if(finishedGen) super.update();

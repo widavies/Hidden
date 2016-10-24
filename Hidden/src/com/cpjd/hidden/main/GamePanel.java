@@ -40,7 +40,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	
 	//FP
 	public static int ticks = 0;
-
+	public static boolean DEBUG;
 	
 	public GamePanel() {
 		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));

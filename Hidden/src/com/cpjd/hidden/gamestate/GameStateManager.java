@@ -140,6 +140,8 @@ public class GameStateManager implements UIListener {
 		if(pauseWindow != null) pauseWindow.mouseMoved(x, y);
 		
 		if(gameStates[currentState] != null) gameStates[currentState].mouseMoved(x, y);
+		
+		console.mouseMoved(x, y);
 	}
 	
 	public void mouseWheelMoved(int k) {

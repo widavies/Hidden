@@ -22,7 +22,7 @@ public class Chapter extends GameState {
 	private Rectangle winBox = new Rectangle(19 * 64 - 10, 21 * 64 - 10, 64 + 10, 64 + 10);
 	
 	protected OpenWorld world;
-	
+
 	public Chapter(GameStateManager gsm) {
 		super(gsm);
 		
@@ -34,6 +34,8 @@ public class Chapter extends GameState {
 	
 	@Override
 	public void update() {
+		if(player == null) return;
+		
 		for(int i = 0; i < enemies.size(); i++){
 			if(enemies.get(i).getCollisionBox().intersects(player.getCollisionBox())){
 				gsm.setState(gsm.getState());
@@ -74,11 +76,11 @@ public class Chapter extends GameState {
 			//enemies.get(i).drawSightArc(g);
 		}
 		for(int i = 0; i < enemies.size(); i++){
-			enemies.get(i).draw(g);
+			//enemies.get(i).draw(g);
 		}
 
-		if(enemies.size() > 0 && enemies.get(0) != null)
-			enemies.get(0).drawOverlays(g, player.getX(), player.getY());
+		//if(enemies.size() > 0 && enemies.get(0) != null)
+			//enemies.get(0).drawOverlays(g, player.getX(), player.getY());
 	}
 	@Override
 	public void drawGUI(Graphics2D g) {
@@ -95,11 +97,10 @@ public class Chapter extends GameState {
 		if(player != null) player.keyReleased(k);
 		
 	}
-
+	
 	@Override
 	public void mousePressed(int x, int y) {
 		hud.mousePressed(x, y);
-		
 	}
 
 	@Override

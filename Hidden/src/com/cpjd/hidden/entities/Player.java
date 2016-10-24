@@ -1,6 +1,7 @@
 package com.cpjd.hidden.entities;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -26,6 +27,9 @@ public class Player extends Entity {
 	private double moveSpeed; // How fast the object will gain momentum
 	private double maxSpeed; // The max speed the object can go
 	private boolean left, right, up, down;
+	
+	// global x and y for the console
+	public static Point LOCATION = new Point();
 	
 	public Player(TileMap tm) {
 		super(tm);
@@ -208,10 +212,11 @@ public class Player extends Entity {
 			}
 		}
 	}
-	
 	public void setPosition(double x, double y) {
 		this.x = x;
 		this.y = y;
+		this.LOCATION.x = (int)x;
+		this.LOCATION.y = (int)y;
 	}
 	
 	public void keyPressed(int k) {
