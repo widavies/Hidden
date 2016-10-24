@@ -63,12 +63,12 @@ public class OpenWorld implements Runnable {
 		poolLocations = new ArrayList<Point>();
 		forestLocations = new ArrayList<Point>();
 		
-		//thread = new Thread(this);
-		//thread.start();
+		thread = new Thread(this);
+		thread.start();
 	}
 	
 	public void run() {
-		map = generateWorld(100,20);
+		map = generateWorld(200,200);
 		
 		try {
 			thread.join();
@@ -77,6 +77,10 @@ public class OpenWorld implements Runnable {
 	
 	public int getGenerationProgress() {
 		return (int)(progress / maxProgress * 100);
+	}
+	
+	public boolean isFinishedGeneration() {
+		return progress >= maxProgress;
 	}
 	
 	// Should only be called after getGenerationProgress() returns 100

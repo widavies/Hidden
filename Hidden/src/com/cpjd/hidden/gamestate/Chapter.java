@@ -7,6 +7,7 @@ import java.util.List;
 import com.cpjd.hidden.entities.Enemy;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.main.GamePanel;
+import com.cpjd.hidden.map.OpenWorld;
 import com.cpjd.hidden.map.TileMap;
 import com.cpjd.hidden.ui.hud.HUD;
 
@@ -19,6 +20,8 @@ public class Chapter extends GameState {
 	private HUD hud;
 	
 	private Rectangle winBox = new Rectangle(19 * 64 - 10, 21 * 64 - 10, 64 + 10, 64 + 10);
+	
+	protected OpenWorld world;
 	
 	public Chapter(GameStateManager gsm) {
 		super(gsm);
@@ -79,11 +82,11 @@ public class Chapter extends GameState {
 	}
 	@Override
 	public void drawGUI(Graphics2D g) {
-		//if(!gsm.isPaused()) hud.draw(g);
+		if(!gsm.isPaused() && world.isFinishedGeneration()) hud.draw(g);
 	}
 	@Override
 	public void keyPressed(int k) {
-		player.keyPressed(k);
+		if(player != null) player.keyPressed(k);
 		hud.keyPressed(k);
 	}
 

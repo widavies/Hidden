@@ -117,6 +117,8 @@ public class TileMap {
 		
 	}
 	public void setMap(int[][] generatedMap,int tileWidth,int tileHeight) {
+		map = generatedMap;
+		
 		numRows = tileHeight;
 		numCols = tileWidth;
 		height = numRows * tileSize;
@@ -129,8 +131,6 @@ public class TileMap {
 		
 		numRowsToDraw = GamePanel.HEIGHT  * 4 / tileSize + 2;
 		numColsToDraw = GamePanel.WIDTH * 4 / tileSize + 2;
-		
-		map = generatedMap;
 	}
 	public int getTileSize() {
 		return tileSize;
@@ -165,6 +165,8 @@ public class TileMap {
 	}
 	
 	public int getType(int row, int col) {
+		if(map == null) return 0;
+		
 		int rc = map[row][col];
 		int r = rc / numTilesAcross;
 		int c = rc % numTilesAcross;
