@@ -23,8 +23,7 @@ public class Ch1 extends Chapter {
 		tileMap.loadTiles("/tiles/tileset.png");
 		//tileMap.loadTiledMap("/chapter_maps/Lv1_1.txt");
 		world = new OpenWorld();
-		tileMap.setPosition(0, 0);
-		
+
 		enemies = new LinkedList<Enemy>();
 	}
 	
@@ -32,7 +31,8 @@ public class Ch1 extends Chapter {
 		if(world.isFinishedGeneration() && !finishedGen) {
 			tileMap.setMap(world.getWorld(), 200, 200);	
 			player = new Player(tileMap);
-			player.setPosition(100, 100);
+			player.setPosition(world.getSpawn());
+			System.out.println(world.getSpawn());
 			finishedGen = true;
 		}
 		if(finishedGen) super.update();

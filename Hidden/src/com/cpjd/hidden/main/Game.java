@@ -31,7 +31,7 @@ public class Game {
 			}
 		}
 		
-		frame = new JFrame("Hidden");
+		frame = new JFrame("Hidden v1.0");
 		
 		game = new GamePanel();
 		

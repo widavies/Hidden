@@ -2,6 +2,7 @@ package com.cpjd.hidden.entities;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 
 import com.cpjd.hidden.map.Tile;
@@ -108,7 +109,12 @@ public class Entity {
 	public double getY() {
 		return y;
 	}
-	
+	public void setPosition(Point p) {
+		if(p == null) return;
+		
+		this.x = p.x;
+		this.y = p.y;
+	}
 	public Rectangle getCollisionBox(){
 		return new Rectangle((int) x, (int) y, cwidth, cheight);
 	}

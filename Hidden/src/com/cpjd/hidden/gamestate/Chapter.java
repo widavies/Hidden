@@ -92,7 +92,7 @@ public class Chapter extends GameState {
 
 	@Override
 	public void keyReleased(int k) {
-		player.keyReleased(k);
+		if(player != null) player.keyReleased(k);
 		
 	}
 

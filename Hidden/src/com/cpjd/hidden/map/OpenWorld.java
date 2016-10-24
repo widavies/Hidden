@@ -30,16 +30,13 @@ public class OpenWorld implements Runnable {
 	private double progress;
 	private double maxProgress;
 	private int[][] map;
-	private int currentPools;
 	private ArrayList<Point> poolLocations;
-	private int currentForests;
 	private ArrayList<Point> forestLocations;
+	private Point spawn;
 	
 	// Constants
 	private int WATER_MARGIN = 4; // Water can't span more than 10 tiles into the map
-	private int POOLS_FREQUENCY = 10; // The max amount of small pools of water that should small throughout the map
 	private int POOL_RANGE = 5; // The farthest away water blocks can be from a pool origin point
-	private int FOREST_FREQUENCY = 3;
 	private int FOREST_RANGE = 8;
 	
 	// Generation probabilities (1 is max, 0 is no chances)
@@ -126,16 +123,37 @@ public class OpenWorld implements Runnable {
 		
 		map = generation;
 		
-		/*for(int i = 0; i < map[0].length; i++) {
-			for(int j =0; j < map.length; j++) {
-				System.out.print(map[j][i] +" ");
+		/*
+		 * Let's figure out a good spawning location with these characteristics
+		 * 1) Centerish of map
+		 * 2) Not on a collision tile
+		 * 3) Not boxed in
+		 * 
+		 * Technically speaking, how do we do it?
+		 * First, pick the middle tile. Extend eastward until we hit a grass tile
+		 */
+		int offset = tileWidth / 2;
+		do {
+			if(offset > tileWidth - 1) offset = tileWidth - 1; 
+			
+			if(generation[tileHeight / 2][offset] <= 10) {
+				// Viable spawn!
+				spawn = new Point(tileHeight / 2, offset);
 			}
-			System.out.println();
-		}*/
+			
+			offset++;
+		} while(generation[tileHeight / 2][offset] > 10);
+		
+		
 		
 		return generation;
 	}
-	
+	public Point getSpawn() {
+		if(spawn == null) return null;
+		
+		spawn.setLocation(spawn.x * 16, spawn.y * 16);
+		return spawn;
+	}
 	private boolean shouldGenOcean(int tileWidth, int tileHeight, int row, int col) {
 		if(row > WATER_MARGIN && row < (tileHeight - 1) - WATER_MARGIN && col > WATER_MARGIN && col < (tileWidth - 1) - WATER_MARGIN) return false;
 		
@@ -151,6 +169,7 @@ public class OpenWorld implements Runnable {
 		if(prob > 25 && prob <= 50) return GRASS_2;
 		if(prob > 50 && prob <= 75) return GRASS_3;
 		if(prob > 75 && prob <= 76) return GRASS_5;
+		if(prob == 77) return GRASS_6;
 		else return GRASS_4;
 	}
 	private boolean shouldGenForest(int[][] map, int tileWidth, int tileHeight, int row, int col) {
