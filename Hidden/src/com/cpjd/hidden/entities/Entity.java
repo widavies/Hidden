@@ -56,9 +56,9 @@ public class Entity {
 
 	public void calculateCorners(double x, double y) {
 		int leftTile = (int) (x - cwidth / 2) / tileSize;
-		int rightTile = (int) (x + cwidth / 2 - 1) / tileSize;
+		int rightTile = (int) (x + cwidth / 2) / tileSize;
 		int topTile = (int) (y - cheight / 2) / tileSize;
-		int bottomTile = (int) (y + cheight / 2 - 1) / tileSize;
+		int bottomTile = (int) (y + cheight / 2) / tileSize;
 
 		if(topTile < 0 || bottomTile >= tm.getNumRows() || leftTile < 0 || rightTile >= tm.getNumCols()) {
 			topLeft = topRight = bottomLeft = bottomRight = false;
