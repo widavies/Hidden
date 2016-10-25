@@ -40,7 +40,8 @@ public class Ch1 extends Chapter implements WorldListener {
 		if(finishedGen) return;
 		
 		g.setColor(Color.WHITE);
-		g.drawString("Generating terrain...", Layout.centerString("Generating terrain...", g), Layout.centerStringVert(g));
+		g.setFont(GameStateManager.font.deriveFont(35f));
+		g.drawString("Generating map ("+OpenWorld.WIDTH+","+OpenWorld.HEIGHT+")", Layout.centerString("Generating map: ("+OpenWorld.WIDTH+","+OpenWorld.HEIGHT+")", g), Layout.centerStringVert(g));
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(Layout.centerw(400), Layout.aligny(51), 400, 40);
 		g.setColor(Color.WHITE);
@@ -49,7 +50,7 @@ public class Ch1 extends Chapter implements WorldListener {
 	
 	@Override
 	public void worldGenerated() {
-		tileMap.setMap(world.getWorld(), 200, 200);	
+		tileMap.setMap(world.getWorld(), OpenWorld.WIDTH, OpenWorld.HEIGHT);	
 		player = new Player(tileMap);
 		player.setPosition(world.getSpawn());
 		finishedGen = true;

@@ -7,6 +7,9 @@ import java.util.Random;
 // An open world generation algorithm by yours truly
 public class OpenWorld implements Runnable {
 
+	public static final int WIDTH = 350;
+	public static final int HEIGHT = 300;
+	
 	private Random r;
 	private WorldListener listener;
 	
@@ -66,7 +69,7 @@ public class OpenWorld implements Runnable {
 	}
 	
 	public void run() {
-		generateWorld(200,200);
+		generateWorld(WIDTH,HEIGHT);
 		
 		reset();
 	}
