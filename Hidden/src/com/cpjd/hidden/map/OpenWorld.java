@@ -66,7 +66,7 @@ public class OpenWorld implements Runnable {
 	}
 	
 	public void run() {
-		map = generateWorld(200,200);
+		generateWorld(200,200);
 		
 		reset();
 	}
@@ -87,7 +87,7 @@ public class OpenWorld implements Runnable {
 		return map;
 	}
 	
-	public int[][] generateWorld(int tileWidth, int tileHeight) {
+	private void generateWorld(int tileWidth, int tileHeight) {
 		int[][] generation = new int[tileHeight][tileWidth];
 		
 		maxProgress = tileWidth * tileHeight;
@@ -124,21 +124,70 @@ public class OpenWorld implements Runnable {
 		 * Technically speaking, how do we do it?
 		 * First, pick the middle tile. Extend eastward until we hit a grass tile
 		 */
-		int offset = tileWidth / 2;
+		int xOffset = tileWidth / 2;
+		int yOffset = tileHeight / 2;
+		int searches = 0; // 0, we're going right until the edge, 1, left until the edge, 2 up until the edge, 3 down until the edge
+		int spawnSafeRange = 4;
+		boolean viable = false;
+		int randomAttempts = 0;
 		do {
-			if(offset > tileWidth - 1) offset = tileWidth - 1; 
-			
-			if(generation[tileHeight / 2][offset] <= 10) {
-				// Viable spawn!
-				spawn = new Point(tileHeight / 2, offset);
+			viable = true;
+			for(int i = 0; i < spawnSafeRange; i++) {
+				for(int j = 0; j < spawnSafeRange; j++) {
+					if(generation[yOffset + i][xOffset + j] > 10) viable = false; 
+				}
 			}
 			
-			offset++;
-		} while(generation[tileHeight / 2][offset] > 10);
+			if(searches == 0) {
+				xOffset+=2;
+				if(xOffset > tileWidth - 1) {
+					xOffset = tileWidth / 2;
+					searches = 1;
+				}
+			}
+			else if(searches == 1) {
+				xOffset-=2;
+				if(xOffset < 0) {
+					xOffset = tileWidth / 2;
+					searches = 2;
+				}
+			}
+			else if(searches == 2) {
+				yOffset+=2;
+				if(yOffset > tileHeight - 1) {
+					yOffset = tileHeight / 2;
+					searches = 3;
+				}
+			}
+			else if(searches == 3) {
+				yOffset-=2;
+				if(yOffset < 0) {
+					yOffset = 0;
+					searches = 4;
+				}
+			}
+			
+			if(searches == 4) {
+				xOffset = r.nextInt(tileWidth - 1);
+				yOffset = r.nextInt(tileHeight - 1);
+				randomAttempts++;
+			}
+			
+			if(randomAttempts > 10) { 
+				viable = true;
+			}
+		} while(!viable);
 		
-		listener.worldGenerated();
-		
-		return generation;
+		if(viable && randomAttempts >= 10) {
+			// We couldn't find a spawn location. :( Regenerate the map.
+			generateWorld(tileWidth,tileHeight);
+		} else if(viable) {
+			spawn = new Point(xOffset + (int)(spawnSafeRange / 2), yOffset + (int)(spawnSafeRange / 2));
+			
+			listener.worldGenerated();
+			
+		}
+		map = generation;
 	}
 	public Point getSpawn() {
 		if(spawn == null) return null;

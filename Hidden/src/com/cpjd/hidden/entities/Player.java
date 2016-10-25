@@ -22,7 +22,8 @@ public class Player extends Entity {
 	private ArrayList<BufferedImage[]> sprites;
 	private final int[] numFrames = { 2, 8};
 	private BufferedImage rotation;
-
+	private int degrees;
+	
 	// physics
 	private double moveSpeed; // How fast the object will gain momentum
 	private double maxSpeed; // The max speed the object can go
@@ -52,7 +53,7 @@ public class Player extends Entity {
 		animation = new Animation();
 		currentAction = IDLE;
 		animation.setFrames(sprites.get(IDLE));
-		animation.setDelay(500);
+		animation.setDelay(400);
 		
 		rotation = animation.getImage();
 	}
@@ -73,20 +74,21 @@ public class Player extends Entity {
 	
 	@Override
 	public void draw(Graphics2D g) {
-		if(up && left || up && right || down && right || down && left) g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), (int)(width * 1.25), (int)(height * 1.25), null);
-		else g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), width, height, null);
+		if(dy != 0 && dx == 0 || dx != 0 && dy == 0 || (dy == 0 && dx == 0) && (degrees % 90 == 0)) g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2) ,width, height, null);
+		else g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), (int)(width * 1.25), (int)(height * 1.25), null);
 	}
 	
 	private BufferedImage calculateRotation(BufferedImage toRotate, int degrees) {
-		double rotationRequired = Math.toRadians (degrees);
+		double rotationRequired = Math.toRadians(degrees);
 		
 		AffineTransform trans = new AffineTransform();
 		trans.setTransform(new AffineTransform());
-		
-		
+		if(degrees % 45 != 0) trans.setToScale(1.25, 1.25);
 		double locX, locY;
+		
 		locX = toRotate.getWidth() / 2;
 		locY = toRotate.getHeight() / 2;
+		
 		AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locX, locY);
 		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
 		toRotate = op.filter(toRotate, null);
@@ -111,21 +113,21 @@ public class Player extends Entity {
 			if(currentAction != IDLE) {
 				currentAction = IDLE;
 				animation.setFrames(sprites.get(IDLE));
-				animation.setDelay(500);
+				animation.setDelay(400);
 			}
 		}
 		animation.update();
 		
 		// Manage image update
-		if(left && up) rotation = calculateRotation(animation.getImage(), 135);
-		else if(right && up) rotation = calculateRotation(animation.getImage(), -135);
-		else if(left && down) rotation = calculateRotation(animation.getImage(), 45);
-		else if(right && down) rotation = calculateRotation(animation.getImage(), -45);
-		else if(left) rotation = calculateRotation(animation.getImage(), 90);
-		else if(right) rotation = calculateRotation(animation.getImage(), -90);
-		else if(up) rotation = calculateRotation(animation.getImage(), 180);
-		else if(down) rotation = calculateRotation(animation.getImage(), 0);
-		
+		if(left && up) degrees = 135;
+		else if(right && up) degrees = -135;
+		else if(left && down) degrees = 45;
+		else if(right && down) degrees = -45;
+		else if(left) degrees = 90;
+		else if(right) degrees = -90;
+		else if(up) degrees = 180;
+		else if(down) degrees = 0; 	
+		rotation = calculateRotation(animation.getImage(), degrees);
 	}
 	
 	private void getNextPosition() {

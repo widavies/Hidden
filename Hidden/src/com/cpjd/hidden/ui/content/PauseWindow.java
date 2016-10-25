@@ -19,7 +19,7 @@ public class PauseWindow extends UIWindow {
 		
 		this.gsm = gsm;
 		
-		animationSpeed = Layout.HEIGHT / 80;
+		animationSpeed = 14;
 		
 		addButton("Resume", 5, Layout.alignPoints(20, 0, (int) (Layout.HEIGHT / 4.5)),(int)(Layout.WIDTH / 4) - 10, true);
 		addButton("Options", 5, Layout.alignPoints(55, 0, (int) (Layout.HEIGHT / 4.5)), (int)(Layout.WIDTH / 4) - 10, true);

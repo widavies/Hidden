@@ -27,6 +27,7 @@ public class CreditsWindow extends UIWindow {
 			"Tileset Art - Thomas Bruno, http://opengameart.org/content/1950s-scifi-setting-indoor-tileset-with-kitchen-appliances#15",
 			"Grass - http://opengameart.org/content/17-grass-tiles#15",
 			"",
+			"",
 			"Sound Attributions#30",
 			"Menu sound - strange_dragoon, https://www.freesound.org/people/strange_dragoon/sounds/271139/#15"
 	};
