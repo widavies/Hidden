@@ -14,7 +14,6 @@ import javax.imageio.ImageIO;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.MathTools;
 import com.cpjd.hidden.toolbox.pathfind.Node;
-import com.cpjd.tools.Layout;
 
 public class TileMap {
 	
@@ -180,8 +179,8 @@ public class TileMap {
 	}
 	
 	public void setPosition(double x, double y) {
-		this.x += (x - this.x - GamePanel.WIDTH / 12) * tween;
-		this.y += (y - this.y) * tween;
+		this.x += (x - this.x);
+		this.y += (y - this.y);
 
 		fixBounds();
 		
@@ -190,8 +189,8 @@ public class TileMap {
 	}
 	
 	private void fixBounds() {
-		xmin = GamePanel.WIDTH - width * 2;
-		ymin = GamePanel.HEIGHT - (height * GamePanel.SCALE);
+		xmin = GamePanel.WIDTH - width + (int)(-1.05 * GamePanel.WIDTH + 424);
+		ymin = GamePanel.HEIGHT - height + (int)(-0.933 * GamePanel.HEIGHT + 220);
 		numRowsToDraw = GamePanel.HEIGHT  * 4 / tileSize + 2;
 		numColsToDraw = GamePanel.WIDTH * 4 / tileSize + 2;
 		

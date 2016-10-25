@@ -14,7 +14,8 @@ import com.cpjd.hidden.ui.hud.HUD;
 public class Chapter extends GameState {
 
 	protected TileMap tileMap;
-
+	protected boolean finishedGen;
+	
 	protected Player player;
 	protected List<Enemy> enemies;
 	private HUD hud;
@@ -34,7 +35,7 @@ public class Chapter extends GameState {
 	
 	@Override
 	public void update() {
-		if(player == null) return;
+		if(player == null || !finishedGen) return;
 		
 		for(int i = 0; i < enemies.size(); i++){
 			if(enemies.get(i).getCollisionBox().intersects(player.getCollisionBox())){
@@ -52,9 +53,7 @@ public class Chapter extends GameState {
 		
 		if(hud.isInventoryOpen()) return;
 		player.update();
-		tileMap.setPosition((GamePanel.WIDTH / 2) - player.getX(), (GamePanel.HEIGHT / 2) - player.getY());
-
-		
+		tileMap.setPosition((GamePanel.WIDTH / 2) - player.getX() - (0.485 * GamePanel.WIDTH - 192), (GamePanel.HEIGHT / 2) - player.getY() - (0.489 * GamePanel.HEIGHT - 109));
 		player.setMapPosition();
 		
 		for(int i = 0; i < enemies.size(); i++){
@@ -67,6 +66,7 @@ public class Chapter extends GameState {
 
 	@Override
 	public void draw(Graphics2D g) {
+		if(!finishedGen) return;
 		
 		tileMap.draw(g);
 		
@@ -84,7 +84,7 @@ public class Chapter extends GameState {
 	}
 	@Override
 	public void drawGUI(Graphics2D g) {
-		if(!gsm.isPaused() && world.isFinishedGeneration()) hud.draw(g);
+		if(!gsm.isPaused() && finishedGen) hud.draw(g);
 	}
 	@Override
 	public void keyPressed(int k) {

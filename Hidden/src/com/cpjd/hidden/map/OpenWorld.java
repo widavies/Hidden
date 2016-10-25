@@ -7,24 +7,21 @@ import java.util.Random;
 // An open world generation algorithm by yours truly
 public class OpenWorld implements Runnable {
 
-	Random r;
+	private Random r;
+	private WorldListener listener;
 	
 	// Tile ids
-	public static final int GRASS_1 = 4;
-	public static final int GRASS_2 = 5;
-	public static final int GRASS_3 = 6;
-	public static final int GRASS_4 = 7;
-	public static final int GRASS_5 = 8;
-	public static final int GRASS_6 = 9;
-	
-	public static final int TREE = 3;
-	public static final int WATER = 31;
-	public static final int STONE = 1;
-	public static final int FOREST_1 = 34;
-	public static final int FOREST_2 = 35;
-	public static final int FOREST_3 = 36;
-	public static final int FOREST_4 = 37;
-	
+	private final int GRASS_1 = 4;
+	private final int GRASS_2 = 5;
+	private final int GRASS_3 = 6;
+	private final int GRASS_4 = 7;
+	private final int GRASS_5 = 8;
+	private final int GRASS_6 = 9;	
+	private final int WATER = 31;
+	private final int FOREST_1 = 34;
+	private final int FOREST_2 = 35;
+	private final int FOREST_3 = 36;
+	private final int FOREST_4 = 37;
 	
 	// Vars
 	private double progress;
@@ -35,11 +32,9 @@ public class OpenWorld implements Runnable {
 	private Point spawn;
 	
 	// Constants
-	private int WATER_MARGIN = 4; // Water can't span more than 10 tiles into the map
+	private int WATER_MARGIN = 4; // Water can't span more than 4 tiles into the map
 	private int POOL_RANGE = 5; // The farthest away water blocks can be from a pool origin point
 	private int FOREST_RANGE = 8;
-	
-	// Generation probabilities (1 is max, 0 is no chances)
 	
 	/*
 	 * Description of custom open-world generation. Decided not to implement perlin noise or similar because we want it more tuned to the style we're looking for
@@ -59,7 +54,13 @@ public class OpenWorld implements Runnable {
 		r = new Random();
 		poolLocations = new ArrayList<Point>();
 		forestLocations = new ArrayList<Point>();
-		
+	}
+	
+	public void addWorldListener(WorldListener listener) {
+		this.listener = listener;
+	}
+	
+	public void generate() {
 		thread = new Thread(this);
 		thread.start();
 	}
@@ -67,34 +68,23 @@ public class OpenWorld implements Runnable {
 	public void run() {
 		map = generateWorld(200,200);
 		
+		reset();
+	}
+	
+	private void reset() {
 		try {
 			thread.join();
-		} catch(Exception e) {}
+		} catch(Exception e) {
+			System.err.println("Couldn't stop the terrain generation thread");
+		}
+		
+		progress = 0;
+		map = null;
 	}
-	
-	public int getGenerationProgress() {
-		return (int)(progress / maxProgress * 100);
-	}
-	
-	public boolean isFinishedGeneration() {
-		return progress >= maxProgress;
-	}
-	
+
 	// Should only be called after getGenerationProgress() returns 100
 	public int[][] getWorld() {
 		return map;
-	}
-	
-	public int[][] generateFlatWorld(int tileWidth, int tileHeight) {
-		int[][] gen = new int[tileHeight][tileWidth];
-		for(int i = 0; i < tileHeight; i++) {
-			for(int j = 0; j < tileWidth; j++) {
-				gen[i][j] = 1;
-				
-			}
-		}
-		gen[0][0] = 30;
-		return gen;
 	}
 	
 	public int[][] generateWorld(int tileWidth, int tileHeight) {
@@ -113,12 +103,14 @@ public class OpenWorld implements Runnable {
 		for(int i = 0; i < tileHeight; i++) {
 			for(int j = 0; j < tileWidth; j++) {
 				progress++;
+				listener.updateProgress(progress / maxProgress);
 				
 				if(shouldGenOcean(tileWidth, tileHeight, i, j)) generation[i][j] = WATER;
 				else if(shouldGenForest(generation, tileWidth, tileHeight, i, j)) generation[i][j] = getForestVariation();
 				else if(shouldGenPool(generation, tileWidth, tileHeight, i, j)) generation[i][j] = WATER;
 				else generation[i][j] = getGrassVariation();
 			}
+
 		}
 		
 		map = generation;
@@ -144,7 +136,7 @@ public class OpenWorld implements Runnable {
 			offset++;
 		} while(generation[tileHeight / 2][offset] > 10);
 		
-		
+		listener.worldGenerated();
 		
 		return generation;
 	}

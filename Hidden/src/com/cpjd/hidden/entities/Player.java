@@ -73,7 +73,8 @@ public class Player extends Entity {
 	
 	@Override
 	public void draw(Graphics2D g) {
-		g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), width, height, null);
+		if(up && left || up && right || down && right || down && left) g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), (int)(width * 1.25), (int)(height * 1.25), null);
+		else g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), width, height, null);
 	}
 	
 	private BufferedImage calculateRotation(BufferedImage toRotate, int degrees) {
@@ -215,8 +216,8 @@ public class Player extends Entity {
 	public void setPosition(double x, double y) {
 		this.x = x;
 		this.y = y;
-		this.LOCATION.x = (int)x;
-		this.LOCATION.y = (int)y;
+		Player.LOCATION.x = (int)x;
+		Player.LOCATION.y = (int)y;
 	}
 	
 	public void keyPressed(int k) {
