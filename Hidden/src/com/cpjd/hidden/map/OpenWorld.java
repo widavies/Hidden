@@ -7,8 +7,8 @@ import java.util.Random;
 // An open world generation algorithm by yours truly
 public class OpenWorld implements Runnable {
 
-	public static final int WIDTH = 350;
-	public static final int HEIGHT = 300;
+	public static final int WIDTH = 100;
+	public static final int HEIGHT = 100;
 	
 	private Random r;
 	private WorldListener listener;
@@ -25,6 +25,9 @@ public class OpenWorld implements Runnable {
 	private final int FOREST_2 = 35;
 	private final int FOREST_3 = 36;
 	private final int FOREST_4 = 37;
+	private final int LOCKED_DOOR = 32;
+	private final int OPEN_DOOR = 33;
+	private final int WALL = 30;
 	
 	// Vars
 	private double progress;
@@ -108,9 +111,22 @@ public class OpenWorld implements Runnable {
 				progress++;
 				listener.updateProgress(progress / maxProgress);
 				
+				if(generation[i][j] != 0) continue;
+				
 				if(shouldGenOcean(tileWidth, tileHeight, i, j)) generation[i][j] = WATER;
 				else if(shouldGenForest(generation, tileWidth, tileHeight, i, j)) generation[i][j] = getForestVariation();
 				else if(shouldGenPool(generation, tileWidth, tileHeight, i, j)) generation[i][j] = WATER;
+				else if(r.nextInt(900) <= 1) {
+					generation[i][j] = 2;
+					generation[i - 1][j] = WALL;
+					generation[i + 1][j] = OPEN_DOOR;
+					generation[i][j - 1] = WALL;
+					generation[i][j + 1] = WALL;
+					generation[i + 1][j - 1] = WALL;
+					generation[i + 1][j + 1] = WALL;
+					generation[i - 1][j - 1] = WALL;
+					generation[i - 1][j + 1] = WALL;
+				}
 				else generation[i][j] = getGrassVariation();
 			}
 
