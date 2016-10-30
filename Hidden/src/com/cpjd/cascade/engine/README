@@ -1,0 +1,13 @@
+Cascade Engine Design
+
+Welcome to the design document for the new engine, Cascade.
+
+We kinda needed a rewrite because our old engine was a little poopy for the in-depth calculations we need.
+
+Here's the basics:
+
+1) All calculations, operations, movement, collision, etc, will be performed on an unscaled image. After all the game stuff is done, we'll draw the image to the screen scaled by 400%.
+2) You'll notice that if you resize the screen, the aspect ratio becomes distorted, instead, this engine will crop off the edges if we change the aspect ratio
+3) I've got a new design specification for this game, every class (related to game mechanics) should have a .release() method that sets all objects to null and releases any sounds it was using, etc.
+4) Most of our code will stay the same, however, the TileMap, Tile, and Entity class will be rewritten to fit the new engine.
+5) Put bugs, todo, etc, down here:
