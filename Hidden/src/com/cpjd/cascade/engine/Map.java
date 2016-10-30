@@ -46,7 +46,7 @@ public class Map {
 	}
 	
 	
-	// Pass in the entity's size and location, then specify the location it's trying to enter
+	// Pass in the entity's size and location, then specify the location it's trying to enter.
 	public boolean checkCollision(Rectangle r1, double x, double y) {
 		return false;
 	}
