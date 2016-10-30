@@ -57,8 +57,8 @@ public class Chapter extends GameState {
 		player.setMapPosition();
 		
 		for(int i = 0; i < enemies.size(); i++){
-			//enemies.get(i).update(player.getX(), player.getY());
-			//enemies.get(i).setMapPosition();
+			enemies.get(i).update(player.getX(), player.getY());
+			enemies.get(i).setMapPosition();
 		}
 		hud.update();
 		
@@ -72,15 +72,13 @@ public class Chapter extends GameState {
 		
 		player.draw(g);
 		
+		
 		for(int i = 0; i < enemies.size(); i++){
-			//enemies.get(i).drawSightArc(g);
-		}
-		for(int i = 0; i < enemies.size(); i++){
-			//enemies.get(i).draw(g);
+			enemies.get(i).draw(g);
 		}
 
-		//if(enemies.size() > 0 && enemies.get(0) != null)
-			//enemies.get(0).drawOverlays(g, player.getX(), player.getY());
+		if(enemies.size() > 0 && enemies.get(0) != null)
+			enemies.get(0).drawOverlays(g, player.getX(), player.getY());
 	}
 	@Override
 	public void drawGUI(Graphics2D g) {
@@ -123,7 +121,7 @@ public class Chapter extends GameState {
 		
 		int senderIndex = enemies.indexOf(sender);
 		
-		double distance;
+		double distanceSquared;
 		double changeX;
 		double changeY;
 		
@@ -133,10 +131,10 @@ public class Chapter extends GameState {
 			
 			changeX = enemies.get(i).getX() - x;
 			changeY = enemies.get(i).getY() - y;
-			distance = changeX * changeX + changeY * changeY;
+			distanceSquared = changeX * changeX + changeY * changeY;
 			
 			
-			if(distance <= messageRange * messageRange){
+			if(distanceSquared <= messageRange * messageRange){
 				enemies.get(i).recievePlayerLocationMessage(player.getX(), player.getY());
 			}
 		}

@@ -132,6 +132,12 @@ public class Player extends Entity {
 	
 	private void getNextPosition() {
 
+		double oldMoveSpeed = moveSpeed;
+		
+		if((left && up) || (left && down) || (right && up) || (right && down)){
+			moveSpeed *= .7;
+		}
+		
 		// movement
 		if(left) {
 			dx -= moveSpeed;
@@ -163,6 +169,7 @@ public class Player extends Entity {
 			dy = 0;
 		}
 
+		moveSpeed = oldMoveSpeed;
 	}
 	
 	public void checkTileMapCollision() {
