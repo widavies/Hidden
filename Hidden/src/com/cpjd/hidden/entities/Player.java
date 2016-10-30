@@ -230,7 +230,7 @@ public class Player extends Entity {
 	}
 	public void keyReleased(int k) {
 		if(k == KeyEvent.VK_W) up = false;
-		if(k == KeyEvent.VK_A) left = false;		
+		if(k == KeyEvent.VK_A) left = false;
 		if(k == KeyEvent.VK_S) down = false;
 		if(k == KeyEvent.VK_D) right = false;
 	}
