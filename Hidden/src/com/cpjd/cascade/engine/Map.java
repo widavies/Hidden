@@ -9,7 +9,7 @@ import com.cpjd.hidden.main.GamePanel;
 
 public class Map {
 	// Consants
-	public static byte SCALE = 1;
+	public static byte SCALE = 4;
 	
 	// Map
 	private byte[][] map;
@@ -25,8 +25,10 @@ public class Map {
 	private int width, height;
 	
 	// Offsets
-	private double x, y; // Player x,y location in px
-	private int xOffset, yOffset; // The left and top visible tiles
+	private double lastx, lasty, x, y; // Player x,y location in px
+	private double xOffset, yOffset; // The left and top visible tiles
+	private double smoothx, smoothy;
+	private double xmin, ymin, xmax, ymax;
 	
 	public Map(int tileSize) {
 		this.tileSize = tileSize;
@@ -64,23 +66,46 @@ public class Map {
 	
 		numCols = map.length;
 		numRows = map[0].length;
-		numColsToDraw = (byte)(GamePanel.WIDTH / tileSize + 1);
-		numRowsToDraw = (byte)(GamePanel.HEIGHT / tileSize + 1);
-		width = numColsToDraw * tileSize;
-		height = numColsToDraw * tileSize;
+
+		width = (numCols - 25)* (tileSize * 4);
+		height = (numRows - 16)* (tileSize * 4);
+		xmin = 0;
+		ymin = 0;
+		xmax = width;
+		ymax = height;
 	}
 	
 	public void draw(Graphics2D g) {
-		for(int row = 0; row < numRows; row++) {
-			for(int col = 0; col < numCols; col++) {
-				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(), col * tileSize * SCALE, row * tileSize * SCALE, tileSize * SCALE, tileSize * SCALE, null);
+		int startRow = (int)(yOffset / (tileSize * SCALE));
+		int startCol = (int)(xOffset / (tileSize * SCALE));
+		
+		for(int row = startRow, rowPx = 0; row < numRowsToDraw + startRow; row++, rowPx++) {
+			for(int col = startCol, colPx = 0; col < numColsToDraw + startCol; col++, colPx++) {
+				if(row >= map[0].length || col >= map.length) continue;
+				
+				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(), (int)colPx * tileSize * SCALE - 20, (int)rowPx * tileSize * SCALE, tileSize * SCALE, tileSize * SCALE, null);
 			}
 		}
+
 	}
 	
 	public void setCameraPosition(double x, double y) {
-		this.x = x;
-		this.y = y;
+		xOffset -= lastx - x;
+		yOffset -= lasty - y;
+		
+		if(lastx - x > 1) smoothx++;
+		if(smoothx > tileSize * 64) smoothx = 0;
+		
+		if(xOffset < xmin) xOffset = xmin;
+		if(yOffset < ymin) yOffset = ymin;
+		if(xOffset > xmax) xOffset = xmax;
+		if(yOffset > ymax) yOffset = ymax;
+		
+		numColsToDraw = (byte)(GamePanel.WIDTH / (tileSize * SCALE) + 1);
+		numRowsToDraw = (byte)(GamePanel.HEIGHT / (tileSize * SCALE) + 1);
+		
+		lastx = x;
+		lasty = y;
 	}
 	
 	public int getTileSize() {

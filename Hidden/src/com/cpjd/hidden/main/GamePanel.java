@@ -21,9 +21,8 @@ import com.cpjd.tools.Layout;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 	// Size
-	public final static int SCALE = 4; // Applied to game only - not interface or hud
-	public static int WIDTH = 1600 / SCALE;
-	public static int HEIGHT = 900 / SCALE;
+	public static int WIDTH = 1600;
+	public static int HEIGHT = 900;
 
 	// Thread
 	private Thread thread;
@@ -43,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	public static boolean DEBUG;
 	
 	public GamePanel() {
-		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setFocusable(true);
 		requestFocus();
 		
@@ -133,7 +132,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 
 	// Resizes the window
 	public void resizeGame(int width, int height) {
-		WIDTH = width / SCALE; HEIGHT = height / SCALE;
+		WIDTH = width; HEIGHT = height;
 		
 		Layout.WIDTH = width;
 		Layout.HEIGHT = height;

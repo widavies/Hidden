@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import com.cpjd.hidden.map.TileMap;
+import com.cpjd.cascade.engine.Map;
+import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.tools.Animation;
 
 public class Player extends Entity {
@@ -32,16 +33,16 @@ public class Player extends Entity {
 	// global x and y for the console
 	public static Point LOCATION = new Point();
 	
-	public Player(TileMap tm) {
+	public Player(Map tm) {
 		super(tm);
 		
-		width = 64;
-		height = 64;
+		width = 128;
+		height = 128;
 		cwidth = 0;
 		cheight = 0;
-		maxSpeed =.8;
+		maxSpeed = 12;
 		
-		moveSpeed = .6;
+		moveSpeed = 8;
 		
 		try {
 			loadAnimation();
@@ -74,8 +75,8 @@ public class Player extends Entity {
 	
 	@Override
 	public void draw(Graphics2D g) {
-		if(dy != 0 && dx == 0 || dx != 0 && dy == 0 || (dy == 0 && dx == 0) && (degrees % 90 == 0)) g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2) ,width, height, null);
-		else g.drawImage(rotation, (int) (x + xmap - width / 2), (int) (y + ymap - height / 2), (int)(width * 1.25), (int)(height * 1.25), null);
+		if(dy != 0 && dx == 0 || dx != 0 && dy == 0 || (dy == 0 && dx == 0) && (degrees % 90 == 0)) g.drawImage(rotation, (GamePanel.WIDTH / 2) - width / 2, (GamePanel.HEIGHT  / 2) - width / 2 ,width, height, null);
+		else g.drawImage(rotation, (GamePanel.WIDTH / 2) - width / 2, (GamePanel.HEIGHT  / 2) - width / 2 ,(int)(width * 1.25), (int)(height * 1.25), null);
 	}
 	
 	private BufferedImage calculateRotation(BufferedImage toRotate, int degrees) {

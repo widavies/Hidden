@@ -5,13 +5,13 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import com.cpjd.hidden.map.Tile;
+import com.cpjd.cascade.engine.Map;
 import com.cpjd.hidden.map.TileMap;
 import com.cpjd.tools.Animation;
 
 public class Entity {
 
-	protected TileMap tm;
+	protected Map tm;
 	protected double xmap;
 	protected double ymap;
 
@@ -45,7 +45,7 @@ public class Entity {
 	// animation
 	protected Animation animation;
 	
-	public Entity(TileMap tm) {
+	public Entity(Map tm) {
 		this.tm = tm;
 		Entity.tileSize = tm.getTileSize();
 	}
@@ -78,10 +78,7 @@ public class Entity {
 	}
 
 	public void setMapPosition() {
-		xmap = tm.getX(); // Map pos tells us where to draw, actual location! vs
-							// global!, only want to draw it if it enter the
-							// screen
-		ymap = tm.getY();
+
 	}
 
 	public double getX() {

@@ -102,7 +102,7 @@ public class GameStateManager implements UIListener {
 		
 		if(pauseWindow != null) g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.15f));
 		if(gameStates[currentState] != null) gameStates[currentState].draw(g2);
-		if(currentState >= CH1) g.drawImage(image, 0, 0,GamePanel.WIDTH * GamePanel.SCALE, GamePanel.HEIGHT * GamePanel.SCALE, null);
+		if(currentState >= CH1) g.drawImage(image, 0, 0,GamePanel.WIDTH, GamePanel.HEIGHT, null);
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 		if(gameStates[currentState] != null) gameStates[currentState].drawGUI(g);
 		if(pauseWindow != null) pauseWindow.draw(g);

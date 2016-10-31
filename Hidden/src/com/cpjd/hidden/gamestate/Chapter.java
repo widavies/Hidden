@@ -62,7 +62,7 @@ public class Chapter extends GameState {
 		
 		if(!finishedGen) return;
 		tileMap.draw(g);
-		//player.draw(g);		
+		player.draw(g);		
 	}
 	@Override
 	public void keyPressed(int k) {

@@ -27,6 +27,8 @@ public class Ch1 extends Chapter implements WorldListener {
 	
 	public void update() {
 		if(finishedGen) super.update();
+		
+		if(player != null) tileMap.setCameraPosition(player.getX(), player.getY());
 	}
 	
 	@Override
@@ -47,8 +49,8 @@ public class Ch1 extends Chapter implements WorldListener {
 	@Override
 	public void worldGenerated() {
 		tileMap.setMap(world.getWorld());
-		//player = new Player(tileMap);
-		//player.setPosition(world.getSpawn());
+		player = new Player(tileMap);
+		player.setPosition(world.getSpawn());
 		finishedGen = true;
 	}
 
