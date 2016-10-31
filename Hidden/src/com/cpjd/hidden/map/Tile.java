@@ -10,10 +10,10 @@ public class Tile {
 	public static final int ITEM = 3;
 	
 	private BufferedImage image;
-	private int type;
-	private int id;
+	private short type;
+	private short id;
 	
-	public Tile(BufferedImage image, int type) {
+	public Tile(BufferedImage image, short type) {
 		this.image = image;
 		this.type = type;
 	}
@@ -22,7 +22,7 @@ public class Tile {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(short id) {
 		this.id = id;
 	}
 	

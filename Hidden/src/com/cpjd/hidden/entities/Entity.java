@@ -55,25 +55,7 @@ public class Entity {
 	}
 
 	public void calculateCorners(double x, double y) {
-		int leftTile = (int) (x - cwidth / 2) / tileSize;
-		int rightTile = (int) (x + cwidth / 2 - 1) / tileSize;
-		int topTile = (int) (y - cheight / 2) / tileSize;
-		int bottomTile = (int) (y + cheight / 2 - 1) / tileSize;
-
-		if(topTile < 0 || bottomTile >= tm.getNumRows() || leftTile < 0 || rightTile >= tm.getNumCols()) {
-			topLeft = topRight = bottomLeft = bottomRight = false;
-			return;
-		}
-
-		int tl = tm.getType(topTile, leftTile);
-		int tr = tm.getType(topTile, rightTile);
-		int bl = tm.getType(bottomTile, leftTile);
-		int br = tm.getType(bottomTile, rightTile);
 		
-		topLeft = tl == Tile.BLOCKED;
-		topRight = tr == Tile.BLOCKED;
-		bottomLeft = bl == Tile.BLOCKED;
-		bottomRight = br == Tile.BLOCKED;
 	}
 
 	// draws the sprite

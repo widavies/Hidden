@@ -35,10 +35,10 @@ public class Player extends Entity {
 	public Player(TileMap tm) {
 		super(tm);
 		
-		width = 32;
-		height = 32;
-		cwidth = 8;
-		cheight = 8;
+		width = 64;
+		height = 64;
+		cwidth = 0;
+		cheight = 0;
 		maxSpeed =.8;
 		
 		moveSpeed = .6;

@@ -2,9 +2,7 @@ package com.cpjd.hidden.chapters;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.util.LinkedList;
 
-import com.cpjd.hidden.entities.Enemy;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.gamestate.GameStateManager;
@@ -25,8 +23,6 @@ public class Ch1 extends Chapter implements WorldListener {
 		world = new OpenWorld();
 		world.addWorldListener(this);
 		world.generate();
-		
-		enemies = new LinkedList<Enemy>();
 	}
 	
 	public void update() {
@@ -50,9 +46,9 @@ public class Ch1 extends Chapter implements WorldListener {
 	
 	@Override
 	public void worldGenerated() {
-		tileMap.setMap(world.getWorld(), OpenWorld.WIDTH, OpenWorld.HEIGHT);	
-		player = new Player(tileMap);
-		player.setPosition(world.getSpawn());
+		tileMap.setMap(world.getWorld());
+		//player = new Player(tileMap);
+		//player.setPosition(world.getSpawn());
 		finishedGen = true;
 	}
 

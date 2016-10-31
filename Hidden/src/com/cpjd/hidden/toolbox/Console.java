@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 
 import javax.swing.JOptionPane;
 
-import com.cpjd.hidden.entities.Enemy;
+import com.cpjd.cascade.engine.Map;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.hidden.main.GamePanel;
@@ -50,9 +50,9 @@ public class Console {
 	public void processCommand(String s) {
 		if(s.equalsIgnoreCase("stop")) System.exit(0);
 		else if(s.equalsIgnoreCase("reload") || s.equalsIgnoreCase("r")) gsm.setState(gsm.getState());
-		else if(s.equalsIgnoreCase("los overlay")) Enemy.drawLOSOverlay = !Enemy.drawLOSOverlay;
-		else if(s.equalsIgnoreCase("pathfind overlay")) Enemy.drawPathFindOverlay = !Enemy.drawPathFindOverlay;
 		else if(s.equalsIgnoreCase("menu")) gsm.setState(GameStateManager.MENU);
+		else if(s.equalsIgnoreCase("scale")) Map.SCALE = 4;
+		else if(s.equalsIgnoreCase("unscale")) Map.SCALE = 1;
 		else if(s.equalsIgnoreCase("mem")) showMemory = !showMemory;
 		else JOptionPane.showMessageDialog(null, "Command not found.");
 		

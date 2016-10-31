@@ -2,22 +2,19 @@ package com.cpjd.hidden.gamestate;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.List;
 
-import com.cpjd.hidden.entities.Enemy;
+import com.cpjd.cascade.engine.Map;
 import com.cpjd.hidden.entities.Player;
-import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.OpenWorld;
-import com.cpjd.hidden.map.TileMap;
 import com.cpjd.hidden.ui.hud.HUD;
+import com.cpjd.tools.Layout;
 
 public class Chapter extends GameState {
 
-	protected TileMap tileMap;
+	protected Map tileMap;
 	protected boolean finishedGen;
 	
 	protected Player player;
-	protected List<Enemy> enemies;
 	private HUD hud;
 	
 	private Rectangle winBox = new Rectangle(19 * 64 - 10, 21 * 64 - 10, 64 + 10, 64 + 10);
@@ -27,8 +24,7 @@ public class Chapter extends GameState {
 	public Chapter(GameStateManager gsm) {
 		super(gsm);
 		
-		tileMap = new TileMap(16);
-		tileMap.setTween(0.07);
+		tileMap = new Map(16);
 		
 		hud = new HUD();
 	}
@@ -36,13 +32,6 @@ public class Chapter extends GameState {
 	@Override
 	public void update() {
 		if(player == null || !finishedGen) return;
-		
-		for(int i = 0; i < enemies.size(); i++){
-			if(enemies.get(i).getCollisionBox().intersects(player.getCollisionBox())){
-				gsm.setState(gsm.getState());
-				System.out.println("you got caught");
-			}
-		}
 		
 		if(player.getCollisionBox().intersects(winBox)){
 			System.out.println("you won");
@@ -53,13 +42,9 @@ public class Chapter extends GameState {
 		
 		if(hud.isInventoryOpen()) return;
 		player.update();
-		tileMap.setPosition((GamePanel.WIDTH / 2) - player.getX() - (0.485 * GamePanel.WIDTH - 192), (GamePanel.HEIGHT / 2) - player.getY() - (0.489 * GamePanel.HEIGHT - 109));
+		//tileMap.setPosition((Layout.WIDTH / 2) - player.getX(), (Layout.HEIGHT / 2) - player.getY());
 		player.setMapPosition();
 		
-		for(int i = 0; i < enemies.size(); i++){
-			enemies.get(i).update(player.getX(), player.getY());
-			enemies.get(i).setMapPosition();
-		}
 		hud.update();
 		
 	}
@@ -68,21 +53,16 @@ public class Chapter extends GameState {
 	public void draw(Graphics2D g) {
 		if(!finishedGen) return;
 		
-		tileMap.draw(g);
-		
-		player.draw(g);
 		
 		
-		for(int i = 0; i < enemies.size(); i++){
-			enemies.get(i).draw(g);
-		}
-
-		if(enemies.size() > 0 && enemies.get(0) != null)
-			enemies.get(0).drawOverlays(g, player.getX(), player.getY());
 	}
 	@Override
 	public void drawGUI(Graphics2D g) {
 		if(!gsm.isPaused() && finishedGen) hud.draw(g);
+		
+		if(!finishedGen) return;
+		tileMap.draw(g);
+		//player.draw(g);		
 	}
 	@Override
 	public void keyPressed(int k) {
@@ -116,29 +96,4 @@ public class Chapter extends GameState {
 	public void mouseWheelMoved(int k) {
 		hud.mouseWheelMoved(k);
 	}
-
-	public void sendSightMessage(double x, double y, int messageRange, Enemy sender) {
-		
-		int senderIndex = enemies.indexOf(sender);
-		
-		double distanceSquared;
-		double changeX;
-		double changeY;
-		
-		for(int i = 0; i < enemies.size(); i++){
-			
-			if(i == senderIndex) continue;
-			
-			changeX = enemies.get(i).getX() - x;
-			changeY = enemies.get(i).getY() - y;
-			distanceSquared = changeX * changeX + changeY * changeY;
-			
-			
-			if(distanceSquared <= messageRange * messageRange){
-				enemies.get(i).recievePlayerLocationMessage(player.getX(), player.getY());
-			}
-		}
-	}
-
-
 }

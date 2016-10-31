@@ -32,7 +32,7 @@ public class OpenWorld implements Runnable {
 	// Vars
 	private double progress;
 	private double maxProgress;
-	private int[][] map;
+	private byte[][] map;
 	private ArrayList<Point> poolLocations;
 	private ArrayList<Point> forestLocations;
 	private Point spawn;
@@ -89,12 +89,12 @@ public class OpenWorld implements Runnable {
 	}
 
 	// Should only be called after getGenerationProgress() returns 100
-	public int[][] getWorld() {
+	public byte[][] getWorld() {
 		return map;
 	}
 	
 	private void generateWorld(int tileWidth, int tileHeight) {
-		int[][] generation = new int[tileHeight][tileWidth];
+		byte[][] generation = new byte[tileHeight][tileWidth];
 		
 		maxProgress = tileWidth * tileHeight;
 		
@@ -114,7 +114,7 @@ public class OpenWorld implements Runnable {
 				if(generation[i][j] != 0) continue;
 				
 				if(shouldGenOcean(tileWidth, tileHeight, i, j)) generation[i][j] = WATER;
-				else if(shouldGenForest(generation, tileWidth, tileHeight, i, j)) generation[i][j] = getForestVariation();
+				else if(shouldGenForest(generation, tileWidth, tileHeight, i, j)) generation[i][j] = (byte)getForestVariation();
 				else if(shouldGenPool(generation, tileWidth, tileHeight, i, j)) generation[i][j] = WATER;
 				else if(r.nextInt(900) <= 1) {
 					generation[i][j] = 2;
@@ -127,7 +127,7 @@ public class OpenWorld implements Runnable {
 					generation[i - 1][j - 1] = WALL;
 					generation[i - 1][j + 1] = WALL;
 				}
-				else generation[i][j] = getGrassVariation();
+				else generation[i][j] = (byte)getGrassVariation();
 			}
 
 		}
@@ -232,7 +232,7 @@ public class OpenWorld implements Runnable {
 		if(prob == 77) return GRASS_6;
 		else return GRASS_4;
 	}
-	private boolean shouldGenForest(int[][] map, int tileWidth, int tileHeight, int row, int col) {
+	private boolean shouldGenForest(byte[][] map, int tileWidth, int tileHeight, int row, int col) {
 		if(map[row][col] == WATER) return false;
 		
 		// Several steps here. First determine if we're within the forest range of an existing forest, if we are, test the probability of this tile being a forest tile
@@ -255,7 +255,7 @@ public class OpenWorld implements Runnable {
 		else return FOREST_4;
 	}
 	
-	private boolean shouldGenPool(int[][] map, int tileWidth, int tileHeight, int row, int col) {
+	private boolean shouldGenPool(byte[][] map, int tileWidth, int tileHeight, int row, int col) {
 		for(int i = 0; i < poolLocations.size(); i++) {
 			double range = Math.hypot(poolLocations.get(i).x - col, poolLocations.get(i).y - row);
 			if(range < POOL_RANGE) {

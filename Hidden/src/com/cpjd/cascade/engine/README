@@ -4,6 +4,10 @@ Welcome to the design document for the new engine, Cascade.
 
 We kinda needed a rewrite because our old engine was a little poopy for the in-depth calculations we need.
 
+Coordinate Systems
+-Pixel - Each pixel is a coordinate
+-Tile - Each tile is a coordinate
+
 Here's the basics:
 
 1) All calculations, operations, movement, collision, etc, will be performed on an unscaled image. After all the game stuff is done, we'll draw the image to the screen scaled by 400%.
