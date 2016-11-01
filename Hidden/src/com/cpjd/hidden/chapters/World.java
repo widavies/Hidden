@@ -6,15 +6,16 @@ import java.awt.Graphics2D;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.gamestate.GameStateManager;
+import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.OpenWorld;
 import com.cpjd.hidden.map.WorldListener;
 import com.cpjd.tools.Layout;
 
-public class Ch1 extends Chapter implements WorldListener {
+public class World extends Chapter implements WorldListener {
 
 	private double progress;
 	
-	public Ch1(GameStateManager gsm) {
+	public World(GameStateManager gsm) {
 		super(gsm);
 		
 		finishedGen = false;
@@ -28,7 +29,10 @@ public class Ch1 extends Chapter implements WorldListener {
 	public void update() {
 		if(finishedGen) super.update();
 		
-		if(player != null) tileMap.setCameraPosition(player.getX(), player.getY());
+		if(player != null) {
+			//System.out.println(player.getX());
+			tileMap.setCameraPosition(player.getX(),player.getY());
+		}
 	}
 	
 	@Override
@@ -50,7 +54,8 @@ public class Ch1 extends Chapter implements WorldListener {
 	public void worldGenerated() {
 		tileMap.setMap(world.getWorld());
 		player = new Player(tileMap);
-		player.setPosition(world.getSpawn());
+		System.out.println(world.getSpawn());
+		player.setPosition(800,400);
 		finishedGen = true;
 	}
 

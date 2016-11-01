@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
-import com.cpjd.hidden.chapters.Ch1;
+import com.cpjd.hidden.chapters.World;
 import com.cpjd.hidden.gamestates.Menu;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.Console;
@@ -66,7 +66,7 @@ public class GameStateManager implements UIListener {
 
 	private void loadState(int state) {
 		if(state == MENU) gameStates[state] = new Menu(this);
-		if(state == CH1) gameStates[state] = new Ch1(this);
+		if(state == CH1) gameStates[state] = new World(this);
 	}
 	private void unloadState(int state) {
 		gameStates[state] = null;

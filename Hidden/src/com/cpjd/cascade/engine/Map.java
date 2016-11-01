@@ -32,10 +32,15 @@ public class Map {
 	private double xOffset, yOffset; // The left and top visible tiles
 	private double xmin, ymin, xmax, ymax;
 	private double borderx, bordery;
+	private int lastScreenWidth, lastScreenHeight;
+	private double checkScalex;
 	
 	public Map(int tileSize) {
 		this.tileSize = tileSize;
 		this.scaledTileSize = tileSize * SCALE;
+		
+		lastScreenWidth = GamePanel.WIDTH;
+		lastScreenHeight = GamePanel.HEIGHT;
 	}
 	
 	/**
@@ -86,10 +91,10 @@ public class Map {
 		adjusty = yOffset % scaledTileSize;
 		
 		for(short row = startRow, rowPx = 0; row < numRowsToDraw + startRow; row++, rowPx++) {
-			if(row >= map[0].length) break;
+			if(row >= map[0].length || row < 0) break;
 			
 			for(short col = startCol, colPx = 0; col < numColsToDraw + startCol; col++, colPx++) {
-				if(col >= map.length) break;
+				if(col >= map.length || col < 0) break;
 				
 				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(),(int)((double)colPx * scaledTileSize - adjustx), (int)((double)rowPx * scaledTileSize - adjusty), (int)scaledTileSize, (int)scaledTileSize, null);
 
@@ -103,20 +108,25 @@ public class Map {
 	 * @param y vertical pixels away form the upper-left most tile
 	 */
 	public void setCameraPosition(double x, double y) {
-		//x = 0; y = 0;
-		xOffset -= lastx - x;
-		yOffset -= lasty - y;
-		
-		if(xOffset < xmin) xOffset = xmin;
-		if(yOffset < ymin) yOffset = ymin;
-		if(xOffset > xmax) xOffset = xmax;
-		if(yOffset > ymax) yOffset = ymax;
+		//System.out.println(x);
+		if(x > GamePanel.WIDTH / 2 && x < width - (GamePanel.WIDTH / 2)) xOffset -= lastx - x;
+		if(y > GamePanel.HEIGHT / 2 && y < height - (GamePanel.HEIGHT / 2))	yOffset -= lasty - y;
 		
 		numColsToDraw = (byte)(GamePanel.WIDTH / (tileSize * SCALE) + 2);
 		numRowsToDraw = (byte)(GamePanel.HEIGHT / (tileSize * SCALE) + 2);
 		
 		lastx = x;
 		lasty = y;
+
+		if(lastScreenWidth != GamePanel.WIDTH) {
+			if(x > GamePanel.WIDTH / 2 && x < width - (GamePanel.WIDTH / 2)) xOffset = xOffset - (GamePanel.WIDTH - lastScreenWidth) / 2; 
+			lastScreenWidth = GamePanel.WIDTH;
+		}
+		
+		if(lastScreenHeight != GamePanel.HEIGHT) {
+			if(y > GamePanel.HEIGHT / 2 && y < height - (GamePanel.HEIGHT / 2)) yOffset = yOffset - (GamePanel.HEIGHT - lastScreenHeight) / 2;
+			lastScreenHeight = GamePanel.HEIGHT;
+		}
 	}
 	
 	/**
@@ -131,6 +141,20 @@ public class Map {
 	 */
 	public int getScaledTileSize() {
 		return (int)scaledTileSize;
+	}
+	
+	/**
+	 * @return Map width (px)
+	 */
+	public int getWidth() {
+		return width;
+	}
+	
+	/**
+	 * @return Map height (px)
+	 */
+	public int getHeight() {
+		return height;
 	}
 	
 }

@@ -30,6 +30,10 @@ public class Player extends Entity {
 	private double maxSpeed; // The max speed the object can go
 	private boolean left, right, up, down;
 	
+	private double snapx, snapy;
+	private double actx, acty;
+	private int lastWidth, lastHeight;
+	
 	// global x and y for the console
 	public static Point LOCATION = new Point();
 	
@@ -57,6 +61,8 @@ public class Player extends Entity {
 		animation.setDelay(400);
 		
 		rotation = animation.getImage();
+		
+		lastWidth = GamePanel.WIDTH; lastHeight = GamePanel.HEIGHT;
 	}
 	
 	private void loadAnimation() throws Exception {
@@ -75,8 +81,8 @@ public class Player extends Entity {
 	
 	@Override
 	public void draw(Graphics2D g) {
-		if(dy != 0 && dx == 0 || dx != 0 && dy == 0 || (dy == 0 && dx == 0) && (degrees % 90 == 0)) g.drawImage(rotation, (GamePanel.WIDTH / 2) - width / 2, (GamePanel.HEIGHT  / 2) - width / 2 ,width, height, null);
-		else g.drawImage(rotation, (GamePanel.WIDTH / 2) - width / 2, (GamePanel.HEIGHT  / 2) - width / 2 ,(int)(width * 1.25), (int)(height * 1.25), null);
+		if(dy != 0 && dx == 0 || dx != 0 && dy == 0 || (dy == 0 && dx == 0) && (degrees % 90 == 0)) g.drawImage(rotation, (int)((GamePanel.WIDTH / 2) - width / 2 - actx), (int)((GamePanel.HEIGHT  / 2) - width / 2 - snapy),width, height, null);
+		else g.drawImage(rotation, (int)(((GamePanel.WIDTH / 2) - width / 2) - actx), (int)((GamePanel.HEIGHT  / 2) - width / 2 -snapy),(int)(width * 1.25), (int)(height * 1.25), null);
 	}
 	
 	private BufferedImage calculateRotation(BufferedImage toRotate, int degrees) {
@@ -99,9 +105,7 @@ public class Player extends Entity {
 	@Override
 	public void update() {
 		getNextPosition();
-		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
-		
 		// Manage animation update
 		if(left || right || down || up) {
 			if(currentAction != WALKING) {
@@ -132,7 +136,7 @@ public class Player extends Entity {
 	}
 	
 	private void getNextPosition() {
-
+		
 		double oldMoveSpeed = moveSpeed;
 		
 		if((left && up) || (left && down) || (right && up) || (right && down)){
@@ -171,58 +175,30 @@ public class Player extends Entity {
 		}
 
 		moveSpeed = oldMoveSpeed;
-	}
-	
-	public void checkTileMapCollision() {
-		currCol = (int) x / tileSize; // Location in tilesize
-		currRow = (int) y / tileSize;
-		xdest = x + dx; // Destination position
-		ydest = y + dy;
-
-		xtemp = x; // Keep track of original x
+		
+		xtemp = x;
 		ytemp = y;
 
-		calculateCorners(x, ydest); // Four cornered method - in y direction
-		if(dy < 0) { // Going upwards
-			if(topLeft || topRight) { // Top too corners
-				dy = 0; // STop it from moving
-				ytemp = currRow * tileSize + cheight / 2; // Set's us right
-															// below tile we
-															// bumped our head
-															// into
-			} else {
-				ytemp += dy; // If nothing is stopping us, keep going up
-			}
+		if(dy < 0) {
+			ytemp += dy;
 		}
-		if(dy > 0) { // Landed on a tile
-			if(bottomLeft || bottomRight) {
-				dy = 0;
-				ytemp = (currRow + 1) * tileSize - cheight / 2;
-			} else {
-				ytemp += dy; // Keep falling if there is nothing there
-			}
-
+		if(dy > 0) {
+			ytemp += dy;
 		}
-
-		calculateCorners(xdest, y);
-		if(dx < 0) { // We are going left
-			if(topLeft || bottomLeft) {
-				dx = 0;
-				xtemp = currCol * tileSize + cwidth / 2;
-			} else {
-				xtemp += dx;
-			}
+		if(dx < 0) {
+			xtemp += dx;
 		}
-		if(dx > 0) { // Moving to the right
-			if(topRight || bottomRight) {
-				dx = 0;
-				xtemp = (currCol + 1) * tileSize - cwidth / 2; // Sets us just
-																// to the left
-			} else {
-				xtemp += dx;
-			}
+		if(dx > 0) {
+			xtemp += dx;
 		}
+		
+		snapx = (GamePanel.WIDTH / 2) - x;
+		if(snapx >= 0) actx = snapx;
+		
+		snapy = (GamePanel.HEIGHT / 2) - y;
+		if(snapy <= 0) snapy = 0;
 	}
+	
 	public void setPosition(double x, double y) {
 		this.x = x;
 		this.y = y;

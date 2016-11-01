@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	// Size
 	public static int WIDTH = 1600;
 	public static int HEIGHT = 900;
-
+	
 	// Thread
 	private Thread thread;
 	private volatile boolean running;
