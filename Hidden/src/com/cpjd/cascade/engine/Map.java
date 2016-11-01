@@ -83,7 +83,7 @@ public class Map {
 			for(int col = startCol, colPx = 0; col < numColsToDraw + startCol; col++, colPx++) {
 				if(row >= map[0].length || col >= map.length) continue;
 				
-				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(), (int)colPx * tileSize * SCALE - 20, (int)rowPx * tileSize * SCALE, tileSize * SCALE, tileSize * SCALE, null);
+				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(), (int)colPx * tileSize * SCALE, (int)rowPx * tileSize * SCALE, tileSize * SCALE, tileSize * SCALE, null);
 			}
 		}
 
