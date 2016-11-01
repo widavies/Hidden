@@ -14,6 +14,7 @@ public class Map {
 	// Map
 	private byte[][] map;
 	private int tileSize;
+	private int scaledTileSize;
 	private Tile[][] tiles;
 	
 	// Tileset
@@ -27,11 +28,11 @@ public class Map {
 	// Offsets
 	private double lastx, lasty, x, y; // Player x,y location in px
 	private double xOffset, yOffset; // The left and top visible tiles
-	private double smoothx, smoothy;
 	private double xmin, ymin, xmax, ymax;
 	
 	public Map(int tileSize) {
 		this.tileSize = tileSize;
+		this.scaledTileSize = tileSize * SCALE;
 	}
 	
 	/**
@@ -76,25 +77,24 @@ public class Map {
 	}
 	
 	public void draw(Graphics2D g) {
-		int startRow = (int)(yOffset / (tileSize * SCALE));
-		int startCol = (int)(xOffset / (tileSize * SCALE));
+		int startRow = (int)(yOffset / scaledTileSize);
+		int startCol = (int)(xOffset / scaledTileSize);
 		
 		for(int row = startRow, rowPx = 0; row < numRowsToDraw + startRow; row++, rowPx++) {
+			if(row >= map[0].length) break;
+			
 			for(int col = startCol, colPx = 0; col < numColsToDraw + startCol; col++, colPx++) {
-				if(row >= map[0].length || col >= map.length) continue;
+				if(col >= map.length) break;
 				
-				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(), (int)colPx * tileSize * SCALE, (int)rowPx * tileSize * SCALE, tileSize * SCALE, tileSize * SCALE, null);
+				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(), (int)(xOffset % scaledTileSize  + colPx * scaledTileSize), (int)(yOffset % scaledTileSize + rowPx * scaledTileSize), scaledTileSize, scaledTileSize, null);
+
 			}
 		}
-
 	}
-	
+
 	public void setCameraPosition(double x, double y) {
 		xOffset -= lastx - x;
 		yOffset -= lasty - y;
-		
-		if(lastx - x > 1) smoothx++;
-		if(smoothx > tileSize * 64) smoothx = 0;
 		
 		if(xOffset < xmin) xOffset = xmin;
 		if(yOffset < ymin) yOffset = ymin;
