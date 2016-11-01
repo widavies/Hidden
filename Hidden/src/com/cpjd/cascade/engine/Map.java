@@ -86,7 +86,7 @@ public class Map {
 			for(int col = startCol, colPx = 0; col < numColsToDraw + startCol; col++, colPx++) {
 				if(col >= map.length) break;
 				
-				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(), (int)(xOffset % scaledTileSize  + colPx * scaledTileSize), (int)(yOffset % scaledTileSize + rowPx * scaledTileSize), scaledTileSize, scaledTileSize, null);
+				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(), (int)(colPx * scaledTileSize - (xOffset % scaledTileSize)), (int)(rowPx * scaledTileSize - (yOffset % scaledTileSize)), scaledTileSize, scaledTileSize, null);
 
 			}
 		}

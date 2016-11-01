@@ -40,9 +40,9 @@ public class Player extends Entity {
 		height = 128;
 		cwidth = 0;
 		cheight = 0;
-		maxSpeed = 12;
+		maxSpeed = 4;
 		
-		moveSpeed = 8;
+		moveSpeed = 2;
 		
 		try {
 			loadAnimation();
