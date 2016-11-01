@@ -14,7 +14,7 @@ public class Map {
 	// Map
 	private byte[][] map;
 	private int tileSize;
-	private int scaledTileSize;
+	private double scaledTileSize;
 	private Tile[][] tiles;
 	
 	// Tileset
@@ -24,11 +24,14 @@ public class Map {
 	private byte numColsToDraw, numRowsToDraw;
 	private int numRows, numCols;
 	private int width, height;
+	private short startRow, startCol;
+	private double adjustx, adjusty;
 	
 	// Offsets
-	private double lastx, lasty, x, y; // Player x,y location in px
+	private double lastx, lasty;
 	private double xOffset, yOffset; // The left and top visible tiles
 	private double xmin, ymin, xmax, ymax;
+	private double borderx, bordery;
 	
 	public Map(int tileSize) {
 		this.tileSize = tileSize;
@@ -77,22 +80,30 @@ public class Map {
 	}
 	
 	public void draw(Graphics2D g) {
-		int startRow = (int)(yOffset / scaledTileSize);
-		int startCol = (int)(xOffset / scaledTileSize);
+		startRow = (short)(yOffset / scaledTileSize);
+		startCol = (short)(xOffset / scaledTileSize);
+		adjustx = xOffset % scaledTileSize;
+		adjusty = yOffset % scaledTileSize;
 		
-		for(int row = startRow, rowPx = 0; row < numRowsToDraw + startRow; row++, rowPx++) {
+		for(short row = startRow, rowPx = 0; row < numRowsToDraw + startRow; row++, rowPx++) {
 			if(row >= map[0].length) break;
 			
-			for(int col = startCol, colPx = 0; col < numColsToDraw + startCol; col++, colPx++) {
+			for(short col = startCol, colPx = 0; col < numColsToDraw + startCol; col++, colPx++) {
 				if(col >= map.length) break;
 				
-				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(), (int)(colPx * scaledTileSize - (xOffset % scaledTileSize)), (int)(rowPx * scaledTileSize - (yOffset % scaledTileSize)), scaledTileSize, scaledTileSize, null);
+				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(),(int)((double)colPx * scaledTileSize - adjustx), (int)((double)rowPx * scaledTileSize - adjusty), (int)scaledTileSize, (int)scaledTileSize, null);
 
 			}
 		}
 	}
 
+	/**
+	 * Draws the map to the player's position.
+	 * @param x horizontal pixels away from the upper-left most tile
+	 * @param y vertical pixels away form the upper-left most tile
+	 */
 	public void setCameraPosition(double x, double y) {
+		//x = 0; y = 0;
 		xOffset -= lastx - x;
 		yOffset -= lasty - y;
 		
@@ -101,15 +112,25 @@ public class Map {
 		if(xOffset > xmax) xOffset = xmax;
 		if(yOffset > ymax) yOffset = ymax;
 		
-		numColsToDraw = (byte)(GamePanel.WIDTH / (tileSize * SCALE) + 1);
-		numRowsToDraw = (byte)(GamePanel.HEIGHT / (tileSize * SCALE) + 1);
+		numColsToDraw = (byte)(GamePanel.WIDTH / (tileSize * SCALE) + 2);
+		numRowsToDraw = (byte)(GamePanel.HEIGHT / (tileSize * SCALE) + 2);
 		
 		lastx = x;
 		lasty = y;
 	}
 	
+	/**
+	 * @return Tile size (px)
+	 */
 	public int getTileSize() {
 		return tileSize;
+	}
+	
+	/**
+	 * @return Tile size multiplied by the scale factor (px)
+	 */
+	public int getScaledTileSize() {
+		return (int)scaledTileSize;
 	}
 	
 }

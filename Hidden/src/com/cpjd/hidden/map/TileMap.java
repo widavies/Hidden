@@ -199,7 +199,7 @@ public class TileMap {
 				int rc = map[row][col];
 				int r = rc / numTilesAcross; 
 				int c = rc % numTilesAcross;
-				g.drawImage(tiles[r][c].getImage(),(int)x + col * tileSize,(int)y + row * tileSize,null);
+				g.drawImage(tiles[r][c].getImage(),(int)x + col * tileSize * 4,(int)y + row * tileSize * 4,tileSize * 4, tileSize * 4,null);
 				} catch(Exception e) {}
 			}
 		}		

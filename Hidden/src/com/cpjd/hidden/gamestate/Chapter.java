@@ -7,7 +7,6 @@ import com.cpjd.cascade.engine.Map;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.map.OpenWorld;
 import com.cpjd.hidden.ui.hud.HUD;
-import com.cpjd.tools.Layout;
 
 public class Chapter extends GameState {
 
