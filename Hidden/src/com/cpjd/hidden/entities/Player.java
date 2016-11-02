@@ -1,5 +1,6 @@
 package com.cpjd.hidden.entities;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
@@ -12,6 +13,7 @@ import javax.imageio.ImageIO;
 
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.Map;
+import com.cpjd.hidden.map.Tile;
 import com.cpjd.tools.Animation;
 
 public class Player extends Entity {
@@ -39,8 +41,8 @@ public class Player extends Entity {
 		
 		width = 128;
 		height = 128;
-		cwidth = 0;
-		cheight = 0;
+		cwidth = 128;
+		cheight = 32;
 		maxSpeed = 3.8;
 		
 		moveSpeed = 2.4;
@@ -79,6 +81,15 @@ public class Player extends Entity {
 	public void draw(Graphics2D g) {
 		if(dy != 0 && dx == 0 || dx != 0 && dy == 0 || (dy == 0 && dx == 0) && (degrees % 90 == 0)) g.drawImage(rotation, (int)((GamePanel.WIDTH / 2) - width / 2 - adjustx), (int)((GamePanel.HEIGHT  / 2) - height / 2 - adjusty),width, height, null);
 		else g.drawImage(rotation, (int)(((GamePanel.WIDTH / 2) - width / 2) - adjustx), (int)((GamePanel.HEIGHT  / 2) - height / 2 -adjusty),(int)(width * 1.25), (int)(height * 1.25), null);
+		
+		// Draw the collision bounds
+		if(GamePanel.DEBUG) {
+			g.setColor(Color.RED);
+			
+			if(dy != 0 && dx == 0 || dx != 0 && dy == 0 || (dy == 0 && dx == 0) && (degrees % 90 == 0)) g.drawRect((int)((GamePanel.WIDTH / 2) - width / 2 - adjustx), (int)((GamePanel.HEIGHT  / 2) - height / 2 - adjusty),cwidth, cheight);
+			else g.drawRect((int)(((GamePanel.WIDTH / 2) - width / 2) - adjustx), (int)((GamePanel.HEIGHT  / 2) - height / 2 -adjusty),cwidth, cheight);
+			
+		}
 	}
 	
 	private BufferedImage calculateRotation(BufferedImage toRotate, int degrees) {
@@ -101,7 +112,7 @@ public class Player extends Entity {
 	@Override
 	public void update() {
 		manageMovement();
-		setPosition(xtemp, ytemp);
+		
 		// Manage animation update
 		if(left || right || down || up) {
 			if(currentAction != WALKING) {
@@ -129,6 +140,15 @@ public class Player extends Entity {
 		else if(up) degrees = 180;
 		else if(down) degrees = 0; 	
 		rotation = calculateRotation(animation.getImage(), degrees);
+		
+		resizeCollisionBox();
+		
+		//System.out.println("X: "+x+" Y: "+y);
+	}
+	
+	private void resizeCollisionBox() {
+		cwidth = 32;
+		cheight = 32;
 	}
 	
 	private void manageMovement() {
@@ -168,12 +188,12 @@ public class Player extends Entity {
 		if(!up && !down) {
 			dy = 0;
 		}
-
+		
 		moveSpeed = oldMoveSpeed;
 		
 		xtemp = x;
 		ytemp = y;
-
+		
 		if(dy < 0) {
 			ytemp += dy;
 		}
@@ -186,6 +206,16 @@ public class Player extends Entity {
 		if(dx > 0) {
 			xtemp += dx;
 		}
+		
+		// Manage collision
+		if(tm.getTileType(xtemp, ytemp) == Tile.COLLISION || tm.getTileType(xtemp + cwidth, ytemp) == Tile.COLLISION
+				|| tm.getTileType(xtemp +cwidth, ytemp + cheight) == Tile.COLLISION || tm.getTileType(xtemp, ytemp + cheight) == Tile.COLLISION ) {
+			System.out.println("L,U");
+			if(dx != 0) xtemp = x;
+			if(dy != 0) ytemp = y;
+		}
+
+		setPosition(xtemp, ytemp);
 		
 		// X borders
 		borderLeftx = (GamePanel.WIDTH / 2) - x;

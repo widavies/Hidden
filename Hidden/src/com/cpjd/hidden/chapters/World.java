@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.gamestate.GameStateManager;
+import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.OpenWorld;
 import com.cpjd.hidden.map.WorldListener;
 import com.cpjd.tools.Layout;
@@ -55,7 +56,7 @@ public class World extends Chapter implements WorldListener {
 	public void worldGenerated() {
 		tileMap.setMap(world.getWorld());
 		player = new Player(tileMap);
-		player.setPosition(450, 450);
+		player.setPosition(0, 0);
 		finishedGen = true;
 	}
 

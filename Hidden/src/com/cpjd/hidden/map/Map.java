@@ -133,7 +133,7 @@ public class Map {
 			for(short col = startCol, colPx = 0; col < numColsToDraw + startCol; col++, colPx++) {
 				if(col >= map.length) break;
 				
-				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(),(int)(colPx * scaledTileSize - adjustx), (int)(rowPx * scaledTileSize - adjusty), (int)scaledTileSize, (int)scaledTileSize, null);
+				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(),(int)Math.floor(colPx * scaledTileSize - adjustx), (int)Math.floor(rowPx * scaledTileSize - adjusty), (int)scaledTileSize, (int)scaledTileSize, null);
 
 			}
 		}
@@ -163,6 +163,26 @@ public class Map {
 			if(y > GamePanel.HEIGHT / 2 && y < height - (GamePanel.HEIGHT / 2)) yOffset = yOffset - (GamePanel.HEIGHT - lastScreenHeight) / 2;
 			lastScreenHeight = GamePanel.HEIGHT;
 		}
+	}
+	
+	/** MAKE THIS BETTER !! TODO
+	 * @param x The horizontal distance (in px) to the requested tile
+	 * @param y The vertical distance (in px) to the request tile
+	 * @return The tile type (Tile.NO_COLLISION, TIlE.COLLISION, etc) of the tile that the specified x,y is in
+	 */
+	public int getTileType(double x, double y) {
+		if(getTileID(x, y) < 30) return 0;
+		else return 1;
+	}
+	
+	/**
+	 * 
+	 * @param x The horizontal distance (in px) to the requested tile
+	 * @param y The vertical distance (in px) to the request tile
+	 * @return The tile id (31, 4, 5, etc) of the tile that the specified x,y is in
+	 */
+	public int getTileID(double x, double y) {
+		return map[(int)(y / scaledTileSize)][(int)(x / scaledTileSize)];
 	}
 	
 	/**

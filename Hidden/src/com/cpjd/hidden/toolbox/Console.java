@@ -7,12 +7,9 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.hidden.main.GamePanel;
-import com.cpjd.hidden.map.Map;
 import com.cpjd.smartui.SmartField;
 import com.cpjd.tools.Layout;
 import com.cpjd.tools.Usage;
@@ -29,10 +26,17 @@ public class Console {
 	
 	private ArrayList<String> output;
 	
+	private final String[] HELP = {
+		"Command, Description, Usage",
+		"stop - force close the program",
+		"reload - reload the current gamestate",
+		"clear - remove all messages from the console"
+	};
+	
 	public Console(GameStateManager gsm) {
 		this.gsm = gsm;
 		
-		Rectangle rect = new Rectangle(0, Layout.aligny(20), Layout.alignx(30), 50);
+		Rectangle rect = new Rectangle(0, Layout.aligny(20), Layout.alignx(30), 30);
 		
 		field = new SmartField(new Font("Arial", Font.PLAIN, 15), rect, 100);
 		field.setBlinkSpeed(40);
@@ -48,43 +52,40 @@ public class Console {
 		field.update();
 		
 		if(field.isEnterPressed()) {
-			processCommand(field.getText());
+			try {
+				processCommand(field.getText());
+			} catch(Exception e) {
+				output.add("Incorrect command syntax. Use <command> help for usage");
+			}
 			field.setEnterPressed(false);
 		}
 	}
 	
-	public void processCommand(String s) {
+	public void processCommand(String s) throws Exception {
+		String[] tokens = s.split("\\s+");
 		
-		if(s.equalsIgnoreCase("stop")) System.exit(0);
-		
-		else if(s.equalsIgnoreCase("reload") || s.equalsIgnoreCase("r")){
+		// Basic commands
+		switch(tokens[0].toLowerCase()) {
+		case "stop":
+			output.add("Force stopping game");
+			System.exit(0);
+			return;
+		case "reload":
 			gsm.setState(gsm.getState());
-			lastCommand = "reload";
 			output.add("Gamestate reloaded.");
+			open = false;
+			return;
+		case "clear":
+			output.clear();
+			return;
+		case "help":
+			for(int i = 0; i < HELP.length; i++) {
+				output.add(HELP[i]);
+			}
+			return;
+		default:
+			output.add("Unrecognized command. Type help for list of commands");
 		}
-		else if(s.equalsIgnoreCase("menu")){
-			gsm.setState(GameStateManager.MENU);
-			lastCommand = "menu";
-			output.add("Returning to menu.");
-		}
-		else if(s.equalsIgnoreCase("scale")){
-			Map.SCALE = 4;
-			lastCommand = "scale";
-			output.add("Scaled changed to 4, reload for effects to take place.");
-		}
-		else if(s.equalsIgnoreCase("unscale")){
-			Map.SCALE = 1;
-			lastCommand = "unscale";
-			output.add("Scaled changed to 1, reload for effects to take place.");
-		}
-		else if(s.equalsIgnoreCase("mem")){
-			showMemory = !showMemory;
-			lastCommand = "mem";
-		}
-		else if(s.equalsIgnoreCase("clear")) {
-			output.clear(); output.add("Messages cleared.");
-		}
-		else output.add("Command not found");
 	}
 	
 	public void draw(Graphics2D g) {
