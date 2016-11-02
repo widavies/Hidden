@@ -58,8 +58,8 @@ public class GameStateManager implements UIListener {
 	}
 
 	private void loadState(int state) {
-		if(state == MENU) gameStates[state] = new Menu(this);
-		if(state == CH1) gameStates[state] = new World(this);
+		if(state == MENU) gameStates[state] = new Menu(this, console);
+		if(state == CH1) gameStates[state] = new World(this, console);
 	}
 	private void unloadState(int state) {
 		gameStates[state] = null;
@@ -119,6 +119,8 @@ public class GameStateManager implements UIListener {
 		if(pauseWindow != null) pauseWindow.mousePressed(x, y);
 		
 		if(gameStates[currentState] != null) gameStates[currentState].mousePressed(x, y);
+		
+		console.mousePressed(x, y);
 	}
 
 	public void mouseReleased(int x, int y) {
@@ -129,8 +131,6 @@ public class GameStateManager implements UIListener {
 		if(pauseWindow != null) pauseWindow.mouseMoved(x, y);
 		
 		if(gameStates[currentState] != null) gameStates[currentState].mouseMoved(x, y);
-		
-		console.mouseMoved(x, y);
 	}
 	
 	public void mouseWheelMoved(int k) {

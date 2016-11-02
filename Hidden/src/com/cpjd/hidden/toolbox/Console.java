@@ -16,8 +16,11 @@ import com.cpjd.tools.Usage;
 
 public class Console {
 	
-	private boolean open;
+	// Passed in stuff
 	private GameStateManager gsm;
+	private Player player;
+	
+	private boolean open;
 	private SmartField field;
 	
 	private String lastCommand = "";
@@ -25,6 +28,8 @@ public class Console {
 	public static boolean showMemory; // A temporary thing
 	
 	private ArrayList<String> output;
+	
+	private boolean awaitingClick;
 	
 	private final String[] HELP = {
 		"Command, Description, Usage",
@@ -36,7 +41,7 @@ public class Console {
 	public Console(GameStateManager gsm) {
 		this.gsm = gsm;
 		
-		Rectangle rect = new Rectangle(0, Layout.aligny(20), Layout.alignx(30), 30);
+		Rectangle rect = new Rectangle(0, Layout.aligny(20), 450, 30);
 		
 		field = new SmartField(new Font("Arial", Font.PLAIN, 15), rect, 100);
 		field.setBlinkSpeed(40);
@@ -78,6 +83,10 @@ public class Console {
 		case "clear":
 			output.clear();
 			return;
+		case "place":
+			output.add("Click where'd you like to move the player.");
+			awaitingClick = true;
+			return;
 		case "help":
 			for(int i = 0; i < HELP.length; i++) {
 				output.add(HELP[i]);
@@ -91,7 +100,7 @@ public class Console {
 	public void draw(Graphics2D g) {
 		if(open) {
 			g.setColor(Color.WHITE);
-			g.fillRect(0, 0, Layout.alignx(30) + 2, Layout.aligny(20));
+			g.fillRect(0, 0, 452, Layout.aligny(20));
 			
 			field.draw(g);
 			
@@ -135,7 +144,18 @@ public class Console {
 		return open;
 	}
 	
-	public void mouseMoved(int x, int y) {
-
+	public void mousePressed(int x, int y) {
+		if(awaitingClick) {
+			if(player != null) {
+				player.setPosition(x - player.getX(), y - player.getY());
+				open = false;
+			} else {
+				output.add("Player is null! Please start a level...");
+			}
+		}
+	}
+	
+	public void setPlayer(Player p) {
+		this.player = p;
 	}
 }

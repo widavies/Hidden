@@ -9,6 +9,7 @@ import com.cpjd.hidden.sound.SoundKeys;
 import com.cpjd.hidden.sound.SoundLoader;
 import com.cpjd.hidden.sound.SoundPlayer;
 import com.cpjd.hidden.sound.SoundRequest;
+import com.cpjd.hidden.toolbox.Console;
 import com.cpjd.hidden.ui.UIListener;
 import com.cpjd.hidden.ui.content.CreditsWindow;
 import com.cpjd.hidden.ui.content.OptionsWindow;
@@ -26,8 +27,8 @@ public class Menu extends GameState implements UIListener {
 	private UIDialog exitDialog;
 	private SoundLoader soundLoader;
 	
-	public Menu(GameStateManager gsm) {
-		super(gsm);
+	public Menu(GameStateManager gsm, Console console) {
+		super(gsm, console);
 
 		play = new UIButton("Play");
 		options = new UIButton("Options");

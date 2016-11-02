@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.map.Map;
+import com.cpjd.hidden.toolbox.Console;
 import com.cpjd.hidden.ui.hud.HUD;
 
 public class Chapter extends GameState {
@@ -16,8 +17,8 @@ public class Chapter extends GameState {
 	
 	
 
-	public Chapter(GameStateManager gsm) {
-		super(gsm);
+	public Chapter(GameStateManager gsm, Console console) {
+		super(gsm, console);
 		
 		tileMap = new Map(16);
 		

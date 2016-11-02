@@ -2,12 +2,16 @@ package com.cpjd.hidden.gamestate;
 
 import java.awt.Graphics2D;
 
+import com.cpjd.hidden.toolbox.Console;
+
 public abstract class GameState {
 
 	protected GameStateManager gsm;
-
-	public GameState(GameStateManager gsm) {
+	protected Console console;
+	
+	public GameState(GameStateManager gsm, Console console) {
 		this.gsm = gsm;
+		this.console = console;
 	}
 	
 	public abstract void update();

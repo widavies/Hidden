@@ -142,8 +142,6 @@ public class Player extends Entity {
 		rotation = calculateRotation(animation.getImage(), degrees);
 		
 		resizeCollisionBox();
-		
-		//System.out.println("X: "+x+" Y: "+y);
 	}
 	
 	private void resizeCollisionBox() {
@@ -210,7 +208,6 @@ public class Player extends Entity {
 		// Manage collision
 		if(tm.getTileType(xtemp, ytemp) == Tile.COLLISION || tm.getTileType(xtemp + cwidth, ytemp) == Tile.COLLISION
 				|| tm.getTileType(xtemp +cwidth, ytemp + cheight) == Tile.COLLISION || tm.getTileType(xtemp, ytemp + cheight) == Tile.COLLISION ) {
-			System.out.println("L,U");
 			if(dx != 0) xtemp = x;
 			if(dy != 0) ytemp = y;
 		}
