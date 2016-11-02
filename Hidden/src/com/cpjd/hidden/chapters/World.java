@@ -15,6 +15,8 @@ public class World extends Chapter implements WorldListener {
 
 	private double progress;
 	
+	protected OpenWorld world;
+	
 	public World(GameStateManager gsm) {
 		super(gsm);
 		

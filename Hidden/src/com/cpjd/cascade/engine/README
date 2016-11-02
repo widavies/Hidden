@@ -15,3 +15,11 @@ Here's the basics:
 3) I've got a new design specification for this game, every class (related to game mechanics) should have a .release() method that sets all objects to null and releases any sounds it was using, etc.
 4) Most of our code will stay the same, however, the TileMap, Tile, and Entity class will be rewritten to fit the new engine.
 5) Put bugs, todo, etc, down here:
+
+
+	I thought that I would list some of the major TODOs, even though they are obvious
+
+	1) Prison loading (from the open world)
+	2) Enemies (both people and fixed [cams, etc])
+	3) Interaction with environment (building?, trading?, buying stuff, etc)
+	4) better/more graphics

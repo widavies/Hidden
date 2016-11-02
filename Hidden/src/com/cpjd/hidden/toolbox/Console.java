@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JOptionPane;
 
@@ -20,6 +21,8 @@ public class Console {
 	private boolean open;
 	private GameStateManager gsm;
 	private SmartField field;
+	
+	private String lastCommand = "";
 	
 	public static boolean showMemory; // A temporary thing
 	
@@ -48,12 +51,29 @@ public class Console {
 	}
 	
 	public void processCommand(String s) {
+		
 		if(s.equalsIgnoreCase("stop")) System.exit(0);
-		else if(s.equalsIgnoreCase("reload") || s.equalsIgnoreCase("r")) gsm.setState(gsm.getState());
-		else if(s.equalsIgnoreCase("menu")) gsm.setState(GameStateManager.MENU);
-		else if(s.equalsIgnoreCase("scale")) Map.SCALE = 4;
-		else if(s.equalsIgnoreCase("unscale")) Map.SCALE = 1;
-		else if(s.equalsIgnoreCase("mem")) showMemory = !showMemory;
+		
+		else if(s.equalsIgnoreCase("reload") || s.equalsIgnoreCase("r")){
+			gsm.setState(gsm.getState());
+			lastCommand = "reload";
+		}
+		else if(s.equalsIgnoreCase("menu")){
+			gsm.setState(GameStateManager.MENU);
+			lastCommand = "menu";
+		}
+		else if(s.equalsIgnoreCase("scale")){
+			Map.SCALE = 4;
+			lastCommand = "scale";
+		}
+		else if(s.equalsIgnoreCase("unscale")){
+			Map.SCALE = 1;
+			lastCommand = "unscale";
+		}
+		else if(s.equalsIgnoreCase("mem")){
+			showMemory = !showMemory;
+			lastCommand = "mem";
+		}
 		else JOptionPane.showMessageDialog(null, "Command not found.");
 		
 		open = false;
@@ -73,7 +93,16 @@ public class Console {
 	}
 	
 	public boolean keyPressed(int k) {
-		if(k == 192) open = !open;
+		if(k == KeyEvent.VK_BACK_QUOTE) open = !open;
+		if(k == KeyEvent.VK_UP){
+			for(int i = 0; i < 50; i++) field.delete();
+			
+			lastCommand.toUpperCase();
+			for(int i = 0; i < lastCommand.length(); i++){
+				field.add(lastCommand.charAt(i));
+			}
+			return true;
+		}
 		GamePanel.DEBUG = open;
 		if(!open) return false;
 		field.keyPressed(k);
