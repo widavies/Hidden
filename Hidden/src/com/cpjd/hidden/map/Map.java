@@ -1,7 +1,10 @@
-package com.cpjd.cascade.engine;
+package com.cpjd.hidden.map;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
@@ -63,6 +66,42 @@ public class Map {
 			tileset = null;
 		} catch(Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Loads a map from a .txt flare map file
+	 * @param path The location of the map file
+	 */
+	public void loadTiledMap(String path) {
+		try {
+			InputStream in = getClass().getResourceAsStream(path);
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+			
+			br.readLine();
+			String delim = "width="; String[] tokens = br.readLine().split(delim);
+			numCols = Integer.parseInt(tokens[1]);
+			delim = "height="; tokens = br.readLine().split(delim);
+			numRows = Integer.parseInt(tokens[1]);
+			
+			byte[][] map = new byte[numRows][numCols];
+
+			for(int i = 0; i < 10; i++) br.readLine();
+			
+			String delims = ",";
+			for(int row = 0; row < numRows; row++) {
+				String line = br.readLine();
+				tokens = line.split(delims);
+				for(int col = 0; col < numCols; col++) {
+					byte tile = Byte.parseByte((tokens[col]));
+					if(tile != 0) tile--;
+					map[row][col] = tile;
+				}
+			}
+			
+			setMap(map);
+		} catch (Exception e) {
+			System.err.println("Could't load the tile map");
 		}
 	}
 	

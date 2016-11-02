@@ -3,8 +3,8 @@ package com.cpjd.hidden.gamestate;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import com.cpjd.cascade.engine.Map;
 import com.cpjd.hidden.entities.Player;
+import com.cpjd.hidden.map.Map;
 import com.cpjd.hidden.map.OpenWorld;
 import com.cpjd.hidden.ui.hud.HUD;
 

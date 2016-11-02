@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import com.cpjd.cascade.engine.Map;
 import com.cpjd.hidden.main.GamePanel;
+import com.cpjd.hidden.map.Map;
 import com.cpjd.tools.Animation;
 
 public class Player extends Entity {
@@ -31,6 +31,7 @@ public class Player extends Entity {
 	private boolean left, right, up, down;
 	
 	private double snapx, snapy;
+	private double snaprx;
 	private double actx, acty;
 	private int lastWidth, lastHeight;
 	
@@ -197,6 +198,10 @@ public class Player extends Entity {
 		
 		snapy = (GamePanel.HEIGHT / 2) - y;
 		if(snapy <= 0) snapy = 0;
+		
+		snaprx = -(width - (GamePanel.WIDTH / 2) - x);
+		if(snaprx <= width - (GamePanel.WIDTH / 2)) actx = x;
+		
 	}
 	
 	public void setPosition(double x, double y) {

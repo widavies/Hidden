@@ -5,8 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import com.cpjd.cascade.engine.Map;
-import com.cpjd.hidden.map.TileMap;
+import com.cpjd.hidden.map.Map;
 import com.cpjd.tools.Animation;
 
 public class Entity {

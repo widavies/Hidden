@@ -8,10 +8,10 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JOptionPane;
 
-import com.cpjd.cascade.engine.Map;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.hidden.main.GamePanel;
+import com.cpjd.hidden.map.Map;
 import com.cpjd.smartui.SmartField;
 import com.cpjd.tools.Layout;
 import com.cpjd.tools.Usage;
