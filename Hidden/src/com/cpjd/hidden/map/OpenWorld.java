@@ -210,8 +210,8 @@ public class OpenWorld implements Runnable {
 	}
 	public Point getSpawn() {
 		if(spawn == null) return null;
-		
-		spawn.setLocation(spawn.x * 16, spawn.y * 16);
+		System.out.println(spawn.x);
+		spawn.setLocation(1000,2000);
 		return spawn;
 	}
 	private boolean shouldGenOcean(int tileWidth, int tileHeight, int row, int col) {

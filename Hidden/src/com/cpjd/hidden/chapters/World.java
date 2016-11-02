@@ -37,6 +37,8 @@ public class World extends Chapter implements WorldListener {
 	
 	@Override
 	public void draw(Graphics2D g) {
+		super.draw(g);
+		
 		if(finishedGen) return;
 		
 		g.setColor(Color.WHITE);
@@ -53,8 +55,7 @@ public class World extends Chapter implements WorldListener {
 	public void worldGenerated() {
 		tileMap.setMap(world.getWorld());
 		player = new Player(tileMap);
-		System.out.println(world.getSpawn());
-		player.setPosition(800,450);
+		player.setPosition(450, 450);
 		finishedGen = true;
 	}
 

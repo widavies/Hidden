@@ -87,12 +87,6 @@ public class Entity {
 	public double getY() {
 		return y;
 	}
-	public void setPosition(Point p) {
-		if(p == null) return;
-		
-		this.x = p.x;
-		this.y = p.y;
-	}
 	public Rectangle getCollisionBox(){
 		return new Rectangle((int) x, (int) y, cwidth, cheight);
 	}

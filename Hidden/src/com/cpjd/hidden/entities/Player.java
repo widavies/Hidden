@@ -77,8 +77,8 @@ public class Player extends Entity {
 	
 	@Override
 	public void draw(Graphics2D g) {
-		if(dy != 0 && dx == 0 || dx != 0 && dy == 0 || (dy == 0 && dx == 0) && (degrees % 90 == 0)) g.drawImage(rotation, (int)((GamePanel.WIDTH / 2) - width / 2 - adjustx), (int)((GamePanel.HEIGHT  / 2) - width / 2 - adjusty),width, height, null);
-		else g.drawImage(rotation, (int)(((GamePanel.WIDTH / 2) - width / 2) - adjustx), (int)((GamePanel.HEIGHT  / 2) - width / 2 -adjusty),(int)(width * 1.25), (int)(height * 1.25), null);
+		if(dy != 0 && dx == 0 || dx != 0 && dy == 0 || (dy == 0 && dx == 0) && (degrees % 90 == 0)) g.drawImage(rotation, (int)((GamePanel.WIDTH / 2) - width / 2 - adjustx), (int)((GamePanel.HEIGHT  / 2) - height / 2 - adjusty),width, height, null);
+		else g.drawImage(rotation, (int)(((GamePanel.WIDTH / 2) - width / 2) - adjustx), (int)((GamePanel.HEIGHT  / 2) - height / 2 -adjusty),(int)(width * 1.25), (int)(height * 1.25), null);
 	}
 	
 	private BufferedImage calculateRotation(BufferedImage toRotate, int degrees) {
@@ -100,7 +100,7 @@ public class Player extends Entity {
 
 	@Override
 	public void update() {
-		getNextPosition();
+		manageMovement();
 		setPosition(xtemp, ytemp);
 		// Manage animation update
 		if(left || right || down || up) {
@@ -131,7 +131,7 @@ public class Player extends Entity {
 		rotation = calculateRotation(animation.getImage(), degrees);
 	}
 	
-	private void getNextPosition() {
+	private void manageMovement() {
 		double oldMoveSpeed = moveSpeed;
 		
 		if((left && up) || (left && down) || (right && up) || (right && down)){
@@ -193,10 +193,10 @@ public class Player extends Entity {
 		if(borderLeftx >= 0) adjustx = borderLeftx;
 		else if(borderRightx <= 0) adjustx = borderRightx;
 		else adjustx = 0;
-
+		
 		// Y borders		
 		borderUpy = (GamePanel.HEIGHT / 2) - y;
-		borderDowny = (tm.getWidth() - (GamePanel.WIDTH / 2) - y);
+		borderDowny = (tm.getHeight() - (GamePanel.HEIGHT / 2) - y);
 		if(borderUpy >= 0) adjusty = borderUpy;
 		else if(borderDowny <= 0) adjusty = borderDowny;
 		else adjusty = 0;

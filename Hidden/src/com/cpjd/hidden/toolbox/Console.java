@@ -31,7 +31,7 @@ public class Console {
 	public Console(GameStateManager gsm) {
 		this.gsm = gsm;
 		
-		Rectangle rect = new Rectangle(0, 0, GamePanel.WIDTH, 50);
+		Rectangle rect = new Rectangle(0, 0, Layout.alignx(30), 50);
 		
 		field = new SmartField(new Font("Arial", Font.PLAIN, 15), rect, 100);
 		
@@ -77,19 +77,18 @@ public class Console {
 		else JOptionPane.showMessageDialog(null, "Command not found.");
 		
 		open = false;
-		GamePanel.DEBUG = open;
 	}
 	
 	public void draw(Graphics2D g) {
-		if(!open) return;
+		if(open) field.draw(g);
 		
-		field.draw(g);
-		int tempx = (int)Math.abs(Player.LOCATION.x) + (x / 4) - 4;
-		int tempy = (int)Math.abs(Player.LOCATION.y) + (y / 4) - 4;
+		if(!GamePanel.DEBUG) return;
+		int tempx = (int)Player.LOCATION.x;
+		int tempy = (int)Player.LOCATION.y;
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Arial", Font.PLAIN, 30));
 		g.drawString(Usage.calcMemory(), 5, Layout.HEIGHT - 50);
-		g.drawString("XY: " + "(" + tempx + "," + tempy + ")"+" XY: ("+(tempx / 16)+","+(tempy / 16)+")", 5, Layout.HEIGHT - 15);
+		g.drawString("XY: " + "(" + tempx + "," + tempy + ")"+" XY: ("+(tempx / 64)+","+(tempy / 64)+")", 5, Layout.HEIGHT - 15);
 	}
 	
 	public boolean keyPressed(int k) {
@@ -103,7 +102,6 @@ public class Console {
 			}
 			return true;
 		}
-		GamePanel.DEBUG = open;
 		if(!open) return false;
 		field.keyPressed(k);
 		return true;

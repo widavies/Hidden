@@ -9,6 +9,7 @@ import java.io.InputStream;
 
 import com.cpjd.hidden.chapters.World;
 import com.cpjd.hidden.gamestates.Menu;
+import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.Console;
 import com.cpjd.hidden.ui.UIListener;
 import com.cpjd.hidden.ui.content.PauseWindow;
@@ -104,6 +105,8 @@ public class GameStateManager implements UIListener {
 		}
 		
 		if(gameStates[currentState] != null) gameStates[currentState].keyPressed(k);
+		
+		if(k == KeyEvent.VK_F6) GamePanel.DEBUG = !GamePanel.DEBUG;
 	}
 
 	public void keyReleased(int k) {
