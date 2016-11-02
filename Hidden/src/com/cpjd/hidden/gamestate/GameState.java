@@ -12,7 +12,6 @@ public abstract class GameState {
 	
 	public abstract void update();
 	public abstract void draw(Graphics2D g);
-	public abstract void drawGUI(Graphics2D g);
 	public abstract void keyPressed(int k);
 	public abstract void keyReleased(int k);
 	public abstract void mousePressed(int x, int y);

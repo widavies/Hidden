@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.gamestate.GameStateManager;
-import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.OpenWorld;
 import com.cpjd.hidden.map.WorldListener;
 import com.cpjd.tools.Layout;
@@ -32,15 +31,12 @@ public class World extends Chapter implements WorldListener {
 		if(finishedGen) super.update();
 		
 		if(player != null) {
-			//System.out.println(player.getX());
 			tileMap.setCameraPosition(player.getX(),player.getY());
 		}
 	}
 	
 	@Override
-	public void drawGUI(Graphics2D g) {
-		super.drawGUI(g);
-		
+	public void draw(Graphics2D g) {
 		if(finishedGen) return;
 		
 		g.setColor(Color.WHITE);
@@ -50,6 +46,7 @@ public class World extends Chapter implements WorldListener {
 		g.fillRect(Layout.centerw(400), Layout.aligny(51), 400, 40);
 		g.setColor(Color.WHITE);
 		g.fillRect(Layout.centerw(400), Layout.aligny(51), (int)(progress * 400), 40);
+		
 	}
 	
 	@Override
@@ -57,7 +54,7 @@ public class World extends Chapter implements WorldListener {
 		tileMap.setMap(world.getWorld());
 		player = new Player(tileMap);
 		System.out.println(world.getSpawn());
-		player.setPosition(800,400);
+		player.setPosition(800,450);
 		finishedGen = true;
 	}
 

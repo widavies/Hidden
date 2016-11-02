@@ -1,11 +1,9 @@
 package com.cpjd.hidden.gamestate;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.map.Map;
-import com.cpjd.hidden.map.OpenWorld;
 import com.cpjd.hidden.ui.hud.HUD;
 
 public class Chapter extends GameState {
@@ -45,17 +43,14 @@ public class Chapter extends GameState {
 	public void draw(Graphics2D g) {
 		if(!finishedGen) return;
 		
-		
-		
-	}
-	@Override
-	public void drawGUI(Graphics2D g) {
 		if(!gsm.isPaused() && finishedGen) hud.draw(g);
 		
 		if(!finishedGen) return;
 		tileMap.draw(g);
-		player.draw(g);		
+		player.draw(g);	
+		
 	}
+
 	@Override
 	public void keyPressed(int k) {
 		if(player != null) player.keyPressed(k);

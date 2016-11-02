@@ -5,12 +5,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
 import com.cpjd.hidden.chapters.World;
 import com.cpjd.hidden.gamestates.Menu;
-import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.Console;
 import com.cpjd.hidden.ui.UIListener;
 import com.cpjd.hidden.ui.content.PauseWindow;
@@ -36,13 +34,7 @@ public class GameStateManager implements UIListener {
 	public static Font font;
 	public static int ticks = 0;
 	
-	Graphics2D g2;
-	BufferedImage image;
-	
 	public GameStateManager() {
-		image = new BufferedImage(GamePanel.WIDTH,GamePanel.HEIGHT,BufferedImage.TYPE_INT_RGB);
-		g2 = (Graphics2D) image.getGraphics();
-		
 		gameStates = new GameState[NUM_GAME_STATES];
 		try {
 			InputStream inStream = getClass().getResourceAsStream("/fonts/USSR STENCIL WEBFONT.ttf");
@@ -96,15 +88,9 @@ public class GameStateManager implements UIListener {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, Layout.WIDTH, Layout.HEIGHT);
 		
-		g2.setFont(font);
-		g2.setColor(Color.BLACK);
-		g2.fillRect(0, 0, Layout.WIDTH, Layout.HEIGHT);
-		
 		if(pauseWindow != null) g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.15f));
-		if(gameStates[currentState] != null) gameStates[currentState].draw(g2);
-		if(currentState >= CH1) g.drawImage(image, 0, 0,GamePanel.WIDTH, GamePanel.HEIGHT, null);
+		if(gameStates[currentState] != null) gameStates[currentState].draw(g);
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-		if(gameStates[currentState] != null) gameStates[currentState].drawGUI(g);
 		if(pauseWindow != null) pauseWindow.draw(g);
 		console.draw(g);
 	}

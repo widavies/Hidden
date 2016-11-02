@@ -25,15 +25,11 @@ public class Player extends Entity {
 	private BufferedImage rotation;
 	private int degrees;
 	
-	// physics
+	// Physics
 	private double moveSpeed; // How fast the object will gain momentum
 	private double maxSpeed; // The max speed the object can go
 	private boolean left, right, up, down;
-	
-	private double snapx, snapy;
-	private double snaprx;
-	private double actx, acty;
-	private int lastWidth, lastHeight;
+	private double borderLeftx, borderRightx, borderUpy, borderDowny, adjustx, adjusty;
 	
 	// global x and y for the console
 	public static Point LOCATION = new Point();
@@ -45,9 +41,9 @@ public class Player extends Entity {
 		height = 128;
 		cwidth = 0;
 		cheight = 0;
-		maxSpeed = 3;
+		maxSpeed = 3.8;
 		
-		moveSpeed = 2;
+		moveSpeed = 2.4;
 		
 		try {
 			loadAnimation();
@@ -62,8 +58,7 @@ public class Player extends Entity {
 		animation.setDelay(400);
 		
 		rotation = animation.getImage();
-		
-		lastWidth = GamePanel.WIDTH; lastHeight = GamePanel.HEIGHT;
+
 	}
 	
 	private void loadAnimation() throws Exception {
@@ -82,8 +77,8 @@ public class Player extends Entity {
 	
 	@Override
 	public void draw(Graphics2D g) {
-		if(dy != 0 && dx == 0 || dx != 0 && dy == 0 || (dy == 0 && dx == 0) && (degrees % 90 == 0)) g.drawImage(rotation, (int)((GamePanel.WIDTH / 2) - width / 2 - actx), (int)((GamePanel.HEIGHT  / 2) - width / 2 - snapy),width, height, null);
-		else g.drawImage(rotation, (int)(((GamePanel.WIDTH / 2) - width / 2) - actx), (int)((GamePanel.HEIGHT  / 2) - width / 2 -snapy),(int)(width * 1.25), (int)(height * 1.25), null);
+		if(dy != 0 && dx == 0 || dx != 0 && dy == 0 || (dy == 0 && dx == 0) && (degrees % 90 == 0)) g.drawImage(rotation, (int)((GamePanel.WIDTH / 2) - width / 2 - adjustx), (int)((GamePanel.HEIGHT  / 2) - width / 2 - adjusty),width, height, null);
+		else g.drawImage(rotation, (int)(((GamePanel.WIDTH / 2) - width / 2) - adjustx), (int)((GamePanel.HEIGHT  / 2) - width / 2 -adjusty),(int)(width * 1.25), (int)(height * 1.25), null);
 	}
 	
 	private BufferedImage calculateRotation(BufferedImage toRotate, int degrees) {
@@ -137,7 +132,6 @@ public class Player extends Entity {
 	}
 	
 	private void getNextPosition() {
-		
 		double oldMoveSpeed = moveSpeed;
 		
 		if((left && up) || (left && down) || (right && up) || (right && down)){
@@ -193,15 +187,19 @@ public class Player extends Entity {
 			xtemp += dx;
 		}
 		
-		snapx = (GamePanel.WIDTH / 2) - x;
-		if(snapx >= 0) actx = snapx;
-		
-		snapy = (GamePanel.HEIGHT / 2) - y;
-		if(snapy <= 0) snapy = 0;
-		
-		snaprx = -(width - (GamePanel.WIDTH / 2) - x);
-		if(snaprx <= width - (GamePanel.WIDTH / 2)) actx = x;
-		
+		// X borders
+		borderLeftx = (GamePanel.WIDTH / 2) - x;
+		borderRightx = (tm.getWidth() - (GamePanel.WIDTH / 2) - x);
+		if(borderLeftx >= 0) adjustx = borderLeftx;
+		else if(borderRightx <= 0) adjustx = borderRightx;
+		else adjustx = 0;
+
+		// Y borders		
+		borderUpy = (GamePanel.HEIGHT / 2) - y;
+		borderDowny = (tm.getWidth() - (GamePanel.WIDTH / 2) - y);
+		if(borderUpy >= 0) adjusty = borderUpy;
+		else if(borderDowny <= 0) adjusty = borderDowny;
+		else adjusty = 0;
 	}
 	
 	public void setPosition(double x, double y) {

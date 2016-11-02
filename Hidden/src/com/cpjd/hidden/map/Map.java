@@ -10,8 +10,13 @@ import javax.imageio.ImageIO;
 
 import com.cpjd.hidden.main.GamePanel;
 
+/**
+ * Manages the loading, drawing, scaling, and editing of the map.
+ * @author Will Davies
+ *
+ */
 public class Map {
-	// Consants
+	// Constants
 	public static byte SCALE = 4;
 	
 	// Map
@@ -32,11 +37,8 @@ public class Map {
 	
 	// Offsets
 	private double lastx, lasty;
-	private double xOffset, yOffset; // The left and top visible tiles
-	private double xmin, ymin, xmax, ymax;
-	private double borderx, bordery;
+	private double xOffset, yOffset;
 	private int lastScreenWidth, lastScreenHeight;
-	private double checkScalex;
 	
 	public Map(int tileSize) {
 		this.tileSize = tileSize;
@@ -115,12 +117,8 @@ public class Map {
 		numCols = map.length;
 		numRows = map[0].length;
 
-		width = (numCols - 25)* (tileSize * 4);
-		height = (numRows - 16)* (tileSize * 4);
-		xmin = 0;
-		ymin = 0;
-		xmax = width;
-		ymax = height;
+		width = (numCols)* (tileSize * SCALE);
+		height = (numRows)* (tileSize * SCALE);
 	}
 	
 	public void draw(Graphics2D g) {
@@ -130,12 +128,12 @@ public class Map {
 		adjusty = yOffset % scaledTileSize;
 		
 		for(short row = startRow, rowPx = 0; row < numRowsToDraw + startRow; row++, rowPx++) {
-			if(row >= map[0].length || row < 0) break;
+			if(row >= map[0].length) break;
 			
 			for(short col = startCol, colPx = 0; col < numColsToDraw + startCol; col++, colPx++) {
-				if(col >= map.length || col < 0) break;
+				if(col >= map.length) break;
 				
-				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(),(int)((double)colPx * scaledTileSize - adjustx), (int)((double)rowPx * scaledTileSize - adjusty), (int)scaledTileSize, (int)scaledTileSize, null);
+				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(),(int)(colPx * scaledTileSize - adjustx), (int)(rowPx * scaledTileSize - adjusty), (int)scaledTileSize, (int)scaledTileSize, null);
 
 			}
 		}
@@ -147,7 +145,6 @@ public class Map {
 	 * @param y vertical pixels away form the upper-left most tile
 	 */
 	public void setCameraPosition(double x, double y) {
-		//System.out.println(x);
 		if(x > GamePanel.WIDTH / 2 && x < width - (GamePanel.WIDTH / 2)) xOffset -= lastx - x;
 		if(y > GamePanel.HEIGHT / 2 && y < height - (GamePanel.HEIGHT / 2))	yOffset -= lasty - y;
 		

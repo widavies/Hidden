@@ -58,10 +58,6 @@ public class Menu extends GameState implements UIListener {
 		if(exitDialog != null) exitDialog.update();
 	}
 	public void draw(Graphics2D g) {
-		
-	}
-	@Override
-	public void drawGUI(Graphics2D g) {
 		play.draw(g);
 		options.draw(g);
 		credits.draw(g);
@@ -75,7 +71,6 @@ public class Menu extends GameState implements UIListener {
 		g.setColor(Color.WHITE);
 		g.setFont(g.getFont().deriveFont(40f));
 		g.drawString("HIDDEN", Layout.alignx(5), Layout.aligny(10));
-		
 	}
 	public void keyPressed(int k) {}
 	public void keyReleased(int k) {}
