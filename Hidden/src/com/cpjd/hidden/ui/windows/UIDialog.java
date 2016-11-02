@@ -17,8 +17,8 @@ public class UIDialog extends UIWindow {
 		
 		center(Layout.WIDTH / 3, Layout.HEIGHT / 4);
 		
-		addButton("Cancel", 5, (int)(Layout.centerh(Layout.HEIGHT / 4) / 2.1), 400, false);
-		addButton("Exit", 5, (int)(Layout.centerh(Layout.HEIGHT / 4) / 1.6), 400, false);
+		addButton("Cancel", 5, (int)(Layout.centerh(Layout.HEIGHT / 4) / 2.4), 400, false);
+		addButton("Exit", 5, (int)(Layout.centerh(Layout.HEIGHT / 4) / 1.7), 400, false);
 		
 		title = "Exit game?";
 	}
