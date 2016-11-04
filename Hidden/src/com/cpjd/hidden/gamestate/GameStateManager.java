@@ -17,7 +17,6 @@ import com.cpjd.hidden.ui.elements.UIButton;
 import com.cpjd.hidden.ui.elements.UICheckbox;
 import com.cpjd.hidden.ui.windows.UIWindow;
 import com.cpjd.tools.Layout;
-import com.cpjd.tools.Usage;
 
 public class GameStateManager implements UIListener {
 
@@ -30,10 +29,10 @@ public class GameStateManager implements UIListener {
 
 	private GameState[] gameStates;
 	private int currentState;
-
-	// The game-wide font
+	
 	public static Font font;
-	public static int ticks = 0;
+	
+	public static long ticks;
 	
 	public GameStateManager() {
 		gameStates = new GameState[NUM_GAME_STATES];
@@ -68,10 +67,10 @@ public class GameStateManager implements UIListener {
 		return currentState;
 	}
 	public void update() {
-		console.update();
 		ticks++;
-		if(ticks % 120 == 0 && Console.showMemory) System.out.println(Usage.calcMemory());
 		
+		console.update();
+
 		if(pauseWindow != null) {
 			pauseWindow.update();
 			return;
@@ -139,13 +138,13 @@ public class GameStateManager implements UIListener {
 
 	@Override
 	public void buttonPressed(UIButton button) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void checkBoxPressed(UICheckbox checkBox, boolean checked) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

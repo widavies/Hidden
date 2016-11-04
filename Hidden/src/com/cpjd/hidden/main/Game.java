@@ -20,7 +20,6 @@ public class Game {
 	
 	public static void main(String[] args) {
 		
-		//mac stuff, makes it look pretty
 		if(System.getProperty("os.name").contains("OS X")){
 			System.setProperty("com.apple.mrj.application.apple.menu.about.name","Hidden");
 			System.setProperty("apple.laf.useScreenMenuBar", "true");
@@ -90,6 +89,5 @@ public class Game {
 		
 			game.resizeGame(1600, 900);
 		}
-		
 	}
 }

@@ -15,8 +15,6 @@ public class Chapter extends GameState {
 	protected Player player;
 	private HUD hud;
 	
-	
-
 	public Chapter(GameStateManager gsm, Console console) {
 		super(gsm, console);
 		
@@ -29,26 +27,20 @@ public class Chapter extends GameState {
 	public void update() {
 		if(player == null || !finishedGen) return;
 		
-		hud.update();
-		
-		if(hud.isInventoryOpen()) return;
 		player.update();
-		//tileMap.setPosition((Layout.WIDTH / 2) - player.getX(), (Layout.HEIGHT / 2) - player.getY());
-
-		hud.update();
+		tileMap.setCameraPosition(player.getX(),player.getY());
 		
+		hud.update();
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
 		if(!finishedGen) return;
-		
-		if(!gsm.isPaused() && finishedGen) hud.draw(g);
-		
-		if(!finishedGen) return;
+	
 		tileMap.draw(g);
-		player.draw(g);	
+		player.draw(g);
 		
+		if(!gsm.isPaused()) hud.draw(g);
 	}
 
 	@Override
@@ -60,7 +52,6 @@ public class Chapter extends GameState {
 	@Override
 	public void keyReleased(int k) {
 		if(player != null) player.keyReleased(k);
-		
 	}
 	
 	@Override
@@ -69,10 +60,7 @@ public class Chapter extends GameState {
 	}
 
 	@Override
-	public void mouseReleased(int x, int y) {
-		
-		
-	}
+	public void mouseReleased(int x, int y) {}
 
 	@Override
 	public void mouseMoved(int x, int y) {

@@ -12,13 +12,11 @@ public class Tile {
 	
 	private BufferedImage image;
 	private int id;
-	private byte type;
-	
+
 	private Animation animation;
 	
-	public Tile(BufferedImage image, byte type) {
+	public Tile(BufferedImage image) {
 		this.image = image;
-		this.type = type;
 	}
 	
 	public void setAnimation(String path, short frameSize, int delay) {

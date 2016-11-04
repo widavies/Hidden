@@ -4,14 +4,12 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
-import com.cpjd.hidden.saves.SaveProfile;
-
 // Stores the current players inventory
 public class Inventory {
 	
 	public Item[][] inventory = new Item[5][6]; // The inventory, including the hotbar
 
-	public Inventory(SaveProfile profile) {
+	public Inventory() {
 		TEMP_VAR = 0;
 		
 		for(int i = 0; i < 4; i++) {

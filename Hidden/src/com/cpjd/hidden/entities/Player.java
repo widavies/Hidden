@@ -1,7 +1,6 @@
 package com.cpjd.hidden.entities;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -12,7 +11,6 @@ import javax.imageio.ImageIO;
 
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.Map;
-import com.cpjd.hidden.map.Tile;
 import com.cpjd.tools.Animation;
 
 public class Player extends Entity {
@@ -27,14 +25,11 @@ public class Player extends Entity {
 	private int degrees;
 	
 	// Physics
-	private double moveSpeed; // How fast the object will gain momentum
-	private double maxSpeed; // The max speed the object can go
+	private double moveSpeed;
+	private double maxSpeed;
 	private boolean left, right, up, down;
 	private double borderLeftx, borderRightx, borderUpy, borderDowny, adjustx, adjusty;
-	
-	// global x and y for the console
-	public static Point LOCATION = new Point();
-	
+
 	public Player(Map tm) {
 		super(tm);
 		
@@ -59,7 +54,6 @@ public class Player extends Entity {
 		animation.setDelay(400);
 		
 		rotation = animation.getImage();
-
 	}
 	
 	private void loadAnimation() throws Exception {
@@ -135,62 +129,40 @@ public class Player extends Entity {
 	private void manageMovement() {
 		double oldMoveSpeed = moveSpeed;
 		
-		if((left && up) || (left && down) || (right && up) || (right && down)){
-			moveSpeed *= .7;
-		}
-		
-		// movement
+		if((left && up) || (left && down) || (right && up) || (right && down)) moveSpeed *= .7;
 		if(left) {
 			dx -= moveSpeed;
-			if(dx < -maxSpeed) {
-				dx = -maxSpeed;
-			}
+			if(dx < -maxSpeed) dx = -maxSpeed;
 		}
 		if(right) {
 			dx += moveSpeed;
-			if(dx > maxSpeed) {
-				dx = maxSpeed;
-			}
+			if(dx > maxSpeed) dx = maxSpeed;
 		}
 		if(up) {
 			dy -= moveSpeed;
 			if(dy < -maxSpeed) dy = -maxSpeed;
-
 		}
 		if(down) {
 			dy += moveSpeed;
-			if(dy > maxSpeed) {
-				dy = maxSpeed;
-			}
+			if(dy > maxSpeed) dy = maxSpeed;
 		}
-		if(!left && !right) {
-			dx = 0;
-		}
-		if(!up && !down) {
-			dy = 0;
-		}
+		if(!left && !right) dx = 0;
+		if(!up && !down) dy = 0;
 		
 		moveSpeed = oldMoveSpeed;
 		
 		xtemp = x;
 		ytemp = y;
 		
-		if(dy < 0) {
-			ytemp += dy;
-		}
-		if(dy > 0) {
-			ytemp += dy;
-		}
-		if(dx < 0) {
-			xtemp += dx;
-		}
-		if(dx > 0) {
-			xtemp += dx;
-		}
+		if(dy < 0) ytemp += dy;
+		if(dy > 0) ytemp += dy;
+		if(dx < 0) xtemp += dx;
+		if(dx > 0) xtemp += dx;
 		
 		manageCollision();
 		
 		setPosition(xtemp, ytemp);
+		
 		// X borders
 		borderLeftx = (GamePanel.WIDTH / 2) - x;
 		borderRightx = (tm.getWidth() - (GamePanel.WIDTH / 2) - x);
@@ -209,37 +181,12 @@ public class Player extends Entity {
 	public void manageCollision() {
 		if(GamePanel.DEBUG) return;
 		
-		if(tm.getTileType(xtemp, ytemp) == Tile.COLLISION || tm.getTileType(xtemp + cwidth, ytemp) == Tile.COLLISION ||
-				tm.getTileType(xtemp, ytemp + cheight) == Tile.COLLISION || tm.getTileType(xtemp + cwidth, ytemp + cheight) == Tile.COLLISION) {
-
-				if(dy != 0 && dx != 0) {
-					if(tm.getTileType(xtemp + cwidth, ytemp + (cheight / 1.4)) == Tile.COLLISION && tm.getTileType(xtemp + cwidth, ytemp + cheight - (cheight / 1.4)) == Tile.COLLISION) {
-						xtemp = x;
-					}
-					if(tm.getTileType(xtemp + (cwidth / 1.4), ytemp) == Tile.COLLISION && tm.getTileType(xtemp + cwidth - (cwidth / 1.4), ytemp) == Tile.COLLISION) {
-						ytemp = y;
-					}
-					if(tm.getTileType(xtemp, ytemp + (cheight / 1.4)) == Tile.COLLISION && tm.getTileType(xtemp, ytemp + cheight - (cheight / 1.4)) == Tile.COLLISION) {
-						xtemp = x;
-					}
-					if(tm.getTileType(xtemp + (cwidth / 1.4), ytemp + cheight) == Tile.COLLISION && tm.getTileType(xtemp + cwidth - (cwidth / 1.4), ytemp + cheight) == Tile.COLLISION) {
-						ytemp = y;
-					}
-				}
-				else if(dx != 0) xtemp = x;
-				else if (dy != 0) ytemp = y;
-			
-				
-				
-		}
-
+		
 		
 	}
 	
 	public void setPosition(double x, double y) {
 		super.setPosition(x, y);
-		Player.LOCATION.x = (int)x;
-		Player.LOCATION.y = (int)y;
 	}
 	
 	public void keyPressed(int k) {

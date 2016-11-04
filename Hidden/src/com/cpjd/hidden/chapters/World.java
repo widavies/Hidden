@@ -30,10 +30,6 @@ public class World extends Chapter implements WorldListener {
 	
 	public void update() {
 		if(finishedGen) super.update();
-		
-		if(player != null) {
-			tileMap.setCameraPosition(player.getX(),player.getY());
-		}
 	}
 	
 	@Override

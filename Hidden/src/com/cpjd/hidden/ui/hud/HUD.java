@@ -8,10 +8,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
-import com.cpjd.hidden.effects.Effect;
-import com.cpjd.hidden.effects.Effect.EffectInfo;
 import com.cpjd.hidden.items.Inventory;
 import com.cpjd.hidden.items.Inventory.Item;
 import com.cpjd.hidden.main.GamePanel;
@@ -26,9 +23,6 @@ public class HUD {
 	private Inventory inventory;
 	private int selected;
 
-	// Effects
-	private ArrayList<EffectInfo> effects;
-	
 	// Technical
 	private AlphaComposite composite;
 	private AlphaComposite defaultComposite;
@@ -44,44 +38,13 @@ public class HUD {
 		composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.80f);
 		defaultComposite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f);
 		
-		inventory = new Inventory(null);
-		
-		effects = new ArrayList<EffectInfo>();
-		
-		effects.add(new EffectInfo(Effect.POSION));
-		effects.add(new EffectInfo(Effect.POSION));
-		effects.add(new EffectInfo(Effect.POSION));
-		effects.add(new EffectInfo(Effect.POSION));
+		inventory = new Inventory();
 	}
 
 	public void setStats(double health, double maxHealth) {
 		this.health = health / maxHealth;
 	}
 
-	public void addEffect(EffectInfo effectInfo) {
-		if(!updateEffect(effectInfo)) effects.add(effectInfo);
-	}
-	
-	public void removeEffect(EffectInfo effectInfo) {
-		for(int i = 0; i < effects.size(); i++) {
-			if(effects.get(i).type == effectInfo.type) {
-				effects.remove(i);
-				return;
-			}
-		}
-	}
-	
-	// Returns if the effect was successfully updated
-	public boolean updateEffect(EffectInfo effectInfo) {
-		for(int i = 0; i < effects.size(); i++) {
-			if(effects.get(i).type == effectInfo.type) {
-				effects.set(i, effectInfo);
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	public void update() {
 		if(!inv) return;
 		
@@ -138,7 +101,6 @@ public class HUD {
 
 		drawStats(g);
 		drawHotbar(g);
-		drawEffects(g);
 		if(inv) drawInventory(g);
 		
 		g.setComposite(defaultComposite);
@@ -240,19 +202,7 @@ public class HUD {
 		}
 		
 	}
-	
-	private void drawEffects(Graphics2D g) {
-		for(int i = 0; i < effects.size(); i++) {
-			g.setColor(Color.WHITE);
-			g.fillRect(Layout.WIDTH - ((i + 1) * 100), 10, 90, 90);
-			g.setColor(Color.BLACK);
-			g.drawRect(Layout.WIDTH - ((i + 1) * 100), 10, 90, 90);
-			g.setColor(Color.BLACK);
-			double percent = effects.get(i).duration / effects.get(i).maxDuration;
-			g.fillRect(Layout.WIDTH - ((i + 1) * 100) + 1, (int)(10 + (90 - (percent * 90))) + 1, 89, (int)(percent * 90));
-		}
-	}
-	
+
 	private void drawStats(Graphics2D g) {
 		/* Draw player stats */
 		g.setColor(Color.WHITE);

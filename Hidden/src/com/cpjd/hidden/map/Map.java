@@ -60,7 +60,7 @@ public class Map {
 			
 			for(byte row = 0; row < numRowsAcross; row++) {
 				for(byte col = 0; col < numColsAcross; col++) {
-					tiles[row][col] = new Tile(tileset.getSubimage(col * tileSize, row * tileSize, tileSize, tileSize), row);
+					tiles[row][col] = new Tile(tileset.getSubimage(col * tileSize, row * tileSize, tileSize, tileSize));
 				}
 			}
 			
@@ -163,19 +163,23 @@ public class Map {
 		}
 	}
 	
+	/**
+	 * Sets up the init camera values for out of the ordinary spawn locations
+	 * @param x The player position horizontally (px)
+	 * @param y The player position vertically (px)
+	 */
 	public void initCamera(double x, double y) {
 		if(x >= width - (GamePanel.WIDTH / 2)) xOffset = x - GamePanel.WIDTH / 2;
 		if(y >= height - (GamePanel.HEIGHT / 2)) yOffset = y - GamePanel.HEIGHT / 2;
 	}
 	
-	/** MAKE THIS BETTER !! TODO
+	/**
 	 * @param x The horizontal distance (in px) to the requested tile
 	 * @param y The vertical distance (in px) to the request tile
 	 * @return The tile type (Tile.NO_COLLISION, TIlE.COLLISION, etc) of the tile that the specified x,y is in
 	 */
 	public int getTileType(double x, double y) {
-		if(getTileID(x, y) < 30) return 0;
-		else return 1;
+		return (getTileID(x, y) + 1) % 30;
 	}
 	
 	/**

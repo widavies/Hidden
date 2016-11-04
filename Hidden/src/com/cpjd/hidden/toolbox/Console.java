@@ -25,11 +25,7 @@ public class Console {
 	
 	private String lastCommand = "";
 	
-	public static boolean showMemory; // A temporary thing
-	
 	private ArrayList<String> output;
-	
-	private boolean awaitingClick;
 	
 	private final String[] HELP = {
 		"Command, Description, Usage",
@@ -83,10 +79,6 @@ public class Console {
 		case "clear":
 			output.clear();
 			return;
-		case "place":
-			output.add("Click where'd you like to move the player.");
-			awaitingClick = true;
-			return;
 		case "help":
 			for(int i = 0; i < HELP.length; i++) {
 				output.add(HELP[i]);
@@ -115,8 +107,8 @@ public class Console {
 		}
 		
 		if(!GamePanel.DEBUG) return;
-		int tempx = (int)Player.LOCATION.x;
-		int tempy = (int)Player.LOCATION.y;
+		int tempx = (int)player.getX();
+		int tempy = (int)player.getY();
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Arial", Font.PLAIN, 30));
 		g.drawString(Usage.calcMemory(), 5, Layout.HEIGHT - 50);

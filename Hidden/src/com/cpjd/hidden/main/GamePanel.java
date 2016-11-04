@@ -37,8 +37,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 	// Game State Manager
 	private GameStateManager gsm;  
 	
-	//FP
-	public static int ticks = 0;
 	public static boolean DEBUG;
 	
 	public GamePanel() {
@@ -89,19 +87,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 				update();
 				draw();
 				drawToScreen();
-				ticks++;
 			}
 			elapsed = System.nanoTime() - start;
 			wait = targetTime - elapsed / 1000000;
 			if(wait < 0) wait = 0;
-	/*		
-			if(ticks == FPS){
-				long elapsedSec = System.nanoTime() - lastSec;
-				System.out.println(FPS + " frames took " + elapsedSec / 1000000000d + " seconds");
-				ticks = 0;
-				lastSec = System.nanoTime();
-			}
-		*/	
 			try {
 				Thread.sleep(wait);
 			} catch(Exception e) {
@@ -126,8 +115,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 		if(g2 == null) return;
 		g2.drawImage(image, 0, 0, Layout.WIDTH, Layout.HEIGHT, null);
 		g2.dispose();
-		//System.out.println(WIDTH * SCALE);
-		//g2.drawImage(GUIImage, 0, 0, WIDTH, HEIGHT, null);
 	}
 
 	// Resizes the window
