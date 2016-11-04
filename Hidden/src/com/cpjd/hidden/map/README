@@ -3,7 +3,7 @@ Cascade Engine Design
 Welcome to the design document for the new engine, Cascade.
 
 We kinda needed a rewrite because our old engine was a little poopy for the in-depth calculations we need.
-// Todo list while I'm thinking about it, spawning tweak, collision tweaks, map getType method, scaling map when near the edge, clean up player code
+// Todo list while I'm thinking about it, spawning tweak, collision tweaks, map getType method, clean up player code
 		
 
 Coordinate Systems
@@ -25,3 +25,16 @@ Here's the basics:
 	2) Enemies (both people and fixed [cams, etc])
 	3) Interaction with environment (building?, trading?, buying stuff, etc)
 	4) better/more graphics
+	
+VERSION SEMANTICS
+Example 1.43 - Stable
+
+The ones place (in this case = 1) should be changed when a large update or new system is added - for example, adding village generation, or an items system
+The 10ths place (in this case = 4) should be changed when a considerable amount of tweaks / fixes have been done, a.k.a 5 or more bug fixes and tweaks
+The 100ths place (in this cas = 3) should be changed when a few bug fixes or tweaks happened
+
+Versions with the same 1s place should always be compatible, but different can be incompatible. After the game is released, versions should be carefully considered as to whether they will
+break existing features
+
+Add the -Stable or Unstable tag based off whether the application is working and completely functional, or there are serious bugs / unfinished features that you're in the middle of.
+This is so we know what to expect if it's labeled as stable.

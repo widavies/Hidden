@@ -188,13 +188,8 @@ public class Player extends Entity {
 			xtemp += dx;
 		}
 		
-		// Manage collision
-		if((tm.getTileType(xtemp, ytemp) == Tile.COLLISION || tm.getTileType(xtemp + cwidth, ytemp) == Tile.COLLISION
-				|| tm.getTileType(xtemp +cwidth, ytemp + cheight) == Tile.COLLISION || tm.getTileType(xtemp, ytemp + cheight) == Tile.COLLISION) && !GamePanel.DEBUG) {
-			if(dx != 0) xtemp = x;
-			if(dy != 0) ytemp = y;
-		}
-
+		manageCollision();
+		
 		setPosition(xtemp, ytemp);
 		// X borders
 		borderLeftx = (GamePanel.WIDTH / 2) - x;
@@ -209,6 +204,36 @@ public class Player extends Entity {
 		if(borderUpy >= 0) adjusty = borderUpy;
 		else if(borderDowny <= 0) adjusty = borderDowny;
 		else adjusty = 0;
+	}
+	
+	public void manageCollision() {
+		if(GamePanel.DEBUG) return;
+		
+		if(tm.getTileType(xtemp, ytemp) == Tile.COLLISION || tm.getTileType(xtemp + cwidth, ytemp) == Tile.COLLISION ||
+				tm.getTileType(xtemp, ytemp + cheight) == Tile.COLLISION || tm.getTileType(xtemp + cwidth, ytemp + cheight) == Tile.COLLISION) {
+
+				if(dy != 0 && dx != 0) {
+					if(tm.getTileType(xtemp + cwidth, ytemp + (cheight / 1.4)) == Tile.COLLISION && tm.getTileType(xtemp + cwidth, ytemp + cheight - (cheight / 1.4)) == Tile.COLLISION) {
+						xtemp = x;
+					}
+					if(tm.getTileType(xtemp + (cwidth / 1.4), ytemp) == Tile.COLLISION && tm.getTileType(xtemp + cwidth - (cwidth / 1.4), ytemp) == Tile.COLLISION) {
+						ytemp = y;
+					}
+					if(tm.getTileType(xtemp, ytemp + (cheight / 1.4)) == Tile.COLLISION && tm.getTileType(xtemp, ytemp + cheight - (cheight / 1.4)) == Tile.COLLISION) {
+						xtemp = x;
+					}
+					if(tm.getTileType(xtemp + (cwidth / 1.4), ytemp + cheight) == Tile.COLLISION && tm.getTileType(xtemp + cwidth - (cwidth / 1.4), ytemp + cheight) == Tile.COLLISION) {
+						ytemp = y;
+					}
+				}
+				else if(dx != 0) xtemp = x;
+				else if (dy != 0) ytemp = y;
+			
+				
+				
+		}
+
+		
 	}
 	
 	public void setPosition(double x, double y) {
