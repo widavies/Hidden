@@ -28,6 +28,7 @@ public class CreditsWindow extends UIWindow {
 			"Grass - http://opengameart.org/content/17-grass-tiles#15",
 			"",
 			"",
+			"",
 			"Sound Attributions#30",
 			"Menu sound - strange_dragoon, https://www.freesound.org/people/strange_dragoon/sounds/271139/#15"
 	};

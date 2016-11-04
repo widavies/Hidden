@@ -127,12 +127,12 @@ public class Map {
 		adjusty = yOffset % scaledTileSize;
 		
 		for(short row = startRow, rowPx = 0; row < numRowsToDraw + startRow; row++, rowPx++) {
-			if(row >= map[0].length) break;
+			if(row >= map[0].length || row < 0) break;
 			
 			for(short col = startCol, colPx = 0; col < numColsToDraw + startCol; col++, colPx++) {
-				if(col >= map.length) break;
+				if(col >= map.length || col < 0) break;
 				
-				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(),(int)Math.floor(colPx * scaledTileSize - adjustx), (int)Math.floor(rowPx * scaledTileSize - adjusty), (int)scaledTileSize, (int)scaledTileSize, null);
+				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(),(int)(colPx * scaledTileSize - adjustx), (int)(rowPx * scaledTileSize - adjusty), (int)scaledTileSize, (int)scaledTileSize, null);
 
 			}
 		}

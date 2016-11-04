@@ -119,7 +119,7 @@ public class OpenWorld implements Runnable {
 				else if(r.nextInt(900) <= 1) {
 					generation[i][j] = 2;
 					generation[i - 1][j] = WALL;
-					generation[i + 1][j] = OPEN_DOOR;
+					generation[i + 1][j] = LOCKED_DOOR;
 					generation[i][j - 1] = WALL;
 					generation[i][j + 1] = WALL;
 					generation[i + 1][j - 1] = WALL;
