@@ -237,8 +237,7 @@ public class Player extends Entity {
 	}
 	
 	public void setPosition(double x, double y) {
-		this.x = x;
-		this.y = y;
+		super.setPosition(x, y);
 		Player.LOCATION.x = (int)x;
 		Player.LOCATION.y = (int)y;
 	}

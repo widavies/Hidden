@@ -7,8 +7,8 @@ import java.util.Random;
 // An open world generation algorithm by yours truly
 public class OpenWorld implements Runnable {
 
-	public static final int WIDTH = 100;
-	public static final int HEIGHT = 100;
+	public static final int WIDTH = 50;
+	public static final int HEIGHT = 50;
 	
 	private Random r;
 	private WorldListener listener;
@@ -146,7 +146,7 @@ public class OpenWorld implements Runnable {
 		int xOffset = tileWidth / 2;
 		int yOffset = tileHeight / 2;
 		int searches = 0; // 0, we're going right until the edge, 1, left until the edge, 2 up until the edge, 3 down until the edge
-		int spawnSafeRange = 4;
+		int spawnSafeRange = 6;
 		boolean viable = false;
 		int randomAttempts = 0;
 		do {
@@ -202,7 +202,6 @@ public class OpenWorld implements Runnable {
 			generateWorld(tileWidth,tileHeight);
 		} else if(viable) {
 			spawn = new Point(xOffset + (int)(spawnSafeRange / 2), yOffset + (int)(spawnSafeRange / 2));
-			
 			listener.worldGenerated();
 			
 		}
@@ -210,8 +209,6 @@ public class OpenWorld implements Runnable {
 	}
 	public Point getSpawn() {
 		if(spawn == null) return null;
-		System.out.println(spawn.x);
-		spawn.setLocation(1000,2000);
 		return spawn;
 	}
 	private boolean shouldGenOcean(int tileWidth, int tileHeight, int row, int col) {

@@ -34,8 +34,7 @@ public class Chapter extends GameState {
 		if(hud.isInventoryOpen()) return;
 		player.update();
 		//tileMap.setPosition((Layout.WIDTH / 2) - player.getX(), (Layout.HEIGHT / 2) - player.getY());
-		player.setMapPosition();
-		
+
 		hud.update();
 		
 	}

@@ -75,7 +75,7 @@ public class Console {
 			output.add("Force stopping game");
 			System.exit(0);
 			return;
-		case "reload":
+		case "r":
 			gsm.setState(gsm.getState());
 			output.add("Gamestate reloaded.");
 			open = false;
