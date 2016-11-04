@@ -3,7 +3,7 @@ Cascade Engine Design
 Welcome to the design document for the new engine, Cascade.
 
 We kinda needed a rewrite because our old engine was a little poopy for the in-depth calculations we need.
-// Todo list while I'm thinking about it - fix upper bounds glitch, spawning tweak, collision tweaks, map getType method, scaling map when near the edge!, clean up player code
+// Todo list while I'm thinking about it, spawning tweak, collision tweaks, map getType method, scaling map when near the edge, clean up player code
 		
 
 Coordinate Systems

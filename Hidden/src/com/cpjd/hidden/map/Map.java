@@ -36,7 +36,6 @@ public class Map {
 	private double adjustx, adjusty;
 	
 	// Offsets
-	private double lastx, lasty;
 	private double xOffset, yOffset;
 	private int lastScreenWidth, lastScreenHeight;
 	
@@ -145,24 +144,28 @@ public class Map {
 	 * @param y vertical pixels away form the upper-left most tile
 	 */
 	public void setCameraPosition(double x, double y) {
-		if(x > GamePanel.WIDTH / 2 && x < width - (GamePanel.WIDTH / 2)) xOffset -= lastx - x;
-		if(y > GamePanel.HEIGHT / 2 && y < height - (GamePanel.HEIGHT / 2))	yOffset -= lasty - y;
+		if(x > GamePanel.WIDTH / 2 && x < width - (GamePanel.WIDTH / 2)) xOffset = x - GamePanel.WIDTH / 2;
+		if(y > GamePanel.HEIGHT / 2 && y < height - (GamePanel.HEIGHT / 2))	yOffset = y - GamePanel.HEIGHT / 2;
 		
 		numColsToDraw = (byte)(GamePanel.WIDTH / (tileSize * SCALE) + 2);
 		numRowsToDraw = (byte)(GamePanel.HEIGHT / (tileSize * SCALE) + 2);
 		
-		lastx = x;
-		lasty = y;
-
 		if(lastScreenWidth != GamePanel.WIDTH) {
-			if(x > GamePanel.WIDTH / 2 && x < width - (GamePanel.WIDTH / 2)) xOffset = xOffset - (GamePanel.WIDTH - lastScreenWidth) / 2; 
+			if(x > GamePanel.WIDTH / 2) xOffset = xOffset - (GamePanel.WIDTH - lastScreenWidth) / 2;
+			if(x >= width - (GamePanel.WIDTH / 2)) xOffset -= (GamePanel.WIDTH - lastScreenWidth) / 2;
 			lastScreenWidth = GamePanel.WIDTH;
 		}
 		
 		if(lastScreenHeight != GamePanel.HEIGHT) {
-			if(y > GamePanel.HEIGHT / 2 && y < height - (GamePanel.HEIGHT / 2)) yOffset = yOffset - (GamePanel.HEIGHT - lastScreenHeight) / 2;
+			if(y > GamePanel.HEIGHT / 2) yOffset = yOffset - (GamePanel.HEIGHT - lastScreenHeight) / 2;
+			if(y >= height - (GamePanel.HEIGHT / 2)) yOffset -= (GamePanel.HEIGHT - lastScreenHeight) / 2;
 			lastScreenHeight = GamePanel.HEIGHT;
 		}
+	}
+	
+	public void initCamera(double x, double y) {
+		if(x >= width - (GamePanel.WIDTH / 2)) xOffset = x - GamePanel.WIDTH / 2;
+		if(y >= height - (GamePanel.HEIGHT / 2)) yOffset = y - GamePanel.HEIGHT / 2;
 	}
 	
 	/** MAKE THIS BETTER !! TODO

@@ -145,14 +145,7 @@ public class Console {
 	}
 	
 	public void mousePressed(int x, int y) {
-		if(awaitingClick) {
-			if(player != null) {
-				player.setPosition(x - player.getX(), y - player.getY());
-				open = false;
-			} else {
-				output.add("Player is null! Please start a level...");
-			}
-		}
+		//if(GamePanel.DEBUG && player != null) player.setPosition(player.getX() - (GamePanel.WIDTH / 2), player.getY() - (GamePanel.HEIGHT / 2) - y);
 	}
 	
 	public void setPlayer(Player p) {

@@ -56,9 +56,11 @@ public class World extends Chapter implements WorldListener {
 	public void worldGenerated() {
 		tileMap.setMap(world.getWorld());
 		player = new Player(tileMap);
-		player.setPosition(200, 200);
+		player.setPosition(100,100);
+		tileMap.initCamera(player.getX(), player.getY());
 		console.setPlayer(player);
 		finishedGen = true;
+		
 	}
 
 	@Override
