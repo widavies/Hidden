@@ -1,5 +1,12 @@
 package com.cpjd.hidden.sound;
 
+import java.util.HashMap;
+
+import org.newdawn.slick.Music;
+import org.newdawn.slick.Sound;
+
+import com.cpjd.hidden.toolbox.ErrorLog;
+
 /**
  * Dynamic SoundLoader for Hidden. Create a new one of these when a group of sounds needs to be loaded / released. 
  * If the sound doesn't need to be managed after loaded, just let this class sit as it is.
@@ -14,11 +21,20 @@ public class SoundLoader implements Runnable {
 	public int total;
 	
 	public SoundLoader(SoundRequest s) {
+		
 		this.s = s;
 		progress = 0;
 		try {
 			total = s.getMusic().length + s.getSFX().length;
-		} catch(Exception e) {}
+		} catch(Exception e) {
+			ErrorLog.log("Error in SoundLoader constructor - couldn't find 'total' value");
+		}
+		
+		//FIXME play first sound silently to avoid lag, but this slows loading significantly
+		SoundPlayer.setVolume(0f);
+		SoundPlayer.playSound(SoundKeys.MENU_HOVER);
+		SoundPlayer.setVolume(1.4f);
+		SoundPlayer.MusicVol = 0.05f;
 	}
 	
 	public void load() {
@@ -29,20 +45,26 @@ public class SoundLoader implements Runnable {
 	public void run() {
 		try {
 			for(int i = 0; i < s.getSFX().length; i++) {
-				SoundPlayer.addSound(s.getSFX()[i], SoundKeys.getPath(s.getSFX()[i]));
+				//SoundPlayer.addSound(s.getSFX()[i], SoundKeys.getPath(s.getSFX()[i]));
 				progress++;
 			}
-		} catch(Exception e) {}
+		} catch(Exception e) {
+			ErrorLog.log("SoundLoader - Couldn't add sound");
+		}
 		try {
 			for(int i = 0; i < s.getMusic().length; i++) {
-				SoundPlayer.addMusic(s.getMusic()[i], SoundKeys.getPath(s.getMusic()[i]));
+				//SoundPlayer.addMusic(s.getMusic()[i], SoundKeys.getPath(s.getMusic()[i]));
 				progress++;
 			}
-		} catch(Exception e) {}
+		} catch(Exception e) {
+			ErrorLog.log("SoundLoader - Couldn't add music");
+		}
+		
 		try {
 			thread.join();
 		} catch(Exception e) {
 			System.err.println("Couldn't stop SoundLoader thread");
+			ErrorLog.log("Couldn't stop SoundLoader thread");
 		}
 	}
 	/**

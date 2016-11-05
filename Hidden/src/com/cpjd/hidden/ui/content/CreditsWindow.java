@@ -19,7 +19,7 @@ public class CreditsWindow extends UIWindow {
 			"Team#30",
 			"Lead Programmer - Will Davies#30",
 			"Programmer - Alex Harker#30",
-			"Artwork - Daniel Peterson#30",
+			"Artwork/Lead Procrastinator - Daniel Peterson#30",
 			"Artwork - Kira Davies#30",
 			"",
 			"",

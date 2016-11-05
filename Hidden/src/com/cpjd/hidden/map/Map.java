@@ -186,7 +186,8 @@ public class Map {
 		else{
 			return Tile.NO_COLLISION;
 		}
-		//FIXME return (getTileID(x, y) + 1) % 30;
+		//FIXME getTileType() method
+		//return (getTileID(x, y) + 1) % 30;
 	}
 	
 	/**

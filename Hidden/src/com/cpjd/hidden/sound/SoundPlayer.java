@@ -7,8 +7,6 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
-import com.cpjd.hidden.toolbox.ErrorLog;
-
 // Alpha 0.13 Sound Rework
 public class SoundPlayer {
 	
@@ -19,6 +17,17 @@ public class SoundPlayer {
 	
 	private static float SFXVol = 1.4f;
 	public static float MusicVol = 0.05f;
+	
+	//FIXME sound loading - this is not permanent
+	static{
+		try {
+			soundMap.put(SoundKeys.MENU_HOVER, new Sound(SoundPlayer.class.getResource("/sound/interface/menu.ogg")));
+			musicMap.put(SoundKeys.CREDITS_MUSIC, new Music(SoundPlayer.class.getResource("/sound/interface/credits_music.ogg")));
+			
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public static void addSound(String key, String path) {
 		try {
@@ -42,6 +51,11 @@ public class SoundPlayer {
 		MusicVol = f;
 	}
 	
+	public static void setVolume(Float f) {
+		SFXVol = f;
+		MusicVol = f;
+	}
+	
 	public static void removeAllSound() {
 		soundMap.clear();
 	}
@@ -59,15 +73,11 @@ public class SoundPlayer {
 	}
 	
 	public static void playSound(String key) {
-		try{
-			if(!mute) soundMap.get(key).play(1f, SFXVol);
-		}catch(NullPointerException e){
-			ErrorLog.log("Null Pointer caught at SoundPlayer playSound(String)");
-		}
+		if(!mute) soundMap.get(key).play(1f, SFXVol);
 	}
 	
 	public static void playMusic(String key) {
-		if(!mute) musicMap.get(key).play(1f, MusicVol);;
+		if(!mute) musicMap.get(key).play(1f, MusicVol);
 	}
 	public static boolean isSoundRunning(String key) {
 		return soundMap.get(key).playing();
