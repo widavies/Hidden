@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.Map;
+import com.cpjd.hidden.map.Tile;
 import com.cpjd.tools.Animation;
 
 public class Player extends Entity {
@@ -181,8 +182,16 @@ public class Player extends Entity {
 	public void manageCollision() {
 		if(GamePanel.DEBUG) return;
 		
+		/*TODO collision
 		
+		if(tm.getTileType(xtemp, ytemp) == Tile.NO_COLLISION){
+			return;
+		}else{
+			xtemp = x;
+			ytemp = y;
+		}
 		
+		*/
 	}
 	
 	public void setPosition(double x, double y) {

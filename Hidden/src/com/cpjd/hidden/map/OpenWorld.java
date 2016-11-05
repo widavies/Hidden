@@ -153,7 +153,12 @@ public class OpenWorld implements Runnable {
 			viable = true;
 			for(int i = 0; i < spawnSafeRange; i++) {
 				for(int j = 0; j < spawnSafeRange; j++) {
-					if(generation[yOffset + i][xOffset + j] > 10) viable = false; 
+					try{
+						if(generation[yOffset + i][xOffset + j] > 10) viable = false;
+					}catch(ArrayIndexOutOfBoundsException e){
+						System.out.println("caught ArrayIndexOutOfBoundsException during OpenWorld generateWorld() spawnSafeRange code");
+						continue;
+					}
 				}
 			}
 			

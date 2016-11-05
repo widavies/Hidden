@@ -66,25 +66,28 @@ public class Console {
 		String[] tokens = s.split("\\s+");
 		
 		// Basic commands
-		switch(tokens[0].toLowerCase()) {
-		case "stop":
+		if (tokens[0].toLowerCase().equals("stop")){
 			output.add("Force stopping game");
 			System.exit(0);
 			return;
-		case "r":
+		}
+		else if (tokens[0].toLowerCase().equals("r")){
 			gsm.setState(gsm.getState());
 			output.add("Gamestate reloaded.");
 			open = false;
 			return;
-		case "clear":
+		}
+		else if (tokens[0].toLowerCase().equals("clear")){
 			output.clear();
 			return;
-		case "help":
+		}
+		else if (tokens[0].toLowerCase().equals("help")){
 			for(int i = 0; i < HELP.length; i++) {
 				output.add(HELP[i]);
 			}
 			return;
-		default:
+		}
+		else{
 			output.add("Unrecognized command. Type help for list of commands");
 		}
 	}

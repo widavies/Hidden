@@ -31,3 +31,12 @@ break existing features
 
 Add the -Stable or Unstable tag based off whether the application is working and completely functional, or there are serious bugs / unfinished features that you're in the middle of.
 This is so we know what to expect if it's labeled as stable.
+
+
+
+BUGS
+
+prisons spawn on top of each other
+sometimes if moving left soon after spawn player will jump left about two tiles
+
+VERSIONS
