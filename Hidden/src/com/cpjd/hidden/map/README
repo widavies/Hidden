@@ -18,7 +18,9 @@ Here's the basics:
 	2) Enemies (both people and fixed [cams, etc])
 	3) Interaction with environment (building?, trading?, buying stuff, etc)
 	4) better/more graphics
-	
+
+
+
 VERSION SEMANTICS
 Example 1.43 - Stable
 
@@ -39,4 +41,7 @@ BUGS
 prisons spawn on top of each other
 sometimes if moving left soon after spawn player will jump left about two tiles
 
+
+
 VERSIONS
+1.50 - Stable - added collision, error log

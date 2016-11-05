@@ -118,6 +118,7 @@ public class Map {
 
 		width = (numCols)* (tileSize * SCALE);
 		height = (numRows)* (tileSize * SCALE);
+		
 	}
 	
 	public void draw(Graphics2D g) {
@@ -179,7 +180,13 @@ public class Map {
 	 * @return The tile type (Tile.NO_COLLISION, TIlE.COLLISION, etc) of the tile that the specified x,y is in
 	 */
 	public int getTileType(double x, double y) {
-		return (getTileID(x, y) + 1) % 30;
+		if(getTileID(x, y) >= 30){
+			return Tile.COLLISION;
+		}
+		else{
+			return Tile.NO_COLLISION;
+		}
+		//FIXME return (getTileID(x, y) + 1) % 30;
 	}
 	
 	/**

@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.cpjd.hidden.toolbox.ErrorLog;
+
 // An open world generation algorithm by yours truly
 public class OpenWorld implements Runnable {
 
@@ -156,7 +158,7 @@ public class OpenWorld implements Runnable {
 					try{
 						if(generation[yOffset + i][xOffset + j] > 10) viable = false;
 					}catch(ArrayIndexOutOfBoundsException e){
-						System.out.println("caught ArrayIndexOutOfBoundsException during OpenWorld generateWorld() spawnSafeRange code");
+						ErrorLog.log("ArrayIndexOutOfBounds caught at OpenWorld generateWorld()");
 						continue;
 					}
 				}

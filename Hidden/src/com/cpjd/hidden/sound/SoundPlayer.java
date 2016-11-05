@@ -7,6 +7,8 @@ import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
+import com.cpjd.hidden.toolbox.ErrorLog;
+
 // Alpha 0.13 Sound Rework
 public class SoundPlayer {
 	
@@ -57,7 +59,11 @@ public class SoundPlayer {
 	}
 	
 	public static void playSound(String key) {
-		if(!mute) soundMap.get(key).play(1f, SFXVol);
+		try{
+			if(!mute) soundMap.get(key).play(1f, SFXVol);
+		}catch(NullPointerException e){
+			ErrorLog.log("Null Pointer caught at SoundPlayer playSound(String)");
+		}
 	}
 	
 	public static void playMusic(String key) {

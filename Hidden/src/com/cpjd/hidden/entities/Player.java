@@ -182,16 +182,23 @@ public class Player extends Entity {
 	public void manageCollision() {
 		if(GamePanel.DEBUG) return;
 		
-		/*TODO collision
-		
 		if(tm.getTileType(xtemp, ytemp) == Tile.NO_COLLISION){
 			return;
 		}else{
-			xtemp = x;
-			ytemp = y;
+			if(tm.getTileType(x, ytemp) == Tile.NO_COLLISION){
+				xtemp = x;
+				return;
+			}
+			else if(tm.getTileType(xtemp, y) == Tile.NO_COLLISION){
+				ytemp = y;
+				return;
+			}
+			else{
+				xtemp = x;
+				ytemp = y;
+				return;
+			}
 		}
-		
-		*/
 	}
 	
 	public void setPosition(double x, double y) {
