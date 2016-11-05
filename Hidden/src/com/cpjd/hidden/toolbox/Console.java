@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.hidden.main.GamePanel;
+import com.cpjd.hidden.map.Map;
 import com.cpjd.smartui.SmartField;
 import com.cpjd.tools.Layout;
 import com.cpjd.tools.Usage;
@@ -78,6 +79,14 @@ public class Console {
 			return;
 		case "clear":
 			output.clear();
+			return;
+		case "unscale":
+			Map.SCALE = 1;
+			output.add("Map was unscaled. Reload for changes to take effect.");
+			return;
+		case "scale":
+			Map.SCALE = 4;
+			output.add("Map was rescaled. Reload for changes to take effect.");
 			return;
 		case "help":
 			for(int i = 0; i < HELP.length; i++) {

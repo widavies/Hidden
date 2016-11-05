@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.gamestate.GameStateManager;
-import com.cpjd.hidden.map.OpenWorld;
+import com.cpjd.hidden.map.GenWorld;
 import com.cpjd.hidden.map.WorldListener;
 import com.cpjd.hidden.toolbox.Console;
 import com.cpjd.tools.Layout;
@@ -15,7 +15,7 @@ public class World extends Chapter implements WorldListener {
 
 	private double progress;
 	
-	protected OpenWorld world;
+	protected GenWorld world;
 	
 	public World(GameStateManager gsm, Console console) {
 		super(gsm, console);
@@ -23,7 +23,7 @@ public class World extends Chapter implements WorldListener {
 		finishedGen = false;
 		
 		tileMap.loadTiles("/tiles/tileset.png");
-		world = new OpenWorld();
+		world = new GenWorld();
 		world.addWorldListener(this);
 		world.generate();
 	}
@@ -40,7 +40,7 @@ public class World extends Chapter implements WorldListener {
 		
 		g.setColor(Color.WHITE);
 		g.setFont(GameStateManager.font.deriveFont(35f));
-		g.drawString("Generating map ("+OpenWorld.WIDTH+","+OpenWorld.HEIGHT+")", Layout.centerString("Generating map: ("+OpenWorld.WIDTH+","+OpenWorld.HEIGHT+")", g), Layout.centerStringVert(g));
+		g.drawString("Generating map ("+GenWorld.WIDTH+","+GenWorld.HEIGHT+")", Layout.centerString("Generating map: ("+GenWorld.WIDTH+","+GenWorld.HEIGHT+")", g), Layout.centerStringVert(g));
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(Layout.centerw(400), Layout.aligny(51), 400, 40);
 		g.setColor(Color.WHITE);

@@ -5,29 +5,30 @@ import java.util.ArrayList;
 import java.util.Random;
 
 // An open world generation algorithm by yours truly
-public class OpenWorld implements Runnable {
+public class GenWorld implements Runnable {
 
-	public static final int WIDTH = 50;
-	public static final int HEIGHT = 50;
+	public static final int WIDTH = 100;
+	public static final int HEIGHT = 100;
 	
 	private Random r;
 	private WorldListener listener;
 	
 	// Tile ids
-	private final int GRASS_1 = 4;
-	private final int GRASS_2 = 5;
-	private final int GRASS_3 = 6;
-	private final int GRASS_4 = 7;
-	private final int GRASS_5 = 8;
-	private final int GRASS_6 = 9;	
-	private final int WATER = 31;
-	private final int FOREST_1 = 34;
-	private final int FOREST_2 = 35;
-	private final int FOREST_3 = 36;
-	private final int FOREST_4 = 37;
-	private final int LOCKED_DOOR = 32;
-	private final int OPEN_DOOR = 33;
-	private final int WALL = 30;
+	public final static int CEMENT = 2;
+	public final static int GRASS_1 = 4;
+	public final static int GRASS_2 = 5;
+	public final static int GRASS_3 = 6;
+	public final static int GRASS_4 = 7;
+	public final static int GRASS_5 = 8;
+	public final static int GRASS_6 = 9;	
+	public final static int WATER = 31;
+	public final static int FOREST_1 = 34;
+	public final static int FOREST_2 = 35;
+	public final static int FOREST_3 = 36;
+	public final static int FOREST_4 = 37;
+	public final static int LOCKED_DOOR = 32;
+	public final static int OPEN_DOOR = 33;
+	public final static int WALL = 30;
 	
 	// Vars
 	private double progress;
@@ -56,7 +57,7 @@ public class OpenWorld implements Runnable {
 	
 	private Thread thread;
 	
-	public OpenWorld() {
+	public GenWorld() {
 		r = new Random();
 		poolLocations = new ArrayList<Point>();
 		forestLocations = new ArrayList<Point>();
@@ -116,24 +117,21 @@ public class OpenWorld implements Runnable {
 				if(shouldGenOcean(tileWidth, tileHeight, i, j)) generation[i][j] = WATER;
 				else if(shouldGenForest(generation, tileWidth, tileHeight, i, j)) generation[i][j] = (byte)getForestVariation();
 				else if(shouldGenPool(generation, tileWidth, tileHeight, i, j)) generation[i][j] = WATER;
-				else if(r.nextInt(900) <= 1) {
-					generation[i][j] = 2;
-					generation[i - 1][j] = WALL;
-					generation[i + 1][j] = LOCKED_DOOR;
-					generation[i][j - 1] = WALL;
-					generation[i][j + 1] = WALL;
-					generation[i + 1][j - 1] = WALL;
-					generation[i + 1][j + 1] = WALL;
-					generation[i - 1][j - 1] = WALL;
-					generation[i - 1][j + 1] = WALL;
-				}
 				else generation[i][j] = (byte)getGrassVariation();
 			}
 
 		}
 		
+		// Generate those prisons boi
+		generation = new GenPrison(generation).getMap();
+
 		map = generation;
 		
+		// Find a spawn - ends world gen
+		findSpawn(tileWidth, tileHeight, generation);
+		
+	}
+	private void findSpawn(int tileWidth, int tileHeight, byte[][] generation) {
 		/*
 		 * Let's figure out a good spawning location with these characteristics
 		 * 1) Centerish of map
@@ -207,6 +205,7 @@ public class OpenWorld implements Runnable {
 		}
 		map = generation;
 	}
+	
 	public Point getSpawn() {
 		if(spawn == null) return null;
 		return spawn;
