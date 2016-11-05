@@ -182,21 +182,24 @@ public class Player extends Entity {
 	public void manageCollision() {
 		if(GamePanel.DEBUG) return;
 		
-		if(tm.getTileType(xtemp, ytemp) == Tile.NO_COLLISION){
-			return;
-		}else{
-			if(tm.getTileType(x, ytemp) == Tile.NO_COLLISION){
-				xtemp = x;
+		if(dx != 0 || dy != 0){
+		
+			if(tm.getTileType(xtemp, ytemp) == Tile.NO_COLLISION){
 				return;
-			}
-			else if(tm.getTileType(xtemp, y) == Tile.NO_COLLISION){
-				ytemp = y;
-				return;
-			}
-			else{
-				xtemp = x;
-				ytemp = y;
-				return;
+			}else{
+				if(tm.getTileType(x, ytemp) == Tile.NO_COLLISION){
+					xtemp = x;
+					return;
+				}
+				else if(tm.getTileType(xtemp, y) == Tile.NO_COLLISION){
+					ytemp = y;
+					return;
+				}
+				else{
+					xtemp = x;
+					ytemp = y;
+					return;
+				}
 			}
 		}
 	}

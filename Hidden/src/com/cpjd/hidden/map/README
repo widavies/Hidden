@@ -21,6 +21,20 @@ Here's the basics:
 
 
 
+BUGS
+
+1) prisons spawn on top of each other
+
+2) if player spawns near edge of map such that the camera is offset from the player, and then moves towards middle of map so that the camera is centered on him, the camera's transition from not on him to on him is jumpy
+	aka spawn on edge, move towards middle, camera jumps
+
+
+
+VERSIONS
+1.50 - Stable - added collision, error log
+
+
+
 VERSION SEMANTICS
 Example 1.43 - Stable
 
@@ -33,15 +47,3 @@ break existing features
 
 Add the -Stable or Unstable tag based off whether the application is working and completely functional, or there are serious bugs / unfinished features that you're in the middle of.
 This is so we know what to expect if it's labeled as stable.
-
-
-
-BUGS
-
-prisons spawn on top of each other
-sometimes if moving left soon after spawn player will jump left about two tiles
-
-
-
-VERSIONS
-1.50 - Stable - added collision, error log

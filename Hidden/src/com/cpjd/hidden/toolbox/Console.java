@@ -31,6 +31,7 @@ public class Console {
 	private boolean errorLogOpen = false;
 	
 	private final String[] HELP = {
+		"",
 		"Command, Description, Usage",
 		"stop - force close the program",
 		"reload - reload the current gamestate",
@@ -71,13 +72,15 @@ public class Console {
 	public void processCommand(String s) throws Exception {
 		String[] tokens = s.split("\\s+");
 		
+		lastCommand = tokens[0];
+		
 		// Basic commands
 		if (tokens[0].toLowerCase().equals("stop")){
 			output.add("Force stopping game");
 			System.exit(0);
 			return;
 		}
-		else if (tokens[0].toLowerCase().equals("r")){
+		else if (tokens[0].toLowerCase().equals("r") || tokens[0].toLowerCase().equals("reload")){
 			gsm.setState(gsm.getState());
 			output.add("Gamestate reloaded.");
 			open = false;
