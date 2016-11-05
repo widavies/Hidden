@@ -90,20 +90,8 @@ public class Console {
 		else if (tokens[0].toLowerCase().equals("clear")){
 			output.clear();
 			return;
-<<<<<<< HEAD
-		case "unscale":
-			Map.SCALE = 1;
-			output.add("Map was unscaled. Reload for changes to take effect.");
-			return;
-		case "scale":
-			Map.SCALE = 4;
-			output.add("Map was rescaled. Reload for changes to take effect.");
-			return;
-		case "help":
-=======
 		}
 		else if (tokens[0].toLowerCase().equals("help")){
->>>>>>> refs/remotes/origin/master
 			for(int i = 0; i < HELP.length; i++) {
 				output.add(HELP[i]);
 			}
