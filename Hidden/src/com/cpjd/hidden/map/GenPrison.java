@@ -61,7 +61,6 @@ public class GenPrison {
 			array = TIER1_2_3;
 			startxOffset = 2;
 			startyOffset = 1;
-			System.out.println("Generating tier 4 bithces");
 			break;
 		}
 		
