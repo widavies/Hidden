@@ -18,7 +18,25 @@ Here's the basics:
 	2) Enemies (both people and fixed [cams, etc])
 	3) Interaction with environment (building?, trading?, buying stuff, etc)
 	4) better/more graphics
-	
+
+
+
+BUGS
+
+1) prisons spawn on top of each other
+
+2) if player spawns near edge of map such that the camera is offset from the player, and then moves towards middle of map so that the camera is centered on him, the camera's transition from not on him to on him is jumpy
+	aka spawn on edge, move towards middle, camera jumps
+
+3) see FIXME tags
+
+
+VERSIONS
+1.50 - Semistable - added collision, error log
+1.51 - Semistable - sound fixed in temporary way (slow)
+
+
+
 VERSION SEMANTICS
 Example 1.43 - Stable
 

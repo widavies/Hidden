@@ -24,15 +24,20 @@ public class Console {
 	private boolean open;
 	private SmartField field;
 	
-	private String lastCommand = "";
+	private String lastCommand;
 	
 	private ArrayList<String> output;
 	
+	private ErrorLog errorLog;
+	private boolean errorLogOpen = false;
+	
 	private final String[] HELP = {
+		"",
 		"Command, Description, Usage",
 		"stop - force close the program",
 		"reload - reload the current gamestate",
-		"clear - remove all messages from the console"
+		"clear - remove all messages from the console",
+		"log - toggles visibility of error log"
 	};
 	
 	public Console(GameStateManager gsm) {
@@ -44,6 +49,8 @@ public class Console {
 		field.setBlinkSpeed(40);
 		
 		output = new ArrayList<String>();
+		
+		errorLog = new ErrorLog();
 	}
 	
 	public void update() {
@@ -66,20 +73,24 @@ public class Console {
 	public void processCommand(String s) throws Exception {
 		String[] tokens = s.split("\\s+");
 		
+		lastCommand = tokens[0];
+		
 		// Basic commands
-		switch(tokens[0].toLowerCase()) {
-		case "stop":
+		if (tokens[0].toLowerCase().equals("stop")){
 			output.add("Force stopping game");
 			System.exit(0);
 			return;
-		case "r":
+		}
+		else if (tokens[0].toLowerCase().equals("r") || tokens[0].toLowerCase().equals("reload")){
 			gsm.setState(gsm.getState());
 			output.add("Gamestate reloaded.");
 			open = false;
 			return;
-		case "clear":
+		}
+		else if (tokens[0].toLowerCase().equals("clear")){
 			output.clear();
 			return;
+<<<<<<< HEAD
 		case "unscale":
 			Map.SCALE = 1;
 			output.add("Map was unscaled. Reload for changes to take effect.");
@@ -89,16 +100,27 @@ public class Console {
 			output.add("Map was rescaled. Reload for changes to take effect.");
 			return;
 		case "help":
+=======
+		}
+		else if (tokens[0].toLowerCase().equals("help")){
+>>>>>>> refs/remotes/origin/master
 			for(int i = 0; i < HELP.length; i++) {
 				output.add(HELP[i]);
 			}
 			return;
-		default:
+		}
+		else if (tokens[0].toLowerCase().equals("log")){
+			errorLogOpen = !errorLogOpen;
+			output.add("Error log toggled.");
+			return;
+		}
+		else{
 			output.add("Unrecognized command. Type help for list of commands");
 		}
 	}
 	
 	public void draw(Graphics2D g) {
+		
 		if(open) {
 			g.setColor(Color.WHITE);
 			g.fillRect(0, 0, 452, Layout.aligny(20));
@@ -107,12 +129,15 @@ public class Console {
 			
 			// Draw items
 			g.setColor(Color.BLACK);
+			g.setFont(new Font("Arial", Font.PLAIN, 15));
 			for(int i = output.size() - 1, j = 0; i >= 0; i--, j++) {
 				g.drawString(output.get(i), 5, Layout.aligny(19) - (j * 20));
 			}
 			
-			
-			
+		}
+		
+		if(errorLogOpen){
+			errorLog.draw(g);
 		}
 		
 		if(!GamePanel.DEBUG) return;
@@ -127,6 +152,12 @@ public class Console {
 	public boolean keyPressed(int k) {
 		if(k == KeyEvent.VK_BACK_QUOTE) open = !open;
 		if(k == KeyEvent.VK_UP){
+			
+			if(lastCommand == null){
+				output.add("No previous command");
+				return true;
+			}
+			
 			for(int i = 0; i < 50; i++) field.delete();
 			
 			lastCommand.toUpperCase();

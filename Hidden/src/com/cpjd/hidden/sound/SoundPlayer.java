@@ -18,6 +18,17 @@ public class SoundPlayer {
 	private static float SFXVol = 1.4f;
 	public static float MusicVol = 0.05f;
 	
+	//FIXME sound loading - this is not permanent
+	static{
+		try {
+			soundMap.put(SoundKeys.MENU_HOVER, new Sound(SoundPlayer.class.getResource("/sound/interface/menu.ogg")));
+			musicMap.put(SoundKeys.CREDITS_MUSIC, new Music(SoundPlayer.class.getResource("/sound/interface/credits_music.ogg")));
+			
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void addSound(String key, String path) {
 		try {
 			soundMap.put(key, new Sound(SoundPlayer.class.getResource(path)));
@@ -36,6 +47,11 @@ public class SoundPlayer {
 	
 	public static void setVolume(String key, Float f) {
 		musicMap.get(key).setVolume(f);
+		SFXVol = f;
+		MusicVol = f;
+	}
+	
+	public static void setVolume(Float f) {
 		SFXVol = f;
 		MusicVol = f;
 	}
@@ -61,7 +77,7 @@ public class SoundPlayer {
 	}
 	
 	public static void playMusic(String key) {
-		if(!mute) musicMap.get(key).play(1f, MusicVol);;
+		if(!mute) musicMap.get(key).play(1f, MusicVol);
 	}
 	public static boolean isSoundRunning(String key) {
 		return soundMap.get(key).playing();
