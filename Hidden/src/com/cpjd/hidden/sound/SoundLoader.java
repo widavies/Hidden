@@ -29,12 +29,6 @@ public class SoundLoader implements Runnable {
 		} catch(Exception e) {
 			ErrorLog.log("Error in SoundLoader constructor - couldn't find 'total' value");
 		}
-		
-		//FIXME play first sound silently to avoid lag, but this slows loading significantly
-		SoundPlayer.setVolume(0f);
-		SoundPlayer.playSound(SoundKeys.MENU_HOVER);
-		SoundPlayer.setVolume(1.4f);
-		SoundPlayer.MusicVol = 0.05f;
 	}
 	
 	public void load() {
@@ -45,7 +39,7 @@ public class SoundLoader implements Runnable {
 	public void run() {
 		try {
 			for(int i = 0; i < s.getSFX().length; i++) {
-				//SoundPlayer.addSound(s.getSFX()[i], SoundKeys.getPath(s.getSFX()[i]));
+				SoundPlayer.addSound(s.getSFX()[i], SoundKeys.getPath(s.getSFX()[i]));
 				progress++;
 			}
 		} catch(Exception e) {
@@ -53,7 +47,7 @@ public class SoundLoader implements Runnable {
 		}
 		try {
 			for(int i = 0; i < s.getMusic().length; i++) {
-				//SoundPlayer.addMusic(s.getMusic()[i], SoundKeys.getPath(s.getMusic()[i]));
+				SoundPlayer.addMusic(s.getMusic()[i], SoundKeys.getPath(s.getMusic()[i]));
 				progress++;
 			}
 		} catch(Exception e) {
@@ -67,6 +61,11 @@ public class SoundLoader implements Runnable {
 			ErrorLog.log("Couldn't stop SoundLoader thread");
 		}
 	}
+	
+	public boolean isFinishedLoading() {
+		return progress >= total;
+	}
+	
 	/**
 	 * Releases all the previously loaded sound from memory
 	 */

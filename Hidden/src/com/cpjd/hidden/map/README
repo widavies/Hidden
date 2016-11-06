@@ -25,16 +25,19 @@ BUGS
 
 1) prisons spawn on top of each other
 
-2) if player spawns near edge of map such that the camera is offset from the player, and then moves towards middle of map so that the camera is centered on him, the camera's transition from not on him to on him is jumpy
-	aka spawn on edge, move towards middle, camera jumps
+4) Collision doesn't work when moving diagonally through blocks (here's an example 0 - no collision, 1 - collision, p = player)
 
-3) see FIXME tags
+0 0 0 0
+0 P 1 0
+0 1 D 0
+0 0 0 0
+
+In this scenario, the player could move between the two collision blocks to d (non-collision) without being stopped.
 
 
 VERSIONS
 1.50 - Semistable - added collision, error log
 1.51 - Semistable - sound fixed in temporary way (slow)
-
 
 
 VERSION SEMANTICS

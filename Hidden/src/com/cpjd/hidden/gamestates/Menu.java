@@ -25,7 +25,7 @@ public class Menu extends GameState implements UIListener {
 	private CreditsWindow creditsWindow;
 	private OptionsWindow optionsWindow;
 	private UIDialog exitDialog;
-	private SoundLoader soundLoader;
+	
 	
 	public Menu(GameStateManager gsm, Console console) {
 		super(gsm, console);
@@ -39,12 +39,6 @@ public class Menu extends GameState implements UIListener {
 		options.addUIListener(this);
 		credits.addUIListener(this);
 		exit.addUIListener(this);
-		
-		// Load sound
-		String[] sounds = {SoundKeys.MENU_HOVER};
-		String[] music = {SoundKeys.CREDITS_MUSIC};
-		soundLoader = new SoundLoader(new SoundRequest(sounds, music));
-		soundLoader.load();
 	}
 	
 	public void update() {
@@ -111,7 +105,7 @@ public class Menu extends GameState implements UIListener {
 			exit.setFocus(false);
 		}
 		if(play == button) {
-			gsm.setState(GameStateManager.CH1);
+			gsm.setState(GameStateManager.WORLD);
 			//soundLoader.release();
 			
 		}

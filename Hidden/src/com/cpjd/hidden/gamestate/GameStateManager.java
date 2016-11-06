@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.io.InputStream;
 
 import com.cpjd.hidden.chapters.World;
+import com.cpjd.hidden.gamestates.Intro;
 import com.cpjd.hidden.gamestates.Menu;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.Console;
@@ -23,9 +24,10 @@ public class GameStateManager implements UIListener {
 	private Console console;
 	private PauseWindow pauseWindow;
 	
-	public static final int NUM_GAME_STATES = 2;
-	public static final int MENU = 0;
-	public static final int CH1 = 1;
+	public static final int NUM_GAME_STATES = 3;
+	public static final int INTRO = 0;
+	public static final int MENU = 1;
+	public static final int WORLD = 2;
 
 	private GameState[] gameStates;
 	private int currentState;
@@ -44,7 +46,7 @@ public class GameStateManager implements UIListener {
 			e.printStackTrace();
 		}
 
-		currentState = MENU;
+		currentState = INTRO;
 		loadState(currentState);
 
 		console = new Console(this);
@@ -57,8 +59,9 @@ public class GameStateManager implements UIListener {
 	}
 
 	private void loadState(int state) {
+		if(state == INTRO) gameStates[state] = new Intro(this, console);
 		if(state == MENU) gameStates[state] = new Menu(this, console);
-		if(state == CH1) gameStates[state] = new World(this, console);
+		if(state == WORLD) gameStates[state] = new World(this, console);
 	}
 	private void unloadState(int state) {
 		gameStates[state] = null;

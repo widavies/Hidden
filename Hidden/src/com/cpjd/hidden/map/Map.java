@@ -170,8 +170,8 @@ public class Map {
 	 * @param y The player position vertically (px)
 	 */
 	public void initCamera(double x, double y) {
-		if(x >= width - (GamePanel.WIDTH / 2)) xOffset = x - GamePanel.WIDTH / 2;
-		if(y >= height - (GamePanel.HEIGHT / 2)) yOffset = y - GamePanel.HEIGHT / 2;
+		if(x >= width - (GamePanel.WIDTH / 2))  xOffset = ((width - GamePanel.WIDTH / 2) - GamePanel.WIDTH / 2);
+		if(y >= height - (GamePanel.HEIGHT / 2)) yOffset = ((height - GamePanel.HEIGHT / 2) - GamePanel.HEIGHT / 2);
 	}
 	
 	/**
@@ -180,14 +180,7 @@ public class Map {
 	 * @return The tile type (Tile.NO_COLLISION, TIlE.COLLISION, etc) of the tile that the specified x,y is in
 	 */
 	public int getTileType(double x, double y) {
-		if(getTileID(x, y) >= 30){
-			return Tile.COLLISION;
-		}
-		else{
-			return Tile.NO_COLLISION;
-		}
-		//FIXME getTileType() method
-		//return (getTileID(x, y) + 1) % 30;
+		return (int)Math.floor(getTileID(x, y) / 30);
 	}
 	
 	/**
