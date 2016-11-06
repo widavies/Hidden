@@ -30,7 +30,7 @@ public class Game {
 			}
 		}
 		
-		frame = new JFrame("HIDDEN Build: v1.51 (Cascade) - Semistable");
+		frame = new JFrame("HIDDEN Build: v1.60 (Cascade) - Stable");
 		
 		game = new GamePanel();
 		

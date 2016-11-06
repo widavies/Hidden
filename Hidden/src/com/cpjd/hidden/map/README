@@ -1,44 +1,18 @@
 Cascade Engine Design
 
-Welcome to the design document for the new engine, Cascade.	
-
-Coordinate Systems
--Pixel - Each pixel is a coordinate
--Tile - Each tile is a coordinate
-
-Here's the basics:
-
-3) I've got a new design specification for this game, every class (related to game mechanics) should have a .release() method that sets all objects to null and releases any sounds it was using, etc.
-5) Put bugs, todo, etc, down here:
-
-
-	I thought that I would list some of the major TODOs, even though they are obvious
-
-	1) Prison loading (from the open world)
-	2) Enemies (both people and fixed [cams, etc])
-	3) Interaction with environment (building?, trading?, buying stuff, etc)
-	4) better/more graphics
-
-
-
 BUGS
-
-1) prisons spawn on top of each other
-
-4) Collision doesn't work when moving diagonally through blocks (here's an example 0 - no collision, 1 - collision, p = player)
-
+-prisons spawn on top of each other
+-Collision doesn't work when moving diagonally through blocks (here's an example 0 - no collision, 1 - collision, p = player)
 0 0 0 0
 0 P 1 0
 0 1 D 0
 0 0 0 0
-
 In this scenario, the player could move between the two collision blocks to d (non-collision) without being stopped.
-
 
 VERSIONS
 1.50 - Semistable - added collision, error log
 1.51 - Semistable - sound fixed in temporary way (slow)
-
+1.60 - Bug fixes related to sound, spawning, and more - Stable
 
 VERSION SEMANTICS
 Example 1.43 - Stable
