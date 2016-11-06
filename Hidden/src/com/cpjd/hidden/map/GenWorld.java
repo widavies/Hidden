@@ -7,32 +7,16 @@ import java.util.Random;
 // An open world generation algorithm by yours truly
 public class GenWorld implements Runnable {
 
-	public static final int WIDTH = 100;
-	public static final int HEIGHT = 100;
+	public static final int WIDTH = 400;
+	public static final int HEIGHT = 400;
 	
 	private Random r;
 	private WorldListener listener;
 	
-	// Tile ids
-	public final static int CEMENT = 2;
-	public final static int GRASS_1 = 4;
-	public final static int GRASS_2 = 5;
-	public final static int GRASS_3 = 6;
-	public final static int GRASS_4 = 7;
-	public final static int GRASS_5 = 8;
-	public final static int GRASS_6 = 9;	
-	public final static int WATER = 31;
-	public final static int FOREST_1 = 34;
-	public final static int FOREST_2 = 35;
-	public final static int FOREST_3 = 36;
-	public final static int FOREST_4 = 37;
-	public final static int LOCKED_DOOR = 32;
-	public final static int OPEN_DOOR = 33;
-	public final static int WALL = 30;
-	
 	// Vars
 	private double progress;
 	private double maxProgress;
+	private String status;
 	private byte[][] map;
 	private ArrayList<Point> poolLocations;
 	private ArrayList<Point> forestLocations;
@@ -94,10 +78,16 @@ public class GenWorld implements Runnable {
 		return map;
 	}
 	
+	public String getStatus() {
+		return status;
+	}
+	
 	private void generateWorld(int tileWidth, int tileHeight) {
 		byte[][] generation = new byte[tileHeight][tileWidth];
 		
 		maxProgress = tileWidth * tileHeight;
+		
+		status = "Generating terrain ("+WIDTH*HEIGHT+" tiles)";
 		
 		// Precalculate forest locations
 		for(int i = 0; i < tileHeight; i++) {
@@ -114,20 +104,22 @@ public class GenWorld implements Runnable {
 				
 				if(generation[i][j] != 0) continue;
 				
-				if(shouldGenOcean(tileWidth, tileHeight, i, j)) generation[i][j] = WATER;
+				if(shouldGenOcean(tileWidth, tileHeight, i, j)) generation[i][j] = TileIDs.WATER;
 				else if(shouldGenForest(generation, tileWidth, tileHeight, i, j)) generation[i][j] = (byte)getForestVariation();
-				else if(shouldGenPool(generation, tileWidth, tileHeight, i, j)) generation[i][j] = WATER;
+				else if(shouldGenPool(generation, tileWidth, tileHeight, i, j)) generation[i][j] = TileIDs.WATER;
 				else generation[i][j] = (byte)getGrassVariation();
 			}
 
 		}
 		
 		// Generate those prisons boi
+		status = "Generating prisons";
 		generation = new GenPrison(generation).getMap();
 
 		map = generation;
 		
 		// Find a spawn - ends world gen
+		status = "Finding a good spawn location";
 		findSpawn(tileWidth, tileHeight, generation);
 		
 	}
@@ -144,13 +136,15 @@ public class GenWorld implements Runnable {
 		int xOffset = tileWidth / 2;
 		int yOffset = tileHeight / 2;
 		int searches = 0; // 0, we're going right until the edge, 1, left until the edge, 2 up until the edge, 3 down until the edge
-		int spawnSafeRange = 6;
+		int spawnSafeRange = 4;
 		boolean viable = false;
 		int randomAttempts = 0;
 		do {
 			viable = true;
 			for(int i = 0; i < spawnSafeRange; i++) {
 				for(int j = 0; j < spawnSafeRange; j++) {
+					if(yOffset + i >= generation[0].length || xOffset + j >= generation.length) continue;
+					
 					if(generation[yOffset + i][xOffset + j] > 10) viable = false; 
 				}
 			}
@@ -198,6 +192,7 @@ public class GenWorld implements Runnable {
 		if(viable && randomAttempts >= 10) {
 			// We couldn't find a spawn location. :( Regenerate the map.
 			generateWorld(tileWidth,tileHeight);
+			progress = 0;
 		} else if(viable) {
 			spawn = new Point(xOffset + (int)(spawnSafeRange / 2), yOffset + (int)(spawnSafeRange / 2));
 			listener.worldGenerated();
@@ -221,15 +216,15 @@ public class GenWorld implements Runnable {
 	}
 	private int getGrassVariation() {
 		int prob = r.nextInt(100);
-		if(prob <= 25) return GRASS_1;
-		if(prob > 25 && prob <= 50) return GRASS_2;
-		if(prob > 50 && prob <= 75) return GRASS_3;
-		if(prob > 75 && prob <= 76) return GRASS_5;
-		if(prob == 77) return GRASS_6;
-		else return GRASS_4;
+		if(prob <= 25) return TileIDs.GRASS_1;
+		if(prob > 25 && prob <= 50) return TileIDs.GRASS_2;
+		if(prob > 50 && prob <= 75) return TileIDs.GRASS_3;
+		if(prob > 75 && prob <= 76) return TileIDs.FLOWER_1;
+		if(prob == 77) return TileIDs.FLOWER_2;
+		else return TileIDs.GRASS_4;
 	}
 	private boolean shouldGenForest(byte[][] map, int tileWidth, int tileHeight, int row, int col) {
-		if(map[row][col] == WATER) return false;
+		if(map[row][col] == TileIDs.WATER) return false;
 		
 		// Several steps here. First determine if we're within the forest range of an existing forest, if we are, test the probability of this tile being a forest tile
 		for(int i = 0; i < forestLocations.size(); i++) {
@@ -245,10 +240,10 @@ public class GenWorld implements Runnable {
 	}
 	private int getForestVariation() {
 		int prob = r.nextInt(100);
-		if(prob <= 75) return FOREST_1;
-		if(prob > 75 && prob <= 90) return FOREST_2;
-		if(prob > 90 && prob <= 98) return FOREST_3;
-		else return FOREST_4;
+		if(prob <= 75) return TileIDs.FOREST_1;
+		if(prob > 75 && prob <= 90) return TileIDs.FOREST_2;
+		if(prob > 90 && prob <= 98) return TileIDs.FOREST_3;
+		else return TileIDs.FOREST_4;
 	}
 	
 	private boolean shouldGenPool(byte[][] map, int tileWidth, int tileHeight, int row, int col) {

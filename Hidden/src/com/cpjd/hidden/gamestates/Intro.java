@@ -74,8 +74,8 @@ public class Intro extends GameState implements Runnable {
 			alphas[2]+=0.01f;
 			if(alphas[2] > 1f) alphas[2] = 1f;
 		} 
-		else if(ext < GamePanel.HEIGHT / 2) ext+=3;
-		else if(ext2 >= 20 && soundLoader.isFinishedLoading() && seconds >= 6) gsm.setState(GameStateManager.MENU);
+		else if(ext < GamePanel.HEIGHT / 2 + logo.getHeight() / 8) ext+=3;
+		else if(ext2 >= 17 && soundLoader.isFinishedLoading() && seconds >= 6) gsm.setState(GameStateManager.MENU);
 	}
 
 	@Override
@@ -90,9 +90,9 @@ public class Intro extends GameState implements Runnable {
 			if(i == 2) xpos = xcenter + Layout.getStringWidth(g, name[0]) + Layout.getStringWidth(g, name[1]);
 			
 			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphas[i]));
-			if(ext >= GamePanel.HEIGHT / 2 - logo.getHeight() / 2) {
+			if(ext >= GamePanel.HEIGHT / 2 + logo.getHeight() / 8) {
 				ext2+=0.2;
-				if(ext2 > 20) ext2 = 20;
+				if(ext2 > 17) ext2 = 17;
 			}
 			g.drawString(name[i], xpos, (int)(Layout.centerStringVert(g) + ext2));
 		}

@@ -87,6 +87,11 @@ public class Console {
 			open = false;
 			return;
 		}
+		else if(tokens[0].toLowerCase().equals("scale")) {
+			Map.SCALE = Byte.parseByte(tokens[1]);
+			output.add("Map scale changed to "+tokens[1]+". Reload for changes to take effect.");
+			return;
+		}
 		else if (tokens[0].toLowerCase().equals("clear")){
 			output.clear();
 			return;
