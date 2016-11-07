@@ -7,8 +7,8 @@ import java.util.Random;
 // An open world generation algorithm by yours truly
 public class GenWorld implements Runnable {
 
-	public static final int WIDTH = 400;
-	public static final int HEIGHT = 400;
+	public static final int WIDTH = 500;
+	public static final int HEIGHT = 500;
 	
 	private Random r;
 	private WorldListener listener;

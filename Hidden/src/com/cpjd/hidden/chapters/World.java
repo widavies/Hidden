@@ -40,7 +40,7 @@ public class World extends Chapter implements WorldListener {
 		
 		g.setColor(Color.WHITE);
 		g.setFont(GameStateManager.font.deriveFont(35f));
-		g.drawString(world.getStatus(), Layout.centerString(world.getStatus(), g), Layout.centerStringVert(g));
+		//g.drawString(world.getStatus(), Layout.centerString(world.getStatus(), g), Layout.centerStringVert(g));
 		g.setColor(Color.DARK_GRAY);
 		g.fillRect(Layout.centerw(400), Layout.aligny(51), 400, 40);
 		g.setColor(Color.WHITE);

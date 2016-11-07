@@ -1,24 +1,38 @@
 Cascade Engine Design
 
 DESIGN
--The final open world map size of the game will be 500 x 500 pixels. On my computer, this takes about a minute to calculate,
+-The final open world map size of the game will be 500 x 500 tiles. On my computer, this takes about a minute to calculate,
 here's the reason why I think we can get away with it - a) procedural generation isn't really worth our time, we should spend time
 working on the mechanics, and our world isn't infinite so procedural generation isn't required b) the generation can be coded for
 more optimization / use of more threads c) we can entertain the user with some silly text story or animation / a minigame - this would actually
 be kinda fun I think
 
 BUGS
+<<<<<<< Upstream, based on branch 'master' of https://github.com/techguy9984/Hidden
 -prisons spawn on top of each other
 -"Cats Pajamas Developers" displays partially off right edge of screen in intro
 -"Generating Terrain" displays partially off right edge of screen while loading
 -player slows down when holding 'w then s' or 'a then d', but not 's then w' of 'd then a'
+=======
+-Collision doesn't work when moving diagonally through blocks (here's an example 0 - no collision, 1 - collision, p = player)
+0 0 0 0
+0 P 1 0
+0 1 D 0
+0 0 0 0
+In this scenario, the player could move between the two collision blocks to d (non-collision) without being stopped.
+-Player can walk in the option direction that the player image is pointing
+>>>>>>> 9ae4443 Prison generation tweaks
 
 VERSIONS
 1.50 - Semistable - added collision, error log
 1.51 - Semistable - sound fixed in temporary way (slow)
 1.60 - Bug fixes related to sound, spawning, and more - Stable
+<<<<<<< Upstream, based on branch 'master' of https://github.com/techguy9984/Hidden
 1.61 - Bug fixes related to collision, movement - Stable
 1.62 - Major update to console - Stable
+=======
+1.70 - Prison locationg generation and related bug fixes
+>>>>>>> 9ae4443 Prison generation tweaks
 
 VERSION SEMANTICS
 Example 1.43 - Stable

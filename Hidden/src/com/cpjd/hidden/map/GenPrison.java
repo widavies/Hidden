@@ -48,14 +48,23 @@ public class GenPrison {
 		
 		for(int i = 0; i < prisonLocations.size(); i++) prisonLocations.add(new ArrayList<Point>());
 		
-		generatePrisonLocations(1, (int)(GenWorld.WIDTH * .3), -1, 170, 6);
+		generatePrisonLocations(1, (int)(GenWorld.WIDTH * .3), -1, 70, 6, TileIDs.LASER_CENTER);
+		generatePrisonLocations(2, (int)(GenWorld.WIDTH * .25), -1, 80, 6, TileIDs.WALL);
+		generatePrisonLocations(3, (int)(GenWorld.WIDTH * .20), -1, 90, 6, TileIDs.BED);
+		generatePrisonLocations(4, (int)(GenWorld.WIDTH * .25), (int)(GenWorld.WIDTH * 0.4), 160, 8, TileIDs.WOOD);
+		generatePrisonLocations(5, (int)(GenWorld.WIDTH * .23), (int)(GenWorld.WIDTH * 0.35), 170, 8, TileIDs.LASER_RIGHT);
+		generatePrisonLocations(6, (int)(GenWorld.WIDTH * .22), (int)(GenWorld.WIDTH * 0.32), 220, 8, TileIDs.LASER_LEFT);
+		generatePrisonLocations(7, (int)(GenWorld.WIDTH * .21), (int)(GenWorld.WIDTH * 0.28), 230, 9, TileIDs.GLASS);
+		generatePrisonLocations(8, 20, (int)(GenWorld.WIDTH * 0.25), 240, 9, TileIDs.STONE);
+		generatePrisonLocations(9, 15, (int)(GenWorld.WIDTH * 0.20), 250, 10, TileIDs.OPEN_DOOR);
+		generatePrisonLocations(10, 10, (int)(GenWorld.WIDTH * 0.18), 360, 10, TileIDs.BUSH_1);
 	}
 	
 	/*
 	 * Start border is the distance from the outside it can't spawn under (e.g., 5 would mean it can't be tiles 0,1,2,3,4)
 	 * End border is the maximum range it can spawn in from the outside (range of 10 would mean it can only spawn within 10 blocks of the edge)
 	 */
-	private void generatePrisonLocations(int tier, int startBorder, int endBorder, int prob, int regionSize) {
+	private void generatePrisonLocations(int tier, int startBorder, int endBorder, int prob, int regionSize, byte centerTile) {
 		for(int col = 0; col < generation.length; col++) {
 			if(col < startBorder || col > generation.length - startBorder - 1) continue;
 
@@ -65,7 +74,8 @@ public class GenPrison {
 						&& col > endBorder && col < generation.length - 1 - endBorder)) continue;	
 				
 				// Check to make sure we're in a piece of land that's not within 10 tiles of another prison, and not on top of water
-				if(checkRegion(col, row, regionSize) && r.nextInt(prob) <=1) generation[row][col] = TileIDs.LASER_CENTER;
+				if(checkRegion(col, row, regionSize) && r.nextInt(prob) <=1) generation[row][col] = centerTile;
+				
 				
 			}
 		}
