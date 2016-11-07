@@ -28,17 +28,35 @@ public class Console {
 	
 	private ArrayList<String> output;
 	
-	private ErrorLog errorLog;
-	private boolean errorLogOpen = false;
+	private MessageLog messageLog;
+	private boolean messageLogOpen = false;
 	
+	private final String PAGEID = "#";
+	//maximum ten lines per page, top and third should be empty
 	private final String[] HELP = {
+			
 		"",
-		"Command, Description, Usage",
+		"Command, Description, Usage - Page 1",
+		"",
+		"Help - displays page 1 of help menu",
+		"Help <Page> - displays specified page of help menu",
+		"debug - toggles debug mode",
 		"stop - force close the program",
 		"reload - reload the current gamestate",
 		"clear - remove all messages from the console",
-		"log - toggles visibility of error log"
+		
+		PAGEID + "2",
+		
+		"",
+		"Command, Description, Usage - Page 2",
+		"",
+		"clear log - remove all messages from the message log",
+		"log - toggles visibility of message log",
+		"log <String> - adds the String to the message log",
+		"load <GameState> - loads the GameState specified"
+		
 	};
+	
 	
 	public Console(GameStateManager gsm) {
 		this.gsm = gsm;
@@ -50,7 +68,7 @@ public class Console {
 		
 		output = new ArrayList<String>();
 		
-		errorLog = new ErrorLog();
+		messageLog = new MessageLog();
 	}
 	
 	public void update() {
@@ -64,7 +82,7 @@ public class Console {
 			try {
 				processCommand(field.getText());
 			} catch(Exception e) {
-				output.add("Incorrect command syntax. Use <command> help for usage");
+				output.add("Incorrect command syntax. Use help for usage.");
 			}
 			field.setEnterPressed(false);
 		}
@@ -92,19 +110,90 @@ public class Console {
 			output.add("Map scale changed to "+tokens[1]+". Reload for changes to take effect.");
 			return;
 		}
+		else if(tokens[0].toLowerCase().equals("debug")) {
+			GamePanel.DEBUG = !GamePanel.DEBUG;
+			output.add("DEBUG toggled.");
+			return;
+		}
 		else if (tokens[0].toLowerCase().equals("clear")){
-			output.clear();
+			if(tokens.length > 1){
+				
+				if(tokens[1].equalsIgnoreCase("log")){
+					messageLog.clear();
+					output.add("Message log cleared.");
+				}
+				
+			}else output.clear();
 			return;
 		}
 		else if (tokens[0].toLowerCase().equals("help")){
-			for(int i = 0; i < HELP.length; i++) {
-				output.add(HELP[i]);
+			
+			if(tokens.length > 1){
+					
+				boolean display = false;
+				int page = 1;
+					
+				for(int i = 0; i < HELP.length; i++) {
+					
+					if(page == Integer.parseInt(tokens[1])){
+						display = true;
+					}
+					if(HELP[i].startsWith(PAGEID)){
+						page++;
+							
+						if(display) {
+							break;
+						}
+						continue;
+					}
+					
+					if(display) {
+							
+						output.add(HELP[i]);
+					}
+				}
+				if(!display){
+					output.add("Unrecognized help page.");
+				}
+			}
+			else{
+				for(int i = 0; i < HELP.length; i++) {
+					
+					if(HELP[i].startsWith(PAGEID)) break;
+					output.add(HELP[i]);
+				}
 			}
 			return;
 		}
 		else if (tokens[0].toLowerCase().equals("log")){
-			errorLogOpen = !errorLogOpen;
-			output.add("Error log toggled.");
+			
+			if(tokens.length > 1){
+				
+				tokens[0] = "";
+				
+				String text = Util.getString(tokens, true);
+				MessageLog.log(text);
+				output.add("Logged \"" + text + "\".");
+			}else{
+			
+				messageLogOpen = !messageLogOpen;
+				output.add("Message log toggled.");
+			}
+			return;
+		}
+		else if (tokens[0].toLowerCase().equals("load")){
+			
+			if(tokens.length > 1){
+				
+				lastCommand = tokens.toString();
+				
+				if(GameStateManager.loadStateFromConsole(tokens[1])){
+					
+					output.add("Loaded " + tokens[1]);
+				}else{
+					output.add("Load failed");
+				}
+			}
 			return;
 		}
 		else{
@@ -129,17 +218,23 @@ public class Console {
 			
 		}
 		
-		if(errorLogOpen){
-			errorLog.draw(g);
+		if(messageLogOpen){
+			messageLog.draw(g);
 		}
 		
 		if(!GamePanel.DEBUG) return;
-		int tempx = (int)player.getX();
-		int tempy = (int)player.getY();
+		
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Arial", Font.PLAIN, 30));
+		
+		if(player != null){
+			int tempx = (int)player.getX();
+			int tempy = (int)player.getY();
+			g.drawString("XY: " + "(" + tempx + "," + tempy + ")"+" XY: ("+(tempx / 64)+","+(tempy / 64)+")", 5, Layout.HEIGHT - 15);
+		}
+		
 		g.drawString(Usage.calcMemory(), 5, Layout.HEIGHT - 50);
-		g.drawString("XY: " + "(" + tempx + "," + tempy + ")"+" XY: ("+(tempx / 64)+","+(tempy / 64)+")", 5, Layout.HEIGHT - 15);
+		
 	}
 	
 	public boolean keyPressed(int k) {

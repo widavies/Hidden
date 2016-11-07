@@ -1,5 +1,11 @@
 package com.cpjd.hidden.toolbox;
 
+
+/**
+ * Simple vector class, with normalized values
+ * @author Alex Harker
+ *
+ */
 public class Vector {
 
 	private double normalizedX, normalizedY;

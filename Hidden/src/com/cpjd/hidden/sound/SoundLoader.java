@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.Sound;
 
-import com.cpjd.hidden.toolbox.ErrorLog;
+import com.cpjd.hidden.toolbox.MessageLog;
 
 /**
  * Dynamic SoundLoader for Hidden. Create a new one of these when a group of sounds needs to be loaded / released. 
@@ -27,7 +27,7 @@ public class SoundLoader implements Runnable {
 		try {
 			total = s.getMusic().length + s.getSFX().length;
 		} catch(Exception e) {
-			ErrorLog.log("Error in SoundLoader constructor - couldn't find 'total' value");
+			MessageLog.log("Error in SoundLoader constructor - couldn't find 'total' value");
 		}
 	}
 	
@@ -43,7 +43,7 @@ public class SoundLoader implements Runnable {
 				progress++;
 			}
 		} catch(Exception e) {
-			ErrorLog.log("SoundLoader - Couldn't add sound");
+			MessageLog.log("SoundLoader - Couldn't add sound");
 		}
 		try {
 			for(int i = 0; i < s.getMusic().length; i++) {
@@ -51,14 +51,14 @@ public class SoundLoader implements Runnable {
 				progress++;
 			}
 		} catch(Exception e) {
-			ErrorLog.log("SoundLoader - Couldn't add music");
+			MessageLog.log("SoundLoader - Couldn't add music");
 		}
 		
 		try {
 			thread.join();
 		} catch(Exception e) {
 			System.err.println("Couldn't stop SoundLoader thread");
-			ErrorLog.log("Couldn't stop SoundLoader thread");
+			MessageLog.log("Couldn't stop SoundLoader thread");
 		}
 	}
 	

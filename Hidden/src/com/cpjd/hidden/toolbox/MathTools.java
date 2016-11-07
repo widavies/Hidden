@@ -2,6 +2,11 @@ package com.cpjd.hidden.toolbox;
 
 import java.awt.Point;
 
+/**
+ * For any math you want to do (as long as it is in the class) :)
+ * @author Alex Harker
+ *
+ */
 public class MathTools {
 
 

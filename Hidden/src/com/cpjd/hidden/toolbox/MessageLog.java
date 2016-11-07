@@ -7,18 +7,23 @@ import java.util.ArrayList;
 
 import com.cpjd.tools.Layout;
 
-public class ErrorLog {
+/**
+ * Logs and displays messages
+ * @author Alex Harker
+ *
+ */
+public class MessageLog {
 	
 	private final int LOG_WIDTH = 452, LOG_HEIGHT_PERCENT = 20;
 	
-	private static ArrayList<String> errorLogs = new ArrayList<String>();
+	private static ArrayList<String> messages = new ArrayList<String>();
 	
 	/**
 	 * 
 	 * @param log The string that will displayed in the error log
 	 */
 	public static void log(String log){
-		errorLogs.add(log);
+		messages.add(log);
 	}
 	
 	public void draw(Graphics2D g){
@@ -28,8 +33,12 @@ public class ErrorLog {
 		g.setFont(new Font("Arial", Font.PLAIN, 15));
 		
 		g.setColor(Color.BLACK);
-		for(int i = errorLogs.size() - 1, j = 0; i >= 0; i--, j++) {
-			g.drawString(errorLogs.get(i), Layout.WIDTH - LOG_WIDTH + 5, Layout.aligny(LOG_HEIGHT_PERCENT - 1) - (j * LOG_HEIGHT_PERCENT));
+		for(int i = messages.size() - 1, j = 0; i >= 0; i--, j++) {
+			g.drawString(messages.get(i), Layout.WIDTH - LOG_WIDTH + 5, Layout.aligny(LOG_HEIGHT_PERCENT - 1) - (j * LOG_HEIGHT_PERCENT));
 		}
+	}
+	
+	public void clear(){
+		messages.clear();
 	}
 }

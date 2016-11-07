@@ -3,6 +3,7 @@ package com.cpjd.hidden.gamestates;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
@@ -15,7 +16,6 @@ import com.cpjd.hidden.sound.SoundLoader;
 import com.cpjd.hidden.sound.SoundRequest;
 import com.cpjd.hidden.toolbox.Console;
 import com.cpjd.tools.Layout;
-import com.sun.glass.events.KeyEvent;
 
 public class Intro extends GameState implements Runnable {
 

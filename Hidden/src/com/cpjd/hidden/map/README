@@ -9,25 +9,23 @@ be kinda fun I think
 
 BUGS
 -prisons spawn on top of each other
--Collision doesn't work when moving diagonally through blocks (here's an example 0 - no collision, 1 - collision, p = player)
-0 0 0 0
-0 P 1 0
-0 1 D 0
-0 0 0 0
-In this scenario, the player could move between the two collision blocks to d (non-collision) without being stopped.
--Player can walk in the option direction that the player image is pointing
+-"Cats Pajamas Developers" displays partially off right edge of screen in intro
+-"Generating Terrain" displays partially off right edge of screen while loading
+-player slows down when holding 'w then s' or 'a then d', but not 's then w' of 'd then a'
 
 VERSIONS
 1.50 - Semistable - added collision, error log
 1.51 - Semistable - sound fixed in temporary way (slow)
 1.60 - Bug fixes related to sound, spawning, and more - Stable
+1.61 - Bug fixes related to collision, movement - Stable
+1.62 - Major update to console - Stable
 
 VERSION SEMANTICS
 Example 1.43 - Stable
 
 The ones place (in this case = 1) should be changed when a large update or new system is added - for example, adding village generation, or an items system
 The 10ths place (in this case = 4) should be changed when a considerable amount of tweaks / fixes have been done, a.k.a 5 or more bug fixes and tweaks
-The 100ths place (in this cas = 3) should be changed when a few bug fixes or tweaks happened
+The 100ths place (in this case = 3) should be changed when a few bug fixes or tweaks happened
 
 Versions with the same 1s place should always be compatible, but different can be incompatible. After the game is released, versions should be carefully considered as to whether they will
 break existing features

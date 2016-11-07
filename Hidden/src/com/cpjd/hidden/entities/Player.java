@@ -116,14 +116,14 @@ public class Player extends Entity {
 		animation.update();
 		
 		// Manage image update
-		if(left && up) degrees = 135;
-		else if(right && up) degrees = -135;
-		else if(left && down) degrees = 45;
-		else if(right && down) degrees = -45;
-		else if(left) degrees = 90;
-		else if(right) degrees = -90;
-		else if(up) degrees = 180;
-		else if(down) degrees = 0; 	
+		if(dx < 0 && dy < 0) degrees = 135;
+		else if(dx > 0 && dy < 0) degrees = -135;
+		else if(dx < 0 && dy > 0) degrees = 45;
+		else if(dx > 0 && dy > 0) degrees = -45;
+		else if(dx < 0) degrees = 90;
+		else if(dx > 0) degrees = -90;
+		else if(dy < 0) degrees = 180;
+		else if(dy > 0) degrees = 0; 	
 		rotation = calculateRotation(animation.getImage(), degrees);
 	}
 	
@@ -184,7 +184,7 @@ public class Player extends Entity {
 		
 		if(dx != 0 || dy != 0){
 		
-			if(tm.getTileType(xtemp, ytemp) == Tile.NO_COLLISION){
+			if(tm.getTileType(xtemp, y) == Tile.NO_COLLISION && tm.getTileType(x, ytemp) == Tile.NO_COLLISION){
 				return;
 			}else{
 				if(tm.getTileType(x, ytemp) == Tile.NO_COLLISION){
@@ -201,6 +201,7 @@ public class Player extends Entity {
 					return;
 				}
 			}
+			
 		}
 	}
 	

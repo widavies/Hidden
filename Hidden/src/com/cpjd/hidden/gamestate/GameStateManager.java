@@ -12,6 +12,7 @@ import com.cpjd.hidden.gamestates.Intro;
 import com.cpjd.hidden.gamestates.Menu;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.Console;
+import com.cpjd.hidden.toolbox.MessageLog;
 import com.cpjd.hidden.ui.UIListener;
 import com.cpjd.hidden.ui.content.PauseWindow;
 import com.cpjd.hidden.ui.elements.UIButton;
@@ -24,6 +25,7 @@ public class GameStateManager implements UIListener {
 	private Console console;
 	private PauseWindow pauseWindow;
 	
+	//when adding a new GameState, make sure to add it to the loadStateFromConsole method, thanks
 	public static final int NUM_GAME_STATES = 3;
 	public static final int INTRO = 0;
 	public static final int MENU = 1;
@@ -35,6 +37,8 @@ public class GameStateManager implements UIListener {
 	public static Font font;
 	
 	public static long ticks;
+	
+	private static GameStateManager thisGSM = null;
 	
 	public GameStateManager() {
 		gameStates = new GameState[NUM_GAME_STATES];
@@ -50,6 +54,8 @@ public class GameStateManager implements UIListener {
 		loadState(currentState);
 
 		console = new Console(this);
+		
+		thisGSM = this;
 	}
 
 	public void setState(int state) {
@@ -155,5 +161,35 @@ public class GameStateManager implements UIListener {
 	public void viewClosed(UIWindow window) {
 		if(window == pauseWindow) pauseWindow = null;
 		
+	}
+	/**
+	 * Loads a GameState from the console
+	 * @param name The name of the GameState to load
+	 * @return boolean returns true if new GameState loaded correctly, false if it failed
+	 */
+	public static boolean loadStateFromConsole(String name){
+		
+		if(thisGSM != null){
+			
+			//java 6 doesn't support switch statements with Strings
+			if(name.equalsIgnoreCase("INTRO")){
+				thisGSM.setState(INTRO);
+				return true;
+			}
+			else if(name.equalsIgnoreCase("MENU")){
+				thisGSM.setState(MENU);
+				return true;
+			}
+			else if(name.equalsIgnoreCase("WORLD")){
+				thisGSM.setState(WORLD);
+				return true;
+			}else{
+				MessageLog.log("Attempted to load unrecognized GameState " + name);
+				return false;
+			}
+		}else{
+			MessageLog.log("Load command used before GSM loaded");
+			return false;
+		}
 	}
 }
