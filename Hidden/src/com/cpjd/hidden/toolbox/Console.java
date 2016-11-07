@@ -187,7 +187,7 @@ public class Console {
 				
 				lastCommand = tokens.toString();
 				
-				if(GameStateManager.loadStateFromConsole(tokens[1])){
+				if(loadStateFromConsole(tokens[1])){
 					
 					output.add("Loaded " + tokens[1]);
 				}else{
@@ -270,5 +270,30 @@ public class Console {
 	
 	public void setPlayer(Player p) {
 		this.player = p;
+	}
+	
+	/**
+	 * Loads a GameState from the console
+	 * @param name The name of the GameState to load
+	 * @return boolean returns true if new GameState loaded correctly, false if it failed
+	 */
+	private boolean loadStateFromConsole(String name){
+			
+		//java 6 doesn't support switch statements with Strings
+		if(name.equalsIgnoreCase("INTRO")){
+			gsm.setState(GameStateManager.INTRO);
+			return true;
+		}
+		else if(name.equalsIgnoreCase("MENU")){
+			gsm.setState(GameStateManager.MENU);
+			return true;
+		}
+		else if(name.equalsIgnoreCase("WORLD")){
+			gsm.setState(GameStateManager.WORLD);
+			return true;
+		}else{
+			MessageLog.log("Attempted to load unrecognized GameState " + name);
+			return false;
+		}
 	}
 }

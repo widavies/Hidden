@@ -39,9 +39,7 @@ public class GameStateManager implements UIListener {
 	public static Font font;
 	
 	public static long ticks;
-	
-	private static GameStateManager thisGSM = null;
-	
+		
 	private GameSave gameSave;
 	
 	public GameStateManager() {
@@ -61,8 +59,6 @@ public class GameStateManager implements UIListener {
 		loadState(currentState);
 
 		console = new Console(this);
-		
-		thisGSM = this;
 	}
 	
 	/**
@@ -179,34 +175,5 @@ public class GameStateManager implements UIListener {
 		if(window == pauseWindow) pauseWindow = null;
 		
 	}
-	/**
-	 * Loads a GameState from the console
-	 * @param name The name of the GameState to load
-	 * @return boolean returns true if new GameState loaded correctly, false if it failed
-	 */
-	public static boolean loadStateFromConsole(String name){
-		
-		if(thisGSM != null){
-			
-			//java 6 doesn't support switch statements with Strings
-			if(name.equalsIgnoreCase("INTRO")){
-				thisGSM.setState(INTRO);
-				return true;
-			}
-			else if(name.equalsIgnoreCase("MENU")){
-				thisGSM.setState(MENU);
-				return true;
-			}
-			else if(name.equalsIgnoreCase("WORLD")){
-				thisGSM.setState(WORLD);
-				return true;
-			}else{
-				MessageLog.log("Attempted to load unrecognized GameState " + name);
-				return false;
-			}
-		}else{
-			MessageLog.log("Load command used before GSM loaded");
-			return false;
-		}
-	}
+	
 }

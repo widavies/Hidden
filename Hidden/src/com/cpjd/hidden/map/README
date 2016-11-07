@@ -18,13 +18,6 @@ I can't reproduce these bugs with any screen size of orientation, you'll have to
 -"Generating Terrain" displays partially off right edge of screen while loading
 
 -player slows down when holding 'w then s' or 'a then d', but not 's then w' of 'd then a'
--Collision doesn't work when moving diagonally through blocks (here's an example 0 - no collision, 1 - collision, p = player)
-0 0 0 0
-0 P 1 0
-0 1 D 0
-0 0 0 0
-In this scenario, the player could move between the two collision blocks to d (non-collision) without being stopped.
--Player can walk in the option direction that the player image is pointing
 -Console vertical position doesn't change with screen resize
 
 Some storyline stuff
