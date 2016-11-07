@@ -36,10 +36,13 @@ public class IO {
 	public static GameSave deserializeGameSave() {
 		return (GameSave) deserializeObject("gamesave.ser");
 	}
+	public static void deleteGameSave() {
+		IO.deleteFile("gamesave.ser");
+	}
 	
 	private static boolean serializeObject(Object object, String fileName) {
 		try {
-			FileOutputStream fos = new FileOutputStream(gameDir + fileName);
+			FileOutputStream fos = new FileOutputStream(gameDir + File.separator + fileName);
 			ObjectOutputStream out = new ObjectOutputStream(fos);
 			out.writeObject(object);
 			out.close();
@@ -53,16 +56,21 @@ public class IO {
 	
 	private static Object deserializeObject(String location) {
 		try {
-			FileInputStream fis = new FileInputStream(gameDir + location);
+			FileInputStream fis = new FileInputStream(gameDir + File.separator + location);
 			ObjectInputStream in = new ObjectInputStream(fis);
 			Object o = in.readObject();
 			in.close();
 			fis.close();
 			return o;
 		} catch(Exception e) {
-			System.err.println("Couldn't read game save.");
+			System.err.println("Couldn't find or read game save. Creating new game save.");
 			return null;
 		}
+	}
+	
+	private static void deleteFile(String location) {
+		File file = new File(gameDir + File.separator + location);
+		file.delete();
 	}
 	
 }

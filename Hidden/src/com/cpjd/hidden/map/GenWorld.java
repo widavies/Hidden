@@ -7,8 +7,8 @@ import java.util.Random;
 // An open world generation algorithm by yours truly
 public class GenWorld implements Runnable {
 
-	public static final int WIDTH = 200;
-	public static final int HEIGHT = 200;
+	public static final int WIDTH = 500;
+	public static final int HEIGHT = 500;
 	
 	private Random r;
 	private WorldListener listener;
@@ -111,6 +111,9 @@ public class GenWorld implements Runnable {
 			}
 
 		}
+		
+		forestLocations.clear();
+		poolLocations.clear();
 		
 		// Generate those prisons boi
 		status = "Generating prisons";

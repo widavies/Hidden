@@ -53,7 +53,6 @@ public class GameStateManager implements UIListener {
 		}
 
 		IO.initDirs();
-		gameSave = IO.deserializeGameSave();
 		
 		currentState = INTRO;
 		loadState(currentState);
@@ -63,12 +62,20 @@ public class GameStateManager implements UIListener {
 	
 	/**
 	 * Gets the latest game save file from the file system
-	 * @return
+	 * @return The GameSave
 	 */
 	public GameSave getGameSave() {
 		gameSave = IO.deserializeGameSave();
 		
 		return gameSave;
+	}
+	
+	/**
+	 * Saves the game to the file system
+	 * @param save The GameSave with it's updated values
+	 */
+	public void saveGame(GameSave save) {
+		IO.serializeGameSave(save);
 	}
 	
 	public void setState(int state) {

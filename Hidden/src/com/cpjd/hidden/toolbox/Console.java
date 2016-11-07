@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import com.cpjd.hidden.entities.Player;
+import com.cpjd.hidden.files.IO;
 import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.Map;
@@ -113,6 +114,11 @@ public class Console {
 		else if(tokens[0].toLowerCase().equals("debug")) {
 			GamePanel.DEBUG = !GamePanel.DEBUG;
 			output.add("DEBUG toggled.");
+			return;
+		}
+		else if(tokens[0].toLowerCase().equals("delete")) {
+			IO.deleteGameSave();
+			output.add("Deleted game save file.");
 			return;
 		}
 		else if (tokens[0].toLowerCase().equals("clear")){

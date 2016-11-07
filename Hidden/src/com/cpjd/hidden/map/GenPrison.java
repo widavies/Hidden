@@ -48,6 +48,7 @@ public class GenPrison {
 		r = new Random();
 		
 		prisonLocations = new ArrayList<ArrayList<Point>>();
+		
 		currentCount = new int[10];
 		
 		for(int i = 0; i < prisonLocations.size(); i++) prisonLocations.add(new ArrayList<Point>());
@@ -62,6 +63,39 @@ public class GenPrison {
 		generatePrisonLocations(8, 20, (int)(GenWorld.WIDTH * 0.25), 1800, 9, TileIDs.STONE);
 		generatePrisonLocations(9, 15, (int)(GenWorld.WIDTH * 0.20), 2000, 10, TileIDs.OPEN_DOOR);
 		generatePrisonLocations(10, 10, (int)(GenWorld.WIDTH * 0.18), 2200, 10, TileIDs.BUSH_1);
+		
+		// We've got locations for everything now, let's generate the structures around them.
+		for(int i = 0; i < prisonLocations.size(); i++) {
+			for(int j = 0; j < prisonLocations.get(i).size(); j++) {
+				generateStructure(i, prisonLocations.get(i).get(j).x, prisonLocations.get(i).get(j).y, 1, 1);
+			}
+		}
+	}
+	
+	/**
+	 * Generates a prison structure based off a location
+	 * @param structure A byte array that contains the tile ids of the structure, must contain only 1 center tile, must have odd dimensions
+	 * @param centerx the x position of the center block
+	 * @param centery the y position of the center block
+	 * @param startx the x position offset (from the center) to start generating the structure
+	 * @param starty the y position offset (from the center) to start generating the structure
+	 */
+	private void generateStructure(int tier, int centerx, int centery, int startx, int starty) {
+		byte[][] structure = null;
+
+		switch(tier) {
+		case 1:
+			structure = Structures.TIER_1;
+			break;
+		default:
+			return;
+		}
+		
+		for(int col = centerx - startx, x = 0; x < structure.length; col++, x++) {
+			for(int row = centery, y = 0; y < structure[0].length; row++, y++) {
+				generation[row][col] = structure[y][x];
+			}
+		}
 	}
 	
 	/*
@@ -69,6 +103,8 @@ public class GenPrison {
 	 * End border is the maximum range it can spawn in from the outside (range of 10 would mean it can only spawn within 10 blocks of the edge)
 	 */
 	private void generatePrisonLocations(int tier, int startBorder, int endBorder, int prob, int regionSize, byte centerTile) {
+		prisonLocations.add(new ArrayList<Point>());
+		
 		for(int col = 0; col < generation.length; col++) {
 			if(col < startBorder || col > generation.length - startBorder - 1) continue;
 
@@ -81,6 +117,11 @@ public class GenPrison {
 				if(checkRegion(col, row, regionSize) && (r.nextInt(prob) <=1 || (currentCount[tier - 1] < MINIMUM[tier -1]) && col > currentCount[tier - 1] * 28)) {
 					generation[row][col] = centerTile;
 					currentCount[tier - 1]++;
+					prisonLocations.get(tier - 1).add(new Point(col, row));
+					
+					if(tier == 1) {
+						System.out.println("Generated a tier 1 prison @: "+col+","+row);
+					}
 				}
 			}
 		}

@@ -16,9 +16,9 @@ BUGS
 I can't reproduce these bugs with any screen size of orientation, you'll have to figure out why there're happening on your mac:
 -"Cats Pajamas Developers" displays partially off right edge of screen in intro
 -"Generating Terrain" displays partially off right edge of screen while loading
-
 -player slows down when holding 'w then s' or 'a then d', but not 's then w' of 'd then a'
 -Console vertical position doesn't change with screen resize
+-Pause menu opens laggily when fullscreen
 
 Some storyline stuff
 -Throughout the story, you learn of the corruptness of the agency, if you choose, you can try to destroy them

@@ -175,6 +175,13 @@ public class Map {
 	}
 	
 	/**
+	 * @return The current map that is being used
+	 */
+	public byte[][] getMap() {
+		return map;
+	}
+	
+	/**
 	 * @param x The horizontal distance (in px) to the requested tile
 	 * @param y The vertical distance (in px) to the request tile
 	 * @return The tile type (Tile.NO_COLLISION, TIlE.COLLISION, etc) of the tile that the specified x,y is in
