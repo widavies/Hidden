@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.cpjd.tools.Log;
+
 // Manages prison generation for the map
 public class GenPrison {
 
@@ -84,12 +86,15 @@ public class GenPrison {
 		byte[][] structure = null;
 
 		switch(tier) {
-		case 1:
+		case 0:
 			structure = Structures.TIER_1;
 			break;
-		default:
-			return;
+		case 1:
+			structure = Structures.TIER_2;
+			break;
 		}
+		
+		if(structure == null) return;
 		
 		for(int col = centerx - startx, x = 0; x < structure.length; col++, x++) {
 			for(int row = centery, y = 0; y < structure[0].length; row++, y++) {
@@ -119,9 +124,7 @@ public class GenPrison {
 					currentCount[tier - 1]++;
 					prisonLocations.get(tier - 1).add(new Point(col, row));
 					
-					if(tier == 1) {
-						System.out.println("Generated a tier 1 prison @: "+col+","+row);
-					}
+					Log.log("Tier "+tier+" prison generated at: "+col+","+row, 2);
 				}
 			}
 		}
@@ -153,4 +156,8 @@ public class GenPrison {
 		return generation;
 	}
 
+	public ArrayList<ArrayList<Point>> getPrisonLocations() {
+		return prisonLocations;
+	}
+	
 }

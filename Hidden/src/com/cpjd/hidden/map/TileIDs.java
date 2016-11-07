@@ -28,4 +28,6 @@ public abstract class TileIDs {
 	public static final byte LASER_CENTER = 60;
 	public static final byte LASER_RIGHT = 61;
 	public static final byte LASER_LEFT = 62;
+	public static final byte WALL_2 = 44;
+	public static final byte WALL_3 = 45;
 }

@@ -13,12 +13,16 @@ import javax.swing.UIManager;
 
 import org.lwjgl.openal.AL;
 
+import com.cpjd.tools.Log;
+
 public class Game {
 	
 	public static JFrame frame;
 	private static GamePanel game;
 	
 	public static void main(String[] args) {
+		
+		Log.setLogDir("Hidden");
 		
 		if(System.getProperty("os.name").contains("OS X")){
 			System.setProperty("com.apple.mrj.application.apple.menu.about.name","Hidden");
