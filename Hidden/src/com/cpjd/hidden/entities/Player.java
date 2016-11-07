@@ -99,14 +99,14 @@ public class Player extends Entity {
 		manageMovement();
 		
 		// Manage animation update
-		if(left || right || down || up) {
+		if(dx != 0 || dy != 0) {
 			if(currentAction != WALKING) {
 				currentAction = WALKING;
 				animation.setFrames(sprites.get(WALKING));
 				animation.setDelay(90);
 			}
 		}
-		else if(!left && !right && !down && !up) {
+		else if(dx == 0 && dy == 0) {
 			if(currentAction != IDLE) {
 				currentAction = IDLE;
 				animation.setFrames(sprites.get(IDLE));
@@ -147,8 +147,8 @@ public class Player extends Entity {
 			dy += moveSpeed;
 			if(dy > maxSpeed) dy = maxSpeed;
 		}
-		if(!left && !right) dx = 0;
-		if(!up && !down) dy = 0;
+		if((!left && !right) || (left && right)) dx = 0;
+		if((!up && !down) || (up && down)) dy = 0;
 		
 		moveSpeed = oldMoveSpeed;
 		
