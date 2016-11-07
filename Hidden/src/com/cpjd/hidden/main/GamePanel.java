@@ -21,8 +21,8 @@ import com.cpjd.tools.Layout;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 	// Size
-	public static int WIDTH = 1600;
-	public static int HEIGHT = 900;
+	public static int WIDTH = 900;
+	public static int HEIGHT = 500;
 	
 	// Thread
 	private Thread thread;
