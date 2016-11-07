@@ -37,6 +37,9 @@ public class GenPrison {
 
 	private ArrayList<ArrayList<Point>> prisonLocations;
 	
+	private final int[] MINIMUM = {25, 20, 20, 15, 15, 10, 10, 5, 5, 5};
+	private int[] currentCount;
+	
 	private byte[][] generation;
 	private Random r;
 	
@@ -45,19 +48,20 @@ public class GenPrison {
 		r = new Random();
 		
 		prisonLocations = new ArrayList<ArrayList<Point>>();
+		currentCount = new int[10];
 		
 		for(int i = 0; i < prisonLocations.size(); i++) prisonLocations.add(new ArrayList<Point>());
 		
-		generatePrisonLocations(1, (int)(GenWorld.WIDTH * .3), -1, 70, 6, TileIDs.LASER_CENTER);
-		generatePrisonLocations(2, (int)(GenWorld.WIDTH * .25), -1, 80, 6, TileIDs.WALL);
-		generatePrisonLocations(3, (int)(GenWorld.WIDTH * .20), -1, 90, 6, TileIDs.BED);
-		generatePrisonLocations(4, (int)(GenWorld.WIDTH * .25), (int)(GenWorld.WIDTH * 0.4), 160, 8, TileIDs.WOOD);
-		generatePrisonLocations(5, (int)(GenWorld.WIDTH * .23), (int)(GenWorld.WIDTH * 0.35), 170, 8, TileIDs.LASER_RIGHT);
-		generatePrisonLocations(6, (int)(GenWorld.WIDTH * .22), (int)(GenWorld.WIDTH * 0.32), 220, 8, TileIDs.LASER_LEFT);
-		generatePrisonLocations(7, (int)(GenWorld.WIDTH * .21), (int)(GenWorld.WIDTH * 0.28), 230, 9, TileIDs.GLASS);
-		generatePrisonLocations(8, 20, (int)(GenWorld.WIDTH * 0.25), 240, 9, TileIDs.STONE);
-		generatePrisonLocations(9, 15, (int)(GenWorld.WIDTH * 0.20), 250, 10, TileIDs.OPEN_DOOR);
-		generatePrisonLocations(10, 10, (int)(GenWorld.WIDTH * 0.18), 360, 10, TileIDs.BUSH_1);
+		generatePrisonLocations(1, (int)(GenWorld.WIDTH * .3), -1, 800, 6, TileIDs.LASER_CENTER);
+		generatePrisonLocations(2, (int)(GenWorld.WIDTH * .25), -1, 900, 6, TileIDs.WALL);
+		generatePrisonLocations(3, (int)(GenWorld.WIDTH * .20), -1, 800, 6, TileIDs.BED);
+		generatePrisonLocations(4, (int)(GenWorld.WIDTH * .25), (int)(GenWorld.WIDTH * 0.4), 1200, 8, TileIDs.WOOD);
+		generatePrisonLocations(5, (int)(GenWorld.WIDTH * .23), (int)(GenWorld.WIDTH * 0.35), 1400, 8, TileIDs.LASER_RIGHT);
+		generatePrisonLocations(6, (int)(GenWorld.WIDTH * .22), (int)(GenWorld.WIDTH * 0.32), 1400, 8, TileIDs.LASER_LEFT);
+		generatePrisonLocations(7, (int)(GenWorld.WIDTH * .21), (int)(GenWorld.WIDTH * 0.28), 1600, 9, TileIDs.GLASS);
+		generatePrisonLocations(8, 20, (int)(GenWorld.WIDTH * 0.25), 1800, 9, TileIDs.STONE);
+		generatePrisonLocations(9, 15, (int)(GenWorld.WIDTH * 0.20), 2000, 10, TileIDs.OPEN_DOOR);
+		generatePrisonLocations(10, 10, (int)(GenWorld.WIDTH * 0.18), 2200, 10, TileIDs.BUSH_1);
 	}
 	
 	/*
@@ -74,9 +78,10 @@ public class GenPrison {
 						&& col > endBorder && col < generation.length - 1 - endBorder)) continue;	
 				
 				// Check to make sure we're in a piece of land that's not within 10 tiles of another prison, and not on top of water
-				if(checkRegion(col, row, regionSize) && r.nextInt(prob) <=1) generation[row][col] = centerTile;
-				
-				
+				if(checkRegion(col, row, regionSize) && (r.nextInt(prob) <=1 || (currentCount[tier - 1] < MINIMUM[tier -1]) && col > currentCount[tier - 1] * 28)) {
+					generation[row][col] = centerTile;
+					currentCount[tier - 1]++;
+				}
 			}
 		}
 	}

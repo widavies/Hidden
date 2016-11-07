@@ -2,8 +2,11 @@ package com.cpjd.hidden.chapters;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 import com.cpjd.hidden.entities.Player;
+import com.cpjd.hidden.files.GameSave;
+import com.cpjd.hidden.files.IO;
 import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.hidden.map.GenWorld;
@@ -23,9 +26,20 @@ public class World extends Chapter implements WorldListener {
 		finishedGen = false;
 		
 		tileMap.loadTiles("/tiles/tileset.png");
-		world = new GenWorld();
-		world.addWorldListener(this);
-		world.generate();
+		
+		if(gsm.getGameSave() == null || gsm.getGameSave().getMap() == null) {
+			world = new GenWorld();
+			world.addWorldListener(this);
+			world.generate();
+		} else {
+			tileMap.setMap(gsm.getGameSave().getMap());
+			player = new Player(tileMap);
+			player.setPosition(gsm.getGameSave().getPlayerLocation().x, gsm.getGameSave().getPlayerLocation().y);
+			tileMap.initCamera(player.getX(), player.getY());
+			console.setPlayer(player);
+			finishedGen = true;
+		}
+		
 	}
 	
 	public void update() {
@@ -57,6 +71,11 @@ public class World extends Chapter implements WorldListener {
 		console.setPlayer(player);
 		finishedGen = true;
 		
+		GameSave save = new GameSave();
+		save.setMap(world.getWorld());
+		save.setPlayerLocation(new Point((int)player.getX(), (int)player.getY()));
+		
+		IO.serializeGameSave(save);
 	}
 
 	@Override

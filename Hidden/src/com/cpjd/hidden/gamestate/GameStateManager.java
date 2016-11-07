@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 import java.io.InputStream;
 
 import com.cpjd.hidden.chapters.World;
+import com.cpjd.hidden.files.GameSave;
+import com.cpjd.hidden.files.IO;
 import com.cpjd.hidden.gamestates.Intro;
 import com.cpjd.hidden.gamestates.Menu;
 import com.cpjd.hidden.main.GamePanel;
@@ -40,6 +42,8 @@ public class GameStateManager implements UIListener {
 	
 	private static GameStateManager thisGSM = null;
 	
+	private GameSave gameSave;
+	
 	public GameStateManager() {
 		gameStates = new GameState[NUM_GAME_STATES];
 		try {
@@ -50,6 +54,9 @@ public class GameStateManager implements UIListener {
 			e.printStackTrace();
 		}
 
+		IO.initDirs();
+		gameSave = IO.deserializeGameSave();
+		
 		currentState = INTRO;
 		loadState(currentState);
 
@@ -57,7 +64,17 @@ public class GameStateManager implements UIListener {
 		
 		thisGSM = this;
 	}
-
+	
+	/**
+	 * Gets the latest game save file from the file system
+	 * @return
+	 */
+	public GameSave getGameSave() {
+		gameSave = IO.deserializeGameSave();
+		
+		return gameSave;
+	}
+	
 	public void setState(int state) {
 		unloadState(currentState);
 		currentState = state;

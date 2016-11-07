@@ -9,6 +9,8 @@ be kinda fun I think
 
 TODO
 -UI should be scaled down when the screen is resized
+-All that's left for world generation: Prisons, Villages, some more organic things in standard terrain generation
+-Faster world generation so that we can do 500 x 500 tiles more quickly
 
 BUGS
 I can't reproduce these bugs with any screen size of orientation, you'll have to figure out why there're happening on your mac:
@@ -23,6 +25,10 @@ I can't reproduce these bugs with any screen size of orientation, you'll have to
 0 0 0 0
 In this scenario, the player could move between the two collision blocks to d (non-collision) without being stopped.
 -Player can walk in the option direction that the player image is pointing
+-Console vertical position doesn't change with screen resize
+
+Some storyline stuff
+-Throughout the story, you learn of the corruptness of the agency, if you choose, you can try to destroy them
 
 VERSIONS
 1.50 - Semistable - added collision, error log
@@ -30,7 +36,14 @@ VERSIONS
 1.60 - Bug fixes related to sound, spawning, and more - Stable
 1.61 - Bug fixes related to collision, movement - Stable
 1.62 - Major update to console - Stable
-1.70 - Prison locationg generation and related bug fixes
+
+VERSION 2.0 TODO
+Here's what we should get done for version 2.0
+-Terrain / structure generation done
+-All known bugs fixed
+-Optimization of terrain gen.
+-Scaling of the menu
+
 
 VERSION SEMANTICS
 Example 1.43 - Stable
