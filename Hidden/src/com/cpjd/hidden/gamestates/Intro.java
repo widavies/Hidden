@@ -15,6 +15,7 @@ import com.cpjd.hidden.sound.SoundKeys;
 import com.cpjd.hidden.sound.SoundLoader;
 import com.cpjd.hidden.sound.SoundRequest;
 import com.cpjd.hidden.toolbox.Console;
+import com.cpjd.hidden.toolbox.Util;
 import com.cpjd.tools.Layout;
 
 public class Intro extends GameState implements Runnable {
@@ -82,19 +83,23 @@ public class Intro extends GameState implements Runnable {
 	public void draw(Graphics2D g) {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
+		
+		xcenter = Layout.WIDTH / 2 - g.getFontMetrics().stringWidth(Util.getString(name, false)) / 2;
+		
 		g.setColor(Color.BLACK);
 		for(int i = 0; i < name.length; i++) {
-			xcenter = Layout.centerString(name[0] + name[1] + name[2], g);
+			
 			if(i == 0) xpos = xcenter;
 			if(i == 1) xpos = xcenter + Layout.getStringWidth(g, name[0]);
 			if(i == 2) xpos = xcenter + Layout.getStringWidth(g, name[0]) + Layout.getStringWidth(g, name[1]);
 			
 			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphas[i]));
+			
 			if(ext >= GamePanel.HEIGHT / 2 + logo.getHeight() / 8) {
 				ext2+=0.2;
 				if(ext2 > 17) ext2 = 17;
 			}
-			g.drawString(name[i], xpos, (int)(Layout.centerStringVert(g) + ext2));
+			g.drawString(name[i], xpos, (int)(Layout.HEIGHT / 2 - g.getFontMetrics().getHeight() / 2 + ext2));
 		}
 		
 		g.drawImage(logo, Layout.centerw(logo.getWidth()), ext - logo.getHeight() - Layout.getStringHeight(g) * 2, null);

@@ -1,7 +1,6 @@
 package com.cpjd.hidden.main;
 
 import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
@@ -34,7 +33,7 @@ public class Game {
 			}
 		}
 		
-		frame = new JFrame("HIDDEN Build: v1.62 (Cascade) - Stable");
+		frame = new JFrame("HIDDEN Build: v1.63 (Cascade) - Stable");
 		
 		game = new GamePanel();
 		
@@ -43,8 +42,8 @@ public class Game {
 
 		frame.pack();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frame.setLocationRelativeTo(null);
-		frame.setLocation(new Point(2100, 50));
+		frame.setLocationRelativeTo(null);
+		//frame.setLocation(new Point(2100, 50));
 		frame.addComponentListener(new ComponentListener() {
 			public void componentResized(ComponentEvent e) {
 				game.resizeGame(frame.getContentPane().getWidth(), frame.getContentPane().getHeight());

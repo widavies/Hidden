@@ -13,12 +13,9 @@ TODO
 -Faster world generation so that we can do 500 x 500 tiles more quickly
 
 BUGS
-I can't reproduce these bugs with any screen size of orientation, you'll have to figure out why there're happening on your mac:
--"Cats Pajamas Developers" displays partially off right edge of screen in intro
--"Generating Terrain" displays partially off right edge of screen while loading
--player slows down when holding 'w then s' or 'a then d', but not 's then w' of 'd then a'
 -Console vertical position doesn't change with screen resize
 -Pause menu opens laggily when fullscreen
+-fullscreen isnt actually fullscreen on Mac (I will fix this one)
 
 Some storyline stuff
 -Throughout the story, you learn of the corruptness of the agency, if you choose, you can try to destroy them
@@ -29,6 +26,7 @@ VERSIONS
 1.60 - Bug fixes related to sound, spawning, and more - Stable
 1.61 - Bug fixes related to collision, movement - Stable
 1.62 - Major update to console - Stable
+1.63 - Bug fixes for mac
 
 VERSION 2.0 TODO
 Here's what we should get done for version 2.0
