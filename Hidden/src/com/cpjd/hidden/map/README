@@ -16,6 +16,7 @@ BUGS
 -Console vertical position doesn't change with screen resize
 -Pause menu opens laggily when fullscreen
 -fullscreen isnt actually fullscreen on Mac (I will fix this one)
+-cpjd tools Log saves the file in: user home + "/Library/Application Support/" when it should be: user home + "/Library/Application Support/Hidden/"
 
 Some storyline stuff
 -Throughout the story, you learn of the corruptness of the agency, if you choose, you can try to destroy them

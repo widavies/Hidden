@@ -21,7 +21,7 @@ public class IO {
 		if(osName.contains("win")) {
 			gameDir = new File((System.getenv("APPDATA") + File.separator + "Hidden" + File.separator));
 		} else if(osName.contains("mac")) {
-			gameDir = new File(System.getProperty("user.home") + "/Library/Application Support"+File.separator);
+			gameDir = new File(System.getProperty("user.home") + "/Library/Application Support/Hidden"+File.separator);
 		} else if(osName.contains("nux")) {
 			gameDir = new File(System.getProperty("user.home"));
 		}
