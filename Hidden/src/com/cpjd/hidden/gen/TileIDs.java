@@ -1,4 +1,4 @@
-package com.cpjd.hidden.map;
+package com.cpjd.hidden.gen;
 
 public abstract class TileIDs {
 	public static final byte AIR = 0;
@@ -8,6 +8,7 @@ public abstract class TileIDs {
 	public static final byte GRASS_2 = 5;
 	public static final byte GRASS_3 = 6;
 	public static final byte GRASS_4 = 7;
+	public static final byte GRASS_5 = 13;
 	public static final byte FLOWER_1 = 8;
 	public static final byte FLOWER_2 = 9;
 	public static final byte CEMENT_2 = 12;

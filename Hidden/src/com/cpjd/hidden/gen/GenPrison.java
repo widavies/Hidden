@@ -1,4 +1,4 @@
-package com.cpjd.hidden.map;
+package com.cpjd.hidden.gen;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -63,8 +63,8 @@ public class GenPrison {
 		generatePrisonLocations(6, (int)(GenWorld.WIDTH * .22), (int)(GenWorld.WIDTH * 0.32), 1400, 8, TileIDs.LASER_LEFT);
 		generatePrisonLocations(7, (int)(GenWorld.WIDTH * .21), (int)(GenWorld.WIDTH * 0.28), 1600, 9, TileIDs.GLASS);
 		generatePrisonLocations(8, 20, (int)(GenWorld.WIDTH * 0.25), 1800, 9, TileIDs.STONE);
-		generatePrisonLocations(9, 15, (int)(GenWorld.WIDTH * 0.20), 2000, 10, TileIDs.LOCKED_DOOR_RIGHT);
-		generatePrisonLocations(10, 10, (int)(GenWorld.WIDTH * 0.18), 2200, 10, TileIDs.BUSH_1);
+		generatePrisonLocations(9, 15, (int)(GenWorld.WIDTH * 0.20), 1600, 15, TileIDs.LOCKED_DOOR_RIGHT);
+		generatePrisonLocations(10, 10, (int)(GenWorld.WIDTH * 0.18), 1800, 15, TileIDs.BUSH_1);
 		
 		// We've got locations for everything now, let's generate the structures around them.
 		for(int i = 0; i < prisonLocations.size(); i++) {
@@ -106,6 +106,15 @@ public class GenPrison {
 			break;
 		case 6:
 			structure = Structures.TIER_7;
+			break;
+		case 7:
+			structure = Structures.TIER_8;
+			break;
+		case 8:
+			structure = Structures.TIER_9;
+			break;
+		case 9:
+			structure = Structures.TIER_10;
 			break;
 		}
 		

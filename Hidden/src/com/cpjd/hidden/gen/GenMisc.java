@@ -1,4 +1,4 @@
-package com.cpjd.hidden.map;
+package com.cpjd.hidden.gen;
 
 public class GenMisc {
 	/*

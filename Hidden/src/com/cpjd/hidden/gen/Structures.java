@@ -1,4 +1,4 @@
-package com.cpjd.hidden.map;
+package com.cpjd.hidden.gen;
 
 public class Structures {
 
@@ -51,19 +51,21 @@ public class Structures {
 	};
 	
 	public static final byte[][] TIER_8 = {
-			{TileIDs.WALL_3, TileIDs.GLASS, TileIDs.WALL_2, TileIDs.GLASS, TileIDs.WALL_3},
+			{TileIDs.WALL_3, TileIDs.GLASS, TileIDs.WALL_3, TileIDs.GLASS, TileIDs.WALL_3},
 			{TileIDs.GLASS, TileIDs.CEMENT_2, TileIDs.CEMENT_2, TileIDs.CEMENT_2, TileIDs.GLASS},
 			{TileIDs.WALL_3, TileIDs.CEMENT_2, TileIDs.CEMENT_2, TileIDs.CEMENT_2, TileIDs.WALL_3},
-			{TileIDs.WALL_3, TileIDs.CEMENT_2, TileIDs.CEMENT_2, TileIDs.CEMENT_2, TileIDs.GLASS},
+			{TileIDs.GLASS, TileIDs.CEMENT_2, TileIDs.CEMENT_2, TileIDs.CEMENT_2, TileIDs.GLASS},
 			{TileIDs.WALL_3, TileIDs.LOCKED_DOOR_LEFT, TileIDs.WALL_2, TileIDs.LOCKED_DOOR_RIGHT, TileIDs.WALL_3}
 	};
 	
 	public static final byte[][] TIER_9 = {
-			{TileIDs.WALL_3, TileIDs.GLASS, TileIDs.WALL_3, TileIDs.WALL_3, TileIDs.GLASS, TileIDs.WALL_3},
-			{TileIDs.GLASS, TileIDs.CEMENT_2, TileIDs.CEMENT_2,TileIDs.CEMENT_2, TileIDs.CEMENT_2, TileIDs.GLASS},
-			{TileIDs.WALL_3, TileIDs.CEMENT_2, TileIDs.CEMENT_2, TileIDs.CEMENT_2,TileIDs.CEMENT_2, TileIDs.WALL_2},
-			{TileIDs.GLASS, TileIDs.CEMENT_2, TileIDs.CEMENT_2, TileIDs.CEMENT_2,TileIDs.CEMENT_2, TileIDs.GLASS},
-			{TileIDs.WALL_3, TileIDs.LOCKED_DOOR_LEFT, TileIDs.WALL_3, TileIDs.WALL_3, TileIDs.LOCKED_DOOR_RIGHT, TileIDs.WALL_2}
+			{TileIDs.GRASS_1, TileIDs.GRASS_5, TileIDs.GRASS_5, TileIDs.GRASS_1, TileIDs.GRASS_5, TileIDs.GRASS_4, TileIDs.GRASS_1, TileIDs.GRASS_5},
+			{TileIDs.GRASS_3,TileIDs.WALL_3, TileIDs.GLASS, TileIDs.WALL_3, TileIDs.WALL_3, TileIDs.GLASS, TileIDs.WALL_3, TileIDs.GRASS_5},
+			{TileIDs.GRASS_2,TileIDs.GLASS, TileIDs.CEMENT_2, TileIDs.CEMENT_2,TileIDs.CEMENT_2, TileIDs.CEMENT_2, TileIDs.GLASS, TileIDs.GRASS_5},
+			{TileIDs.GRASS_5,TileIDs.WALL_3, TileIDs.CEMENT_2, TileIDs.CEMENT_2, TileIDs.CEMENT_2,TileIDs.CEMENT_2, TileIDs.WALL_3, TileIDs.GRASS_5},
+			{TileIDs.GRASS_4,TileIDs.GLASS, TileIDs.CEMENT_2, TileIDs.CEMENT_2, TileIDs.CEMENT_2,TileIDs.CEMENT_2, TileIDs.GLASS, TileIDs.GRASS_4},
+			{TileIDs.GRASS_5,TileIDs.WALL_3, TileIDs.LOCKED_DOOR_LEFT, TileIDs.WALL_3, TileIDs.WALL_3, TileIDs.LOCKED_DOOR_RIGHT, TileIDs.WALL_3, TileIDs.GRASS_5},
+			{TileIDs.GRASS_5,TileIDs.GRASS_5, TileIDs.GRASS_5, TileIDs.GRASS_1, TileIDs.GRASS_5, TileIDs.GRASS_4, TileIDs.GRASS_1, TileIDs.GRASS_5}
 	};
 	
 	public static final byte[][] TIER_10 = {
