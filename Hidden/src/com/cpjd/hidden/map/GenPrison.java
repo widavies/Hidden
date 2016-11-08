@@ -39,7 +39,7 @@ public class GenPrison {
 
 	private ArrayList<ArrayList<Point>> prisonLocations;
 	
-	private final int[] MINIMUM = {25, 20, 20, 15, 15, 10, 10, 5, 5, 5};
+	private final int[] MINIMUM = {25, 20, 20, 15, 15, 10, 10, 5, 5, 2};
 	private int[] currentCount;
 	
 	private byte[][] generation;
@@ -57,19 +57,19 @@ public class GenPrison {
 		
 		generatePrisonLocations(1, (int)(GenWorld.WIDTH * .3), -1, 800, 6, TileIDs.LASER_CENTER);
 		generatePrisonLocations(2, (int)(GenWorld.WIDTH * .25), -1, 900, 6, TileIDs.WALL);
-		generatePrisonLocations(3, (int)(GenWorld.WIDTH * .20), -1, 800, 6, TileIDs.BED);
-		generatePrisonLocations(4, (int)(GenWorld.WIDTH * .25), (int)(GenWorld.WIDTH * 0.4), 1200, 8, TileIDs.WOOD);
-		generatePrisonLocations(5, (int)(GenWorld.WIDTH * .23), (int)(GenWorld.WIDTH * 0.35), 1400, 8, TileIDs.LASER_RIGHT);
+		generatePrisonLocations(3, (int)(GenWorld.WIDTH * .20), -1, 800, 8, TileIDs.BED);
+		generatePrisonLocations(4, (int)(GenWorld.WIDTH * .25), (int)(GenWorld.WIDTH * 0.4), 1200, 10, TileIDs.WOOD);
+		generatePrisonLocations(5, (int)(GenWorld.WIDTH * .23), (int)(GenWorld.WIDTH * 0.35), 1400, 10, TileIDs.LASER_RIGHT);
 		generatePrisonLocations(6, (int)(GenWorld.WIDTH * .22), (int)(GenWorld.WIDTH * 0.32), 1400, 8, TileIDs.LASER_LEFT);
 		generatePrisonLocations(7, (int)(GenWorld.WIDTH * .21), (int)(GenWorld.WIDTH * 0.28), 1600, 9, TileIDs.GLASS);
 		generatePrisonLocations(8, 20, (int)(GenWorld.WIDTH * 0.25), 1800, 9, TileIDs.STONE);
-		generatePrisonLocations(9, 15, (int)(GenWorld.WIDTH * 0.20), 2000, 10, TileIDs.OPEN_DOOR);
+		generatePrisonLocations(9, 15, (int)(GenWorld.WIDTH * 0.20), 2000, 10, TileIDs.LOCKED_DOOR_RIGHT);
 		generatePrisonLocations(10, 10, (int)(GenWorld.WIDTH * 0.18), 2200, 10, TileIDs.BUSH_1);
 		
 		// We've got locations for everything now, let's generate the structures around them.
 		for(int i = 0; i < prisonLocations.size(); i++) {
 			for(int j = 0; j < prisonLocations.get(i).size(); j++) {
-				generateStructure(i, prisonLocations.get(i).get(j).x, prisonLocations.get(i).get(j).y, 1, 1);
+				generateStructure(i, prisonLocations.get(i).get(j).x, prisonLocations.get(i).get(j).y);
 			}
 		}
 	}
@@ -82,7 +82,7 @@ public class GenPrison {
 	 * @param startx the x position offset (from the center) to start generating the structure
 	 * @param starty the y position offset (from the center) to start generating the structure
 	 */
-	private void generateStructure(int tier, int centerx, int centery, int startx, int starty) {
+	private void generateStructure(int tier, int centerx, int centery) {
 		byte[][] structure = null;
 
 		switch(tier) {
@@ -92,12 +92,26 @@ public class GenPrison {
 		case 1:
 			structure = Structures.TIER_2;
 			break;
+		case 2:
+			structure = Structures.TIER_3;
+			break;
+		case 3:
+			structure = Structures.TIER_4;
+			break;
+		case 4:
+			structure = Structures.TIER_5;
+			break;
+		case 5:
+			structure = Structures.TIER_6;
+			break;
+		case 6:
+			structure = Structures.TIER_7;
+			break;
 		}
 		
-		if(structure == null) return;
-		
-		for(int col = centerx - startx, x = 0; x < structure.length; col++, x++) {
-			for(int row = centery, y = 0; y < structure[0].length; row++, y++) {
+		if(structure == null) return;  
+		for(int row = centery - (int)Math.floor(structure[0].length / 2), y = 0; y < structure.length; row++, y++) {
+			for(int col = centerx - (int)Math.floor(structure.length / 2), x = 0; x < structure[0].length; col++, x++) {
 				generation[row][col] = structure[y][x];
 			}
 		}

@@ -43,7 +43,7 @@ public class Chapter extends GameState {
 		tileMap.draw(g);
 		player.draw(g);
 		
-		if(!gsm.isPaused()) hud.draw(g);
+		//if(!gsm.isPaused()) hud.draw(g);
 	}
 
 	@Override
