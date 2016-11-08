@@ -128,9 +128,9 @@ public class Player extends Entity {
 	}
 	
 	private void manageMovement() {
-		double oldMoveSpeed = moveSpeed;
+		double oldMaxSpeed = maxSpeed;
 		
-		if((left && up) || (left && down) || (right && up) || (right && down)) moveSpeed *= .7;
+		if((left && up) || (left && down) || (right && up) || (right && down)) maxSpeed *= .7;
 		if(left) {
 			dx -= moveSpeed;
 			if(dx < -maxSpeed) dx = -maxSpeed;
@@ -150,7 +150,7 @@ public class Player extends Entity {
 		if((!left && !right) || (left && right)) dx = 0;
 		if((!up && !down) || (up && down)) dy = 0;
 		
-		moveSpeed = oldMoveSpeed;
+		maxSpeed = oldMaxSpeed;
 		
 		xtemp = x + dx;
 		ytemp = y + dy;
@@ -184,15 +184,19 @@ public class Player extends Entity {
 			}else{
 				if(!collision(x, ytemp)){
 					xtemp = x;
+					dx = 0;
 					return;
 				}
 				else if(!collision(xtemp, y)){
 					ytemp = y;
+					dy = 0;
 					return;
 				}
 				else{
 					xtemp = x;
 					ytemp = y;
+					dx = 0;
+					dy = 0;
 					return;
 				}
 			}
