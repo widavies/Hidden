@@ -54,7 +54,9 @@ public class Console {
 		"clear log - remove all messages from the message log",
 		"log - toggles visibility of message log",
 		"log <String> - adds the String to the message log",
-		"load <GameState> - loads the GameState specified"
+		"load <GameState> - loads the GameState specified",
+		"delete - deletes save file",
+		"scale <size> - scales game to size"
 		
 	};
 	

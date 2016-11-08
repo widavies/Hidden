@@ -34,10 +34,10 @@ public class Player extends Entity {
 	public Player(Map tm) {
 		super(tm);
 		
-		width = 128;
-		height = 128;
-		cwidth = 64;
-		cheight = 64;
+		width = 80;
+		height = 80;
+		cwidth = 55;
+		cheight = 55;
 		maxSpeed = 3.8;
 		
 		moveSpeed = 2.4;
@@ -152,13 +152,8 @@ public class Player extends Entity {
 		
 		moveSpeed = oldMoveSpeed;
 		
-		xtemp = x;
-		ytemp = y;
-		
-		if(dy < 0) ytemp += dy;
-		if(dy > 0) ytemp += dy;
-		if(dx < 0) xtemp += dx;
-		if(dx > 0) xtemp += dx;
+		xtemp = x + dx;
+		ytemp = y + dy;
 		
 		manageCollision();
 		
@@ -184,14 +179,14 @@ public class Player extends Entity {
 		
 		if(dx != 0 || dy != 0){
 		
-			if(tm.getTileType(xtemp, y) == Tile.NO_COLLISION && tm.getTileType(x, ytemp) == Tile.NO_COLLISION){
+			if(!collision(xtemp, y) && !collision(x, ytemp)){
 				return;
 			}else{
-				if(tm.getTileType(x, ytemp) == Tile.NO_COLLISION){
+				if(!collision(x, ytemp)){
 					xtemp = x;
 					return;
 				}
-				else if(tm.getTileType(xtemp, y) == Tile.NO_COLLISION){
+				else if(!collision(xtemp, y)){
 					ytemp = y;
 					return;
 				}
@@ -203,6 +198,13 @@ public class Player extends Entity {
 			}
 			
 		}
+	}
+	
+	public boolean collision(double x, double y){
+		return tm.getTileType(x + cwidth / 2, y + cheight / 2) == Tile.COLLISION ||
+				tm.getTileType(x + cwidth / 2, y - cheight / 2) == Tile.COLLISION ||
+				tm.getTileType(x - cwidth / 2, y + cheight / 2) == Tile.COLLISION ||
+				tm.getTileType(x - cwidth / 2, y - cheight / 2) == Tile.COLLISION;
 	}
 	
 	public void setPosition(double x, double y) {
