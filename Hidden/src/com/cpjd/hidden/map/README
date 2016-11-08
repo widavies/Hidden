@@ -9,7 +9,7 @@ be kinda fun I think
 
 TODO
 -UI should be scaled down when the screen is resized
--All that's left for world generation: Prisons, Villages, some more organic things in standard terrain generation
+-All that's left for world generation: Villages, some more organic things in standard terrain generation
 -Faster world generation so that we can do 500 x 500 tiles more quickly
 
 BUGS

@@ -1,10 +1,5 @@
 package com.cpjd.hidden.sound;
 
-import java.util.HashMap;
-
-import org.newdawn.slick.Music;
-import org.newdawn.slick.Sound;
-
 import com.cpjd.hidden.toolbox.MessageLog;
 
 /**

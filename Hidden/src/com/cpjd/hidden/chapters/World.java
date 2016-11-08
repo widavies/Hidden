@@ -73,6 +73,7 @@ public class World extends Chapter implements WorldListener {
 		
 		GameSave save = new GameSave();
 		save.setMap(world.getWorld());
+		save.setPrisonLocations(world.getPrisonLocations());
 		save.setPlayerLocation(new Point((int)player.getX(), (int)player.getY()));
 		
 		IO.serializeGameSave(save);

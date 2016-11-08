@@ -14,7 +14,6 @@ import com.cpjd.hidden.gamestates.Intro;
 import com.cpjd.hidden.gamestates.Menu;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.Console;
-import com.cpjd.hidden.toolbox.MessageLog;
 import com.cpjd.hidden.ui.UIListener;
 import com.cpjd.hidden.ui.content.PauseWindow;
 import com.cpjd.hidden.ui.elements.UIButton;

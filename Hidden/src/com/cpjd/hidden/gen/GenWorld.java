@@ -27,6 +27,9 @@ public class GenWorld implements Runnable {
 	private int POOL_RANGE = 5; // The farthest away water blocks can be from a pool origin point
 	private int FOREST_RANGE = 8;
 	
+	// Generation modules
+	private GenPrison genPrison;
+	
 	/*
 	 * Description of custom open-world generation. Decided not to implement perlin noise or similar because we want it more tuned to the style we're looking for
 	 * 1) Water is generated around edges. Won't generate past the margin-border variable
@@ -117,7 +120,8 @@ public class GenWorld implements Runnable {
 		
 		// Generate those prisons boi
 		status = "Generating prisons";
-		generation = new GenPrison(generation).getMap();
+		genPrison = new GenPrison(generation);
+		generation = genPrison.getMap();
 
 		map = generation;
 		
@@ -260,5 +264,9 @@ public class GenWorld implements Runnable {
 		}
 		
 		return false;
+	}
+	
+	public ArrayList<ArrayList<Point>> getPrisonLocations() {
+		return genPrison.getPrisonLocations();
 	}
 }
