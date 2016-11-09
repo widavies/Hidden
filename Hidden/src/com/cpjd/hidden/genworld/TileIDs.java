@@ -1,4 +1,4 @@
-package com.cpjd.hidden.gen;
+package com.cpjd.hidden.genworld;
 
 public abstract class TileIDs {
 	public static final byte AIR = 0;

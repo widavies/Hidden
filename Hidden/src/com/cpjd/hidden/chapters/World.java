@@ -9,8 +9,8 @@ import com.cpjd.hidden.files.GameSave;
 import com.cpjd.hidden.files.IO;
 import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.gamestate.GameStateManager;
-import com.cpjd.hidden.gen.GenWorld;
-import com.cpjd.hidden.gen.WorldListener;
+import com.cpjd.hidden.genworld.GenWorld;
+import com.cpjd.hidden.genworld.WorldListener;
 import com.cpjd.hidden.toolbox.Console;
 import com.cpjd.tools.Layout;
 

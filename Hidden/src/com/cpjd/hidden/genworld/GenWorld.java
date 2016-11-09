@@ -1,4 +1,4 @@
-package com.cpjd.hidden.gen;
+package com.cpjd.hidden.genworld;
 
 import java.awt.Point;
 import java.util.ArrayList;
