@@ -30,7 +30,7 @@ public class Player extends Entity {
 	private double maxSpeed;
 	private boolean left, right, up, down;
 	private double borderLeftx, borderRightx, borderUpy, borderDowny, adjustx, adjusty;
-
+	
 	public Player(Map tm) {
 		super(tm);
 		
@@ -55,6 +55,7 @@ public class Player extends Entity {
 		animation.setDelay(400);
 		
 		rotation = animation.getImage();
+		
 	}
 	
 	private void loadAnimation() throws Exception {

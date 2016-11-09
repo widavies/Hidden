@@ -228,4 +228,18 @@ public class Map {
 		return height;
 	}
 	
+	/**
+	 * @return camera's x offset (px)
+	 */
+	public double getXOffset(){
+		return xOffset;
+	}
+	
+	/**
+	 * @return camera's y offset (px)
+	 */
+	public double getYOffset(){
+		return yOffset;
+	}
+	
 }
