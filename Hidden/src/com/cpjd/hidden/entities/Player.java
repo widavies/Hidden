@@ -130,7 +130,7 @@ public class Player extends Entity {
 	private void manageMovement() {
 		double oldMaxSpeed = maxSpeed;
 		
-		if((left && up) || (left && down) || (right && up) || (right && down)) maxSpeed *= .7;
+		if((dx < 0 && dy < 0) || (dx < 0 && dy > 0) || (dx > 0 && dy < 0) || (dx > 0 && dy > 0)) maxSpeed *= .7;
 		if(left) {
 			dx -= moveSpeed;
 			if(dx < -maxSpeed) dx = -maxSpeed;
