@@ -20,6 +20,8 @@ public class Chapter extends GameState {
 	private HUD hud;
 	private PUD pud;
 	
+	private boolean drawPUD;
+	
 	public Chapter(GameStateManager gsm, Console console) {
 		super(gsm, console);
 		
@@ -35,9 +37,8 @@ public class Chapter extends GameState {
 		
 		player.update();
 		tileMap.setCameraPosition(player.getX(),player.getY());
-		
+		pud.update();
 		hud.update();
-		pud.update(player.getX(), player.getY());
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class Chapter extends GameState {
 		if(!finishedGen) return;
 		
 		tileMap.draw(g);
-		pud.draw(g, tileMap.getXOffset(), tileMap.getYOffset());
+		if(drawPUD) pud.draw(g, tileMap.getXOffset(), tileMap.getYOffset());
 		player.draw(g);
 		//if(!gsm.isPaused()) hud.draw(g);
 	}
@@ -66,6 +67,10 @@ public class Chapter extends GameState {
 			save.setPlayerLocation(new Point((int)player.getX(), (int)player.getY()));
 			gsm.saveGame(save);
 			System.out.println("Game saved!");
+		}
+		
+		if(k == KeyEvent.VK_I){
+			drawPUD = !drawPUD;
 		}
 	}
 	

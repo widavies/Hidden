@@ -29,25 +29,37 @@ public class PrisonID {
 	private int width;
 	private int height;
 	private final int growSpeed = 10;
+	private boolean drawing = false;
+	
+	public void update(){
+		
+		if(drawing){
+		
+			width += growSpeed;
+			height += growSpeed;
+			
+			if(width > rectWidth){
+				width = rectWidth;
+			}
+			if(height > rectHeight){
+				height = rectHeight;
+			}
+			
+			if(width == rectWidth && height == rectHeight){
+				open = true;
+			}
+		}else{
+			width = 0;
+			height = 0;
+			open = false;
+		}
+		drawing = false;
+	}
 	
 	public void draw(Graphics2D g, double xOffset, double yOffset){
 		
 		int drawX = (int) (x - width / 2 - xOffset);
 		int drawY = (int) (y - height / 2 - yOffset);
-		
-		width += growSpeed;
-		height += growSpeed;
-		
-		if(width > rectWidth){
-			width = rectWidth;
-		}
-		if(height > rectHeight){
-			height = rectHeight;
-		}
-		
-		if(width == rectWidth && height == rectHeight){
-			open = true;
-		}
 		
 		g.setColor(Color.white);
 		g.fillRoundRect(drawX, drawY, width, height, 10, 10);
@@ -66,5 +78,7 @@ public class PrisonID {
 			g.drawString(timeLimitText + timeLimit, drawX + halfWidth - metrics.stringWidth(timeLimitText + timeLimit) / 2, drawY + 5 * metrics.getHeight());
 	
 		}
+		
+		drawing = true;
 	}
 }

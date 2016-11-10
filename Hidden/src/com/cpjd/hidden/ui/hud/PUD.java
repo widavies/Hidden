@@ -21,6 +21,8 @@ public class PUD {
 		prisonIDs = new ArrayList<PrisonID>();
 		
 		id = new PrisonID();
+		id.x = 9200;
+		id.y = 9400;
 		id.name = "Test Name";
 		id.hostage = "Daniel Peterson";
 		id.reward = 200;
@@ -30,17 +32,15 @@ public class PUD {
 		prisonIDs.add(id);
 	}
 	
-	/**
-	 * 
-	 * @param playerx
-	 * @param playery
-	 */
-	public void update(double playerx, double playery) {
-		id.x = (int) (playerx + 50);
-		id.y = (int) (playery + 50);
+	public void update(){
+		for(int i = 0; i < prisonIDs.size(); i++){
+			
+			prisonIDs.get(i).update();
+		}
 	}
 	
 	public void draw(Graphics2D g, double xOffset, double yOffset) {
+		
 		for(int i = 0; i < prisonIDs.size(); i++){
 			
 			prisonIDs.get(i).draw(g, xOffset, yOffset);
