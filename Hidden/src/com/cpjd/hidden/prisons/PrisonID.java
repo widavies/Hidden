@@ -29,31 +29,22 @@ public class PrisonID {
 	private int width;
 	private int height;
 	private final int growSpeed = 10;
-	private boolean drawing = false;
 	
 	public void update(){
 		
-		if(drawing){
-		
-			width += growSpeed;
-			height += growSpeed;
+		width += growSpeed;
+		height += growSpeed;
 			
-			if(width > rectWidth){
-				width = rectWidth;
-			}
-			if(height > rectHeight){
-				height = rectHeight;
-			}
-			
-			if(width == rectWidth && height == rectHeight){
-				open = true;
-			}
-		}else{
-			width = 0;
-			height = 0;
-			open = false;
+		if(width > rectWidth){
+			width = rectWidth;
 		}
-		drawing = false;
+		if(height > rectHeight){
+			height = rectHeight;
+		}
+			
+		if(width == rectWidth && height == rectHeight){
+			open = true;
+		}
 	}
 	
 	public void draw(Graphics2D g, double xOffset, double yOffset){
@@ -78,7 +69,14 @@ public class PrisonID {
 			g.drawString(timeLimitText + timeLimit, drawX + halfWidth - metrics.stringWidth(timeLimitText + timeLimit) / 2, drawY + 5 * metrics.getHeight());
 	
 		}
-		
-		drawing = true;
+	}
+	
+	/**
+	 * call this method to make the box replay the animation when it opens again
+	 */
+	public void reset(){
+		width = 0;
+		height = 0;
+		open = false;
 	}
 }

@@ -185,15 +185,15 @@ public class Player extends Entity {
  			xtemp = x;
  				return;
  			}
- 		else if(tm.getTileType(xtemp, y) == Tile.NO_COLLISION){
- 				ytemp = y;
- 				return;
- 			}
- 			else{
- 				xtemp = x;
- 				ytemp = y;
- 			return;
- 		}
+	 		else if(tm.getTileType(xtemp, y) == Tile.NO_COLLISION){
+	 				ytemp = y;
+	 				return;
+	 			}
+	 			else{
+	 				xtemp = x;
+	 				ytemp = y;
+	 			return;
+	 		}
   		}
 	}
 	
