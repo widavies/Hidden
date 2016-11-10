@@ -76,7 +76,7 @@ public class PrisonID {
 			g.drawString(hostageText + hostage, drawX + halfWidth - metrics.stringWidth(hostageText + hostage) / 2, drawY + 3 * metrics.getHeight());
 			g.drawString(rewardText + reward + " " + moneyName, drawX + halfWidth - metrics.stringWidth(rewardText + reward + " " + moneyName) / 2, drawY + 4 * metrics.getHeight());
 			g.drawString(timeLimitText + timeLimit, drawX + halfWidth - metrics.stringWidth(timeLimitText + timeLimit) / 2, drawY + 5 * metrics.getHeight());
-	
+			
 		}
 		
 		drawing = true;

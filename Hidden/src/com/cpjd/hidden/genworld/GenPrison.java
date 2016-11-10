@@ -45,8 +45,12 @@ public class GenPrison {
 	private byte[][] generation;
 	private Random r;
 	
-	public GenPrison(byte[][] generation) {
+	private ArrayList<Point> villageLocations;
+	
+	public GenPrison(byte[][] generation, ArrayList<Point> villageLocations) {
 		this.generation = generation;
+		this.villageLocations = villageLocations;
+		
 		r = new Random();
 		
 		prisonLocations = new ArrayList<ArrayList<Point>>();
@@ -155,6 +159,12 @@ public class GenPrison {
 			
 	private boolean checkRegion(int col, int row, int diameter) {
 		boolean regionViable;
+		
+		for(int i = 0; i < villageLocations.size(); i++) {
+			if(Math.abs(villageLocations.get(i).x - col) <= GenVillages.WIDTH && Math.abs(villageLocations.get(i).y - row) <= GenVillages.HEIGHT) {
+				return false;
+			}
+		}
 		
 		for(int x = col - (diameter / 2); x < (col - diameter / 2) + diameter; x++) {
 			for(int y = row - (diameter / 2); y < (row - (diameter / 2) + diameter); y++) {

@@ -119,15 +119,15 @@ public class GenWorld implements Runnable {
 		forestLocations.clear();
 		poolLocations.clear();
 		
-		// Generate those prisons boi
-		status = "Generating prisons";
-		genPrison = new GenPrison(generation);
-		generation = genPrison.getMap();
-
 		// Generate villages
 		status = "Generating villages";
 		genVillages = new GenVillages(generation);
 		generation = genVillages.getMap();
+		
+		// Generate those prisons boi
+		status = "Generating prisons";
+		genPrison = new GenPrison(generation, genVillages.getVillageLocations());
+		generation = genPrison.getMap();
 		
 		map = generation;
 		

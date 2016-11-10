@@ -30,6 +30,9 @@ public class GenVillages {
 	 * This are the 6 villages names that could be used (adjust as neccessary)
 	 * -Bradford, Ellwood, Brares, Foxcroft, Town of Ender, Overwood
 	 */
+	public static final int WIDTH = 30;
+	public static final int HEIGHT = 15;
+	
 	private byte[][] generation;
 	private final byte BORDER = 50;
 	private final byte NUM_TO_GENERATE = 5;
@@ -53,7 +56,7 @@ public class GenVillages {
 			int y = r.nextInt(generation[0].length - (2 * BORDER)) + BORDER;
 			
 			for(int j = 0; j < villageLocations.size(); j++) {
-				if(Math.abs(villageLocations.get(j).x - x) <= 30 && Math.abs(villageLocations.get(j).y - y) <= 15) {
+				if(Math.abs(villageLocations.get(j).x - x) <= WIDTH && Math.abs(villageLocations.get(j).y - y) <= HEIGHT) {
 					i--;
 					continue;
 				}
@@ -76,6 +79,10 @@ public class GenVillages {
 	
 	public byte[][] getMap() {
 		return generation;
+	}
+	
+	public ArrayList<Point> getVillageLocations() {
+		return villageLocations;
 	}
 	
 }
