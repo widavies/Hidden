@@ -29,6 +29,7 @@ public class GenWorld implements Runnable {
 	
 	// Generation modules
 	private GenPrison genPrison;
+	private GenVillages genVillages;
 	
 	/*
 	 * Description of custom open-world generation. Decided not to implement perlin noise or similar because we want it more tuned to the style we're looking for
@@ -123,6 +124,11 @@ public class GenWorld implements Runnable {
 		genPrison = new GenPrison(generation);
 		generation = genPrison.getMap();
 
+		// Generate villages
+		status = "Generating villages";
+		genVillages = new GenVillages(generation);
+		generation = genVillages.getMap();
+		
 		map = generation;
 		
 		// Find a spawn - ends world gen
