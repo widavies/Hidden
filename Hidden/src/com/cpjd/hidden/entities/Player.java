@@ -178,7 +178,7 @@ public class Player extends Entity {
 	public void manageCollision() {
 		if(GamePanel.DEBUG) return;
 		
-		if(tm.getTileType(xtemp, ytemp) == Tile.NO_COLLISION){
+		if(tm.getTileType(xtemp, y) == Tile.NO_COLLISION && tm.getTileType(x, ytemp) == Tile.NO_COLLISION && tm.getTileType(xtemp, ytemp) == Tile.NO_COLLISION){
   			return;
   		}else{
  			if(tm.getTileType(x, ytemp) == Tile.NO_COLLISION){
