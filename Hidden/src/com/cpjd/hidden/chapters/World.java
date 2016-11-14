@@ -11,6 +11,7 @@ import com.cpjd.hidden.gamestate.Chapter;
 import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.hidden.genworld.GenWorld;
 import com.cpjd.hidden.genworld.WorldListener;
+import com.cpjd.hidden.prisons.PrisonID;
 import com.cpjd.hidden.toolbox.Console;
 import com.cpjd.tools.Layout;
 
@@ -75,6 +76,16 @@ public class World extends Chapter implements WorldListener {
 		save.setMap(world.getWorld());
 		save.setPrisonLocations(world.getPrisonLocations());
 		save.setPlayerLocation(new Point((int)player.getX(), (int)player.getY()));
+		
+		for(int i = 0; i < world.getPrisonLocations().size(); i++){
+			
+			for(int j = 0; j < world.getPrisonLocations().get(i).size(); j++){
+				
+				PrisonID id = new PrisonID(world.getPrisonLocations().get(i).get(j).x * tileMap.getScaledTileSize(), world.getPrisonLocations().get(i).get(j).y * tileMap.getScaledTileSize(), PrisonID.RANDOM_NAME, Integer.toString(i + 1), "Daniel Peterson", 500, 0);
+				super.addPrisonID(id);
+				
+			}
+		}
 		
 		IO.serializeGameSave(save);
 	}

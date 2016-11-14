@@ -22,17 +22,6 @@ public class PUD {
 	public PUD() {
 		prisonIDs = new ArrayList<PrisonID>();
 		allPrisonIDs = new ArrayList<PrisonID>();
-		
-		PrisonID id = new PrisonID();
-		id.x = 9200;
-		id.y = 9400;
-		id.name = "Test Name";
-		id.hostage = "Daniel Peterson";
-		id.reward = 200;
-		id.tier = "5";
-		id.timeLimit = 505000;
-		
-		allPrisonIDs.add(id);
 	}
 	
 	public void update(double playerX, double playerY){
@@ -87,7 +76,6 @@ public class PUD {
 				double distanceSquared = xDiff * xDiff + yDiff * yDiff;
 				
 				if(distanceSquared < updateDistance * updateDistance){
-					
 					prisonIDs.add(allPrisonIDs.get(i));
 				}
 			}

@@ -188,6 +188,10 @@ public class GenPrison {
 		return generation;
 	}
 
+	/**
+	 * stored as ArrayList<Tier 1-10<Position>>
+	 * @return
+	 */
 	public ArrayList<ArrayList<Point>> getPrisonLocations() {
 		return prisonLocations;
 	}

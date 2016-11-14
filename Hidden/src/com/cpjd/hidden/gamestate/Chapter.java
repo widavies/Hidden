@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.files.GameSave;
 import com.cpjd.hidden.map.Map;
+import com.cpjd.hidden.prisons.PrisonID;
 import com.cpjd.hidden.toolbox.Console;
 import com.cpjd.hidden.ui.hud.HUD;
 import com.cpjd.hidden.ui.hud.PUD;
@@ -84,5 +85,9 @@ public class Chapter extends GameState {
 	@Override
 	public void mouseWheelMoved(int k) {
 		hud.mouseWheelMoved(k);
+	}
+	
+	public void addPrisonID(PrisonID id){
+		pud.addPrisonID(id);
 	}
 }
