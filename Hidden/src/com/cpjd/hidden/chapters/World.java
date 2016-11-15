@@ -3,6 +3,7 @@ package com.cpjd.hidden.chapters;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayList;
 
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.files.GameSave;
@@ -44,6 +45,8 @@ public class World extends Chapter implements WorldListener {
 			tileMap.initCamera(player.getX(), player.getY());
 			console.setPlayer(player);
 			finishedGen = true;
+			
+			setIDs(gsm.getGameSave().getPrisonLocations());
 		}
 		
 	}
@@ -87,19 +90,23 @@ public class World extends Chapter implements WorldListener {
 		save.setPrisonLocations(world.getPrisonLocations());
 		save.setPlayerLocation(new Point((int)player.getX(), (int)player.getY()));
 		
-		for(int i = 0; i < world.getPrisonLocations().size(); i++){
-			
-			for(int j = 0; j < world.getPrisonLocations().get(i).size(); j++){
-				
-				PrisonID id = new PrisonID(world.getPrisonLocations().get(i).get(j).x * tileMap.getScaledTileSize(), world.getPrisonLocations().get(i).get(j).y * tileMap.getScaledTileSize(), PrisonID.RANDOM_NAME, Integer.toString(i + 1), "Daniel Peterson", 500, 0);
-				pud.addPrisonID(id);
-				
-			}
-		}
+		setIDs(world.getPrisonLocations());
 		
 		IO.serializeGameSave(save);
 	}
 
+	private void setIDs(ArrayList<ArrayList<Point>> prisonLocations){
+		for(int i = 0; i < prisonLocations.size(); i++){
+			
+			for(int j = 0; j < prisonLocations.get(i).size(); j++){
+				
+				PrisonID id = new PrisonID(prisonLocations.get(i).get(j).x * tileMap.getScaledTileSize(), prisonLocations.get(i).get(j).y * tileMap.getScaledTileSize(), PrisonID.RANDOM_NAME, Integer.toString(i + 1), "Daniel Peterson", 500, 0);
+				pud.addPrisonID(id);
+				
+			}
+		}
+	}
+	
 	@Override
 	public void updateProgress(double progress) {
 		this.progress = progress;
