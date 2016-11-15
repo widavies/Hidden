@@ -24,4 +24,8 @@ public class Tier1 extends Chapter {
 	public void draw(Graphics2D g){
 		super.draw(g);
 	}
+
 }
+
+
+

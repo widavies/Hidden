@@ -3,6 +3,7 @@ package com.cpjd.hidden.prisons;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.util.Random;
 
 import com.cpjd.hidden.gamestate.GameStateManager;
 
@@ -30,6 +31,27 @@ public class PrisonID {
 	private int height;
 	private final int growSpeed = 10;
 	
+	public static final String RANDOM_NAME = "rand";
+	
+	private static final String[] randomNames = {"Daniel's Prison", "Bob's Prison", "Joe's Prison"};
+	
+	public PrisonID(int x, int y, String name, String tier, String hostage, int reward, int timeLimit) {
+		this.x = x;
+		this.y = y;
+		this.tier = tier;
+		this.hostage = hostage;
+		this.reward = reward;
+		this.timeLimit = timeLimit;
+		
+		if(name.equals(RANDOM_NAME)){
+			
+			Random r = new Random();
+			int rand = r.nextInt(randomNames.length);//gives 0, 1, or 2 if length is 3
+			this.name = randomNames[rand];
+			
+		}else this.name = name;
+	}
+
 	public void update(){
 		
 		width += growSpeed;
