@@ -299,6 +299,9 @@ public class Console {
 		else if(name.equalsIgnoreCase("WORLD")){
 			gsm.setState(GameStateManager.WORLD);
 			return true;
+		}else if(name.equalsIgnoreCase("LVL1")){
+			gsm.setState(GameStateManager.LVL_1);
+			return true;
 		}else{
 			MessageLog.log("Attempted to load unrecognized GameState " + name);
 			return false;

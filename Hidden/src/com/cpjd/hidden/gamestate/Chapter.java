@@ -7,10 +7,8 @@ import java.awt.event.KeyEvent;
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.files.GameSave;
 import com.cpjd.hidden.map.Map;
-import com.cpjd.hidden.prisons.PrisonID;
 import com.cpjd.hidden.toolbox.Console;
 import com.cpjd.hidden.ui.hud.HUD;
-import com.cpjd.hidden.ui.hud.PUD;
 
 public class Chapter extends GameState {
 
@@ -19,7 +17,7 @@ public class Chapter extends GameState {
 	
 	protected Player player;
 	private HUD hud;
-	private PUD pud;
+	
 	
 	public Chapter(GameStateManager gsm, Console console) {
 		super(gsm, console);
@@ -27,7 +25,6 @@ public class Chapter extends GameState {
 		tileMap = new Map(16);
 		
 		hud = new HUD();
-		pud = new PUD();
 	}
 	
 	@Override
@@ -36,7 +33,6 @@ public class Chapter extends GameState {
 		
 		player.update();
 		tileMap.setCameraPosition(player.getX(),player.getY());
-		pud.update(player.getX(), player.getY());
 		hud.update();
 	}
 
@@ -45,7 +41,6 @@ public class Chapter extends GameState {
 		if(!finishedGen) return;
 		
 		tileMap.draw(g);
-		pud.draw(g, tileMap.getXOffset(), tileMap.getYOffset());
 		player.draw(g);
 		//if(!gsm.isPaused()) hud.draw(g);
 	}
@@ -85,9 +80,5 @@ public class Chapter extends GameState {
 	@Override
 	public void mouseWheelMoved(int k) {
 		hud.mouseWheelMoved(k);
-	}
-	
-	public void addPrisonID(PrisonID id){
-		pud.addPrisonID(id);
 	}
 }

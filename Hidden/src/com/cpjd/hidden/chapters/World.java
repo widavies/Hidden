@@ -13,6 +13,7 @@ import com.cpjd.hidden.genworld.GenWorld;
 import com.cpjd.hidden.genworld.WorldListener;
 import com.cpjd.hidden.prisons.PrisonID;
 import com.cpjd.hidden.toolbox.Console;
+import com.cpjd.hidden.ui.hud.PUD;
 import com.cpjd.tools.Layout;
 
 public class World extends Chapter implements WorldListener {
@@ -21,12 +22,16 @@ public class World extends Chapter implements WorldListener {
 	
 	protected GenWorld world;
 	
+	private PUD pud;
+	
 	public World(GameStateManager gsm, Console console) {
 		super(gsm, console);
 		
 		finishedGen = false;
 		
 		tileMap.loadTiles("/tiles/tileset.png");
+		
+		pud = new PUD();
 		
 		if(gsm.getGameSave() == null || gsm.getGameSave().getMap() == null) {
 			world = new GenWorld();
@@ -44,12 +49,17 @@ public class World extends Chapter implements WorldListener {
 	}
 	
 	public void update() {
-		if(finishedGen) super.update();
+		if(finishedGen){
+			super.update();
+			pud.update(player.getX(), player.getY());
+		}
 	}
 	
 	@Override
 	public void draw(Graphics2D g) {
 		super.draw(g);
+		
+		pud.draw(g, tileMap.getXOffset(), tileMap.getYOffset());
 		
 		if(finishedGen) return;
 		
@@ -82,7 +92,7 @@ public class World extends Chapter implements WorldListener {
 			for(int j = 0; j < world.getPrisonLocations().get(i).size(); j++){
 				
 				PrisonID id = new PrisonID(world.getPrisonLocations().get(i).get(j).x * tileMap.getScaledTileSize(), world.getPrisonLocations().get(i).get(j).y * tileMap.getScaledTileSize(), PrisonID.RANDOM_NAME, Integer.toString(i + 1), "Daniel Peterson", 500, 0);
-				super.addPrisonID(id);
+				pud.addPrisonID(id);
 				
 			}
 		}

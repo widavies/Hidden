@@ -26,11 +26,12 @@ public class GameStateManager implements UIListener {
 	private Console console;
 	private PauseWindow pauseWindow;
 	
-	//when adding a new GameState, make sure to add it to the loadStateFromConsole method, thanks
-	public static final int NUM_GAME_STATES = 3;
+	//when adding a new GameState, make sure to add it to the loadStateFromConsole method in Console class, thanks
+	public static final int NUM_GAME_STATES = 4;
 	public static final int INTRO = 0;
 	public static final int MENU = 1;
 	public static final int WORLD = 2;
+	public static final int LVL_1 = 3;
 
 	private GameState[] gameStates;
 	private int currentState;
