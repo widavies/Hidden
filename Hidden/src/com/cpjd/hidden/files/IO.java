@@ -72,5 +72,4 @@ public class IO {
 		File file = new File(gameDir + File.separator + location);
 		file.delete();
 	}
-	
 }

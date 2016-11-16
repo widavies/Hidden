@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.files.GameSave;
+import com.cpjd.hidden.items.Inventory;
 import com.cpjd.hidden.map.Map;
 import com.cpjd.hidden.toolbox.Console;
 import com.cpjd.hidden.ui.hud.HUD;

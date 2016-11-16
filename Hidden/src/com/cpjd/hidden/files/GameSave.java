@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.cpjd.hidden.items.Items.Item;
+
 /**
  * Represents all the data that should be saved for the game
  * @author Will Davies
@@ -13,9 +15,21 @@ public class GameSave implements Serializable {
 
 	private static final long serialVersionUID = 525924313781734122L;
 	
+	// Map related
 	private byte[][] map;
 	private ArrayList<ArrayList<Point>> prisonLocations;
 	private Point playerLocation;
+	
+	// Inventory related
+	private Item[][] inventory;
+	
+	public void setInventory(Item[][] inventory) {
+		this.inventory = inventory;
+	}
+	
+	public Item[][] getInventory() {
+		return inventory;
+	}
 	
 	public void setMap(byte[][] map) {
 		this.map = map;
