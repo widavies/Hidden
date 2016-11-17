@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.files.GameSave;
-import com.cpjd.hidden.items.Inventory;
 import com.cpjd.hidden.map.Map;
 import com.cpjd.hidden.toolbox.Console;
 import com.cpjd.hidden.ui.hud.HUD;
@@ -25,7 +24,7 @@ public class Chapter extends GameState {
 		
 		tileMap = new Map(16);
 		
-		hud = new HUD();
+		hud = new HUD(gsm.getGameSave());
 	}
 	
 	@Override
@@ -43,7 +42,7 @@ public class Chapter extends GameState {
 		
 		tileMap.draw(g);
 		player.draw(g);
-		//if(!gsm.isPaused()) hud.draw(g);
+		if(!gsm.isPaused()) hud.draw(g);
 	}
 
 	@Override
@@ -62,6 +61,7 @@ public class Chapter extends GameState {
 			save.setPlayerLocation(new Point((int)player.getX(), (int)player.getY()));
 			gsm.saveGame(save);
 			System.out.println("Game saved!");
+			hud.save();
 		}
 	}
 	

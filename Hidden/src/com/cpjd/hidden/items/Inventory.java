@@ -12,7 +12,7 @@ import com.cpjd.hidden.items.Items.Item;
  */
 public class Inventory {
 	
-	private Item[][] inventory = new Item[5][5]; // Note: position 4,0 is not used
+	private Item[][] inventory; // Note: position 4,0 is not used
 	private static final int[][] INVENTORY_TYPES = { // -1 for anything, or an Item.type for a type restriction, -2 for not used
 			{Item.ARMOR, -1, -1, -1, -1},
 			{Item.ARMOR, -1, -1, -1, -1},
@@ -26,6 +26,8 @@ public class Inventory {
 		this.gameSave = gameSave;
 		
 		inventory = gameSave.getInventory();
+		
+		if(inventory == null) inventory = new Item[5][5];
 	}
 	
 	/**
@@ -73,6 +75,14 @@ public class Inventory {
 				inventory[i][j] = null;
 			}
 		}
+	}
+	
+	public int getWidth() {
+		return inventory.length;
+	}
+	
+	public int getHeight() {
+		return inventory[0].length;
 	}
 	
 	/**

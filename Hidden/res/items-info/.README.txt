@@ -1,0 +1,8 @@
+To add an item:
+1) Create a <item-name>.item file i the /items-info/ directory. It requires the following data:
+<item-name>
+<description>
+<type 0  - block, 1 - tool, 2 - armor>
+<damage>
+<path to icon image>
+2) Add the name of your item as a new line in the .items-info.properties file
