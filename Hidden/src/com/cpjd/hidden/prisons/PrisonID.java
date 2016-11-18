@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.util.Random;
 
 import com.cpjd.hidden.gamestate.GameStateManager;
+import com.cpjd.hidden.toolbox.MessageLog;
 
 // Stores information about a particular tier of prison
 public class PrisonID {
@@ -15,6 +16,8 @@ public class PrisonID {
 	public String hostage;
 	public int reward;
 	public int timeLimit;
+	
+	private static final int RANGE = 500;
 	
 	private static final int rectWidth = 225;
 	private static final int halfWidth = rectWidth / 2;
@@ -26,7 +29,8 @@ public class PrisonID {
 	private static final String rewardText = "Reward: ";
 	private static final String moneyName = "Credits";
 	
-	private boolean open = false;
+	private static enum StatusEnum {CLOSED, OPENING, OPEN, CLOSING};
+	private StatusEnum status = StatusEnum.CLOSED;
 	private int width;
 	private int height;
 	private final int growSpeed = 10;
@@ -34,6 +38,8 @@ public class PrisonID {
 	public static final String RANDOM_NAME = "rand";
 	
 	private static final String[] randomNames = {"Daniel's Prison", "Bob's Prison", "Joe's Prison"};
+	
+	private boolean inRange;
 	
 	public PrisonID(int x, int y, String name, String tier, String hostage, int reward, int timeLimit) {
 		this.x = x;
@@ -52,21 +58,91 @@ public class PrisonID {
 		}else this.name = name;
 	}
 
-	public void update(){
+	private void updateInRange(double playerX, double playerY){
+		double xDiff = x - playerX, yDiff = y - playerY;
 		
-		width += growSpeed;
-		height += growSpeed;
+		double distanceSquared = xDiff * xDiff + yDiff * yDiff;
+		
+		inRange = false;
+		
+		if(distanceSquared < RANGE * RANGE){
+			inRange = true;
+		}
+	}
+	
+	public void update(double playerX, double playerY){
+		
+		if(GameStateManager.ticks % 5 == 0){
+			updateInRange(playerX, playerY);
+		}
+		
+		switch(status){
+		
+		case CLOSED:
+			if(inRange){
+				status = StatusEnum.OPENING;
+			}
+			break;
 			
-		if(width > rectWidth){
-			width = rectWidth;
-		}
-		if(height > rectHeight){
-			height = rectHeight;
-		}
+		case CLOSING:
 			
-		if(width == rectWidth && height == rectHeight){
-			open = true;
+			if(inRange){
+				status = StatusEnum.OPENING;
+				break;
+			}
+			
+			width -= growSpeed;
+			height -= growSpeed;
+				
+			if(width < 0){
+				width = 0;
+			}
+			if(height < 0){
+				height = 0;
+			}
+				
+			if(width == 0 && height == 0){
+				status = StatusEnum.CLOSED;
+			}
+			break;
+			
+		case OPEN:
+			if(!inRange){
+				status = StatusEnum.CLOSING;
+			}
+			break;
+			
+		case OPENING:
+			
+			if(!inRange){
+				status = StatusEnum.CLOSING;
+				break;
+			}
+			
+			width += growSpeed;
+			height += growSpeed;
+				
+			if(width > rectWidth){
+				width = rectWidth;
+			}
+			if(height > rectHeight){
+				height = rectHeight;
+			}
+				
+			if(width == rectWidth && height == rectHeight){
+				status = StatusEnum.OPEN;
+			}
+			break;
+			
+		default:
+			MessageLog.log("Unrecognized PrisonID status");
+			System.err.println("Unrecognized PrisonID status");
+			break;
+		
 		}
+		
+		
+		
 	}
 	
 	public void draw(Graphics2D g, double xOffset, double yOffset){
@@ -77,7 +153,7 @@ public class PrisonID {
 		g.setColor(Color.white);
 		g.fillRoundRect(drawX, drawY, width, height, 10, 10);
 		
-		if(open){
+		if(status == StatusEnum.OPEN){
 		
 			g.setColor(Color.black);
 			g.setFont(GameStateManager.font.deriveFont(18f));
@@ -91,14 +167,5 @@ public class PrisonID {
 			g.drawString(timeLimitText + timeLimit, drawX + halfWidth - metrics.stringWidth(timeLimitText + timeLimit) / 2, drawY + 5 * metrics.getHeight());
 			
 		}
-	}
-	
-	/**
-	 * call this method to make the box replay the animation when it opens again
-	 */
-	public void reset(){
-		width = 0;
-		height = 0;
-		open = false;
 	}
 }
