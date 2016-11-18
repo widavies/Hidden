@@ -17,27 +17,28 @@ public class PrisonID {
 	public int reward;
 	public int timeLimit;
 	
-	private static final int RANGE = 500;
+	private final int RANGE = 200;
 	
-	private static final int rectWidth = 225;
-	private static final int halfWidth = rectWidth / 2;
-	private static final int rectHeight = 115;
+	private final int rectWidth = 225;
+	private final int halfWidth = rectWidth / 2;
+	private final int rectHeight = 115;
 	
-	private static final String tierText = "Tier: ";
-	private static final String hostageText = "Hostage: ";
-	private static final String timeLimitText = "Time: ";
-	private static final String rewardText = "Reward: ";
-	private static final String moneyName = "Credits";
+	//these are displayed in front of the corresponding information, except for money name-which is after
+	private final String tierText = "Tier: ";
+	private final String hostageText = "Hostage: ";
+	private final String timeLimitText = "Time: ";
+	private final String rewardText = "Reward: ";
+	private final String moneyName = "Credits";
 	
-	private static enum StatusEnum {CLOSED, OPENING, OPEN, CLOSING};
+	private enum StatusEnum {CLOSED, OPENING, OPEN, CLOSING};
 	private StatusEnum status = StatusEnum.CLOSED;
 	private int width;
 	private int height;
 	private final int growSpeed = 10;
 	
-	public static final String RANDOM_NAME = "rand";
+	public static final String RANDOM_NAME = "random_name";
 	
-	private static final String[] randomNames = {"Daniel's Prison", "Bob's Prison", "Joe's Prison"};
+	private final String[] randomNames = {"Daniel's Prison", "Bob's Prison", "Joe's Prison"};
 	
 	private boolean inRange;
 	
@@ -146,6 +147,8 @@ public class PrisonID {
 	}
 	
 	public void draw(Graphics2D g, double xOffset, double yOffset){
+		
+		if(status == StatusEnum.CLOSED) return;
 		
 		int drawX = (int) (x - width / 2 - xOffset);
 		int drawY = (int) (y - height / 2 - yOffset);
