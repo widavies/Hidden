@@ -14,24 +14,28 @@ public class HUD {
 	private Inventory inv;
 	private boolean open;
 	
+	// Dimensions
+	private int width, height, sizeToFollow;
+	
 	public HUD(GameSave gameSave) {
 		inv = new Inventory(gameSave);
 	}
 	
-	public void update() {}
+	public void update() {
+		width = Layout.WIDTH / 3 - (Layout.WIDTH / 3 % (inv.getWidth() + 1));
+		sizeToFollow = width / (inv.getWidth() + 1);
+		height = sizeToFollow * (inv.getHeight() + 1);
+		
+	}
 	public void draw(Graphics2D g) {
 		if(!open) return;
 		
 		g.setColor(Color.WHITE);
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.79f));
 		
-		g.fillRect(Layout.centerw(Layout.WIDTH / 3), Layout.centerh(Layout.HEIGHT / 2), Layout.WIDTH / 3, Layout.HEIGHT / 2);
-		
-		//Draw squares
-		g.setColor(Color.BLACK);
-		for(int row = 0; row < inv.getHeight(); row++) {
-			g.drawLine(Layout.centerw(Layout.WIDTH / 3), row * (Layout.HEIGHT / 2 / inv.getHeight()), Layout.centerw(Layout.WIDTH / 3) + Layout.WIDTH / 3, row * (Layout.HEIGHT / 2 / inv.getHeight()) + Layout.HEIGHT / 2);
-		}
+		g.fillRect(Layout.centerw(width), Layout.centerh(height), width, height - sizeToFollow);
+		g.fillRect(Layout.centerw(width), Layout.HEIGHT - sizeToFollow, width, height);
+		g.fillRect(Layout.centerw(width) - sizeToFollow * 2, Layout.centerh(height), sizeToFollow, height - sizeToFollow);
 		
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC, 1f));
 		

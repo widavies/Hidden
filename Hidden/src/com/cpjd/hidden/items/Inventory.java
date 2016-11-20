@@ -25,7 +25,7 @@ public class Inventory {
 	public Inventory(GameSave gameSave) {
 		this.gameSave = gameSave;
 		
-		inventory = gameSave.getInventory();
+		if(gameSave != null) inventory = gameSave.getInventory();
 		
 		if(inventory == null) inventory = new Item[5][5];
 	}
