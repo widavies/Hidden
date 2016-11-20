@@ -165,6 +165,14 @@ public class GenPrison {
 			}
 		}
 		
+		for(int i = 0; i < prisonLocations.size(); i++) {
+			for(int j = 0; j < prisonLocations.get(i).size(); j++) {
+				if(Math.abs(prisonLocations.get(i).get(j).x - col) <= diameter && Math.abs(prisonLocations.get(i).get(j).y - row) <= diameter) {
+					return false;
+				}	
+			}
+		}
+		
 		for(int x = col - (diameter / 2); x < (col - diameter / 2) + diameter; x++) {
 			for(int y = row - (diameter / 2); y < (row - (diameter / 2) + diameter); y++) {
 				if(col < 0 || row < 0 || x > generation.length || y > generation[0].length) return false;

@@ -13,8 +13,9 @@ TODO
 -Faster world generation so that we can do 500 x 500 tiles more quickly
 
 BUGS
--Console vertical position doesn't change with screen resize
 -Pause menu opens laggily when fullscreen
+-PrisonIDS don't always open in the middle of the prisons
+-PrisonIDS draw on top of the hud
 -fullscreen isnt actually fullscreen on Mac (I will fix this one)
 
 Some storyline stuff

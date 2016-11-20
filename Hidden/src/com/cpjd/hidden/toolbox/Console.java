@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.Stroke;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -64,7 +65,7 @@ public class Console {
 	public Console(GameStateManager gsm) {
 		this.gsm = gsm;
 		
-		Rectangle rect = new Rectangle(0, Layout.aligny(20), 450, 30);
+		Rectangle rect = new Rectangle(0, 200, 450, 30);
 		
 		field = new SmartField(new Font("Arial", Font.PLAIN, 15), rect, 100);
 		field.setBlinkSpeed(40);
@@ -212,8 +213,9 @@ public class Console {
 	public void draw(Graphics2D g) {
 		
 		if(open) {
+			Stroke s = g.getStroke();
 			g.setColor(Color.WHITE);
-			g.fillRect(0, 0, 452, Layout.aligny(20));
+			g.fillRect(0, 0, 452, 200);
 			
 			field.draw(g);
 			
@@ -223,7 +225,7 @@ public class Console {
 			for(int i = output.size() - 1, j = 0; i >= 0; i--, j++) {
 				g.drawString(output.get(i), 5, Layout.aligny(19) - (j * 20));
 			}
-			
+			g.setStroke(s);
 		}
 		
 		if(messageLogOpen){

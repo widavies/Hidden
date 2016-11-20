@@ -31,10 +31,10 @@ public class Chapter extends GameState {
 	public void update() {
 		if(player == null || !finishedGen) return;
 		hud.update();
+		tileMap.setCameraPosition(player.getX(),player.getY());
 		
 		if(hud.isOpen()) return;
 		player.update();
-		tileMap.setCameraPosition(player.getX(),player.getY());
 	}
 
 	@Override
