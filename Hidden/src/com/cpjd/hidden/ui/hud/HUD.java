@@ -22,23 +22,54 @@ public class HUD {
 	}
 	
 	public void update() {
-		width = Layout.WIDTH / 3 - (Layout.WIDTH / 3 % (inv.getWidth() + 1));
-		sizeToFollow = width / (inv.getWidth() + 1);
-		height = sizeToFollow * (inv.getHeight() + 1);
+		width = (int)((Layout.WIDTH / 3.5) - (Layout.WIDTH / 3.5 % inv.getWidth()));
+		sizeToFollow = width / inv.getWidth();
+		height = sizeToFollow * inv.getHeight();
 		
 	}
 	public void draw(Graphics2D g) {
+		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.89f));
+		
+		drawHotbar(g);
+		
 		if(!open) return;
+		drawInv(g);
 		
 		g.setColor(Color.WHITE);
-		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.79f));
+		g.fillRect(Layout.centerw(width), Layout.centerh(height) - width / 15, (int)(sizeToFollow * 1.5), width / 15);
+		g.fillRect((int)(Layout.centerw(width) + sizeToFollow * 1.5), Layout.centerh(height) - width / 15, (int)(sizeToFollow * 1.5), width / 15);
+		g.setColor(Color.BLACK);
 		
-		g.fillRect(Layout.centerw(width), Layout.centerh(height), width, height - sizeToFollow);
-		g.fillRect(Layout.centerw(width), Layout.HEIGHT - sizeToFollow, width, height);
-		g.fillRect(Layout.centerw(width) - sizeToFollow * 2, Layout.centerh(height), sizeToFollow, height - sizeToFollow);
+		g.drawLine(Layout.centerw(width), Layout.centerh(height) - width / 15, (int)(Layout.centerw(width) + sizeToFollow * 3), Layout.centerh(height) - width / 15);
+
 		
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC, 1f));
 		
+	}
+	
+	private void drawHotbar(Graphics2D g) {
+		g.setColor(Color.WHITE);
+		g.fillRect(Layout.centerw(width - sizeToFollow), Layout.HEIGHT - sizeToFollow, width - sizeToFollow, sizeToFollow);
+		
+		g.setColor(Color.BLACK);
+		for(int col = 0; col < inv.getWidth(); col++) {
+			g.drawLine(Layout.centerw(width - sizeToFollow) + col * sizeToFollow, Layout.HEIGHT - sizeToFollow, Layout.centerw(width - sizeToFollow) + col * sizeToFollow, Layout.HEIGHT);
+			g.drawLine(Layout.centerw(width - sizeToFollow), Layout.HEIGHT - sizeToFollow, Layout.centerw(width - sizeToFollow) + width - sizeToFollow, Layout.HEIGHT - sizeToFollow);
+			g.drawLine(Layout.centerw(width - sizeToFollow), Layout.HEIGHT - 1, Layout.centerw(width - sizeToFollow) + width - sizeToFollow, Layout.HEIGHT - 1);
+		}
+	}
+	
+	private void drawInv(Graphics2D g) {
+		g.setColor(Color.WHITE);
+		g.fillRect(Layout.centerw(width), Layout.centerh(height), width, height);
+		
+		g.setColor(Color.BLACK);
+		for(int col = 0; col < inv.getWidth() + 1; col++) {
+			g.drawLine(Layout.centerw(width) + col * sizeToFollow, Layout.centerh(height), Layout.centerw(width) + col * sizeToFollow, Layout.centerh(height) + height);
+			for(int row = 0; row < inv.getHeight() + 1; row++) {
+				g.drawLine(Layout.centerw(width), Layout.centerh(height) + row * sizeToFollow, Layout.centerw(width) + width, Layout.centerh(height) + row * sizeToFollow);
+			}
+		}
 	}
 	
 	public void keyPressed(int k) {
@@ -51,5 +82,9 @@ public class HUD {
 	
 	public void save() {
 		inv.saveChanges();
+	}
+	
+	public boolean isOpen() {
+		return open;
 	}
 }
