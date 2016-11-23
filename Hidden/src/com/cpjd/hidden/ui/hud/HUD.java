@@ -30,6 +30,7 @@ public class HUD {
 	private int degrees;
 	
 	private Items items;
+	private int mousex, mousey;
 	
 	public HUD(GameSave gameSave, Items items) {
 		inv = new Inventory(gameSave);
