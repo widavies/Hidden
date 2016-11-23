@@ -13,13 +13,6 @@ import com.cpjd.hidden.items.Items.Item;
 public class Inventory {
 	
 	private Item[][] inventory; // Note: position 4,0 is not used
-	private static final int[][] INVENTORY_TYPES = { // -1 for anything, or an Item.type for a type restriction, -2 for not used
-			{Item.ARMOR, -1, -1, -1, -1},
-			{Item.ARMOR, -1, -1, -1, -1},
-			{Item.ARMOR, -1, -1, -1, -1},
-			{Item.ARMOR, -1, -1, -1, -1},
-			{-2, -1, -1, -1, -1}
-	};
 	private GameSave gameSave;
 	
 	public Inventory(GameSave gameSave) {
@@ -40,8 +33,6 @@ public class Inventory {
 	 * <br><b>false</b> if the move would result in items being in incompatible inventory slots
 	 */
 	public boolean moveItem(int startx, int starty, int destx, int desty) {
-		if(!validPosition(inventory[starty][startx], destx, desty) || !validPosition(inventory[destx][desty], startx, starty)) return false;
-		
 		Item dest = inventory[desty][destx];
 		inventory[desty][destx] = inventory[starty][startx];
 		inventory[starty][startx] = dest;
@@ -56,7 +47,7 @@ public class Inventory {
 	 */
 	public boolean addItem(Item item) {
 		for(int i = 0; i < inventory[0].length; i++) {
-			for(int j = 1; j < inventory.length; j++) {
+			for(int j = 0; j < inventory.length; j++) {
 				if(inventory[i][j] == null) {
 					inventory[i][j] = item;
 					return true;
@@ -64,6 +55,16 @@ public class Inventory {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Returns the specified item at the coordinate location
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public Item getItem(int x, int y) {
+		return inventory[y][x];
 	}
 	
 	/**
@@ -92,19 +93,5 @@ public class Inventory {
 		gameSave = IO.deserializeGameSave();
 		gameSave.setInventory(inventory);
 		IO.serializeGameSave(gameSave);
-	}
-	
-	/**
-	 * Verifies that the specified item is permitted to reside in the specified inventory slot.
-	 * @param item
-	 * @param x The target location, x
-	 * @param y The target location, y
-	 * @return
-	 */
-	private boolean validPosition(Item item, int x, int y) {
-		if(item == null) return true;
-		else if(INVENTORY_TYPES[y][x] == -1) return true;
-		else if(INVENTORY_TYPES[y][x] == item.getType()) return true;
-		return false;
 	}
 }

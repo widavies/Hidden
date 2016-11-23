@@ -44,6 +44,7 @@ public class World extends Chapter implements WorldListener {
 			player.setPosition(gsm.getGameSave().getPlayerLocation().x, gsm.getGameSave().getPlayerLocation().y);
 			tileMap.initCamera(player.getX(), player.getY());
 			console.setPlayer(player);
+			hud.setPlayer(player);
 			finishedGen = true;
 			
 			setIDs(gsm.getGameSave().getPrisonLocations());
@@ -83,6 +84,7 @@ public class World extends Chapter implements WorldListener {
 		player.setPosition(world.getSpawn().x * tileMap.getScaledTileSize(), world.getSpawn().y * tileMap.getScaledTileSize());
 		tileMap.initCamera(player.getX(), player.getY());
 		console.setPlayer(player);
+		hud.setPlayer(player);
 		finishedGen = true;
 		
 		GameSave save = new GameSave();

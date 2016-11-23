@@ -25,6 +25,10 @@ public class Player extends Entity {
 	private BufferedImage rotation;
 	private int degrees;
 	
+	// Fixed drawing
+	private BufferedImage fixedRotation;
+	private Animation fixedAnimation;
+	
 	// Physics
 	private double moveSpeed;
 	private double maxSpeed;
@@ -54,8 +58,13 @@ public class Player extends Entity {
 		animation.setFrames(sprites.get(IDLE));
 		animation.setDelay(400);
 		
-		rotation = animation.getImage();
+		fixedAnimation = new Animation();
+		currentAction = WALKING;
+		fixedAnimation.setFrames(sprites.get(WALKING));
+		fixedAnimation.setDelay(90);
 		
+		rotation = animation.getImage();
+		fixedRotation = fixedAnimation.getImage();
 	}
 	
 	private void loadAnimation() throws Exception {
@@ -76,6 +85,15 @@ public class Player extends Entity {
 	public void draw(Graphics2D g) {
 		if(dy != 0 && dx == 0 || dx != 0 && dy == 0 || (dy == 0 && dx == 0) && (degrees % 90 == 0)) g.drawImage(rotation, (int)((GamePanel.WIDTH / 2) - width / 2 - adjustx), (int)((GamePanel.HEIGHT  / 2) - height / 2 - adjusty),width, height, null);
 		else g.drawImage(rotation, (int)(((GamePanel.WIDTH / 2) - width / 2) - adjustx), (int)((GamePanel.HEIGHT  / 2) - height / 2 -adjusty),(int)(width * 1.25), (int)(height * 1.25), null);
+	}
+	
+	public void draw(Graphics2D g, int x, int y, int degrees) {
+		fixedAnimation.update();
+
+		fixedRotation = calculateRotation(fixedAnimation.getImage(), degrees);
+		
+		if(degrees % 90 == 0) g.drawImage(fixedRotation, x, y,width, height, null);
+		else g.drawImage(fixedRotation, x, y,(int)(width * 1.25), (int)(height * 1.25), null);
 	}
 	
 	private BufferedImage calculateRotation(BufferedImage toRotate, int degrees) {

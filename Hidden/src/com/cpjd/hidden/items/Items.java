@@ -69,6 +69,15 @@ public class Items {
 	}
 	
 	/**
+	 * Returns a fresh loaded copy of an item
+	 * @param id The item's id.
+	 * @return
+	 */
+	public Item getItem(int id) {
+		return items.get(id);
+	}
+	
+	/**
 	 * Releases all the loaded items.
 	 */
 	public void release() {
