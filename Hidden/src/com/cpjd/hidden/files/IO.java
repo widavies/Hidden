@@ -49,6 +49,7 @@ public class IO {
 			fos.close();
 			return true;
 		} catch(Exception e) {
+			e.printStackTrace();
 			System.err.println("Couldn't save game.");
 			return false;
 		}

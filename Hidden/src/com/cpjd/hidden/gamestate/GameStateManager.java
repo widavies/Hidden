@@ -180,7 +180,6 @@ public class GameStateManager implements UIListener {
 	@Override
 	public void viewClosed(UIWindow window) {
 		if(window == pauseWindow) pauseWindow = null;
-		
 	}
 	
 }

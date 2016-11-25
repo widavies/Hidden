@@ -16,6 +16,7 @@ BUGS
 -Pause menu opens laggily when fullscreen
 -PrisonIDS don't always open in the middle of the prisons
 -PrisonIDS draw on top of the hud
+-Player flashes in top left when inventory is initialized
 -fullscreen isnt actually fullscreen on Mac (I will fix this one)
 
 Some storyline stuff

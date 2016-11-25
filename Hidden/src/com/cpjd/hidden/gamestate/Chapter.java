@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.files.GameSave;
-import com.cpjd.hidden.items.Items;
 import com.cpjd.hidden.map.Map;
 import com.cpjd.hidden.toolbox.Console;
 import com.cpjd.hidden.ui.hud.HUD;
@@ -17,16 +16,16 @@ public class Chapter extends GameState {
 	protected boolean finishedGen;
 	
 	protected Player player;
-	protected HUD hud;
-	protected Items items;
+
+	protected GameSave save;
 	
 	public Chapter(GameStateManager gsm, Console console) {
 		super(gsm, console);
+
+		save = gsm.getGameSave();
+		hud = new HUD(save);
 		
 		tileMap = new Map(16);
-		
-		items = new Items();
-		hud = new HUD(gsm.getGameSave(), items);
 	}
 	
 	@Override

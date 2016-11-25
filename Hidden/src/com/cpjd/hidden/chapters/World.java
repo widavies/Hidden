@@ -28,26 +28,29 @@ public class World extends Chapter implements WorldListener {
 	public World(GameStateManager gsm, Console console) {
 		super(gsm, console);
 		
+		console.setHUD(hud);
+		
 		finishedGen = false;
 		
 		tileMap.loadTiles("/tiles/tileset.png");
 		
 		pud = new PUD();
 		
-		if(gsm.getGameSave() == null || gsm.getGameSave().getMap() == null) {
+		if(save == null || save.getMap() == null) {
 			world = new GenWorld();
 			world.addWorldListener(this);
 			world.generate();
 		} else {
-			tileMap.setMap(gsm.getGameSave().getMap());
+
+			tileMap.setMap(save.getMap());
 			player = new Player(tileMap);
-			player.setPosition(gsm.getGameSave().getPlayerLocation().x, gsm.getGameSave().getPlayerLocation().y);
+			player.setPosition(save.getPlayerLocation().x, save.getPlayerLocation().y);
 			tileMap.initCamera(player.getX(), player.getY());
 			console.setPlayer(player);
 			hud.setPlayer(player);
 			finishedGen = true;
 			
-			setIDs(gsm.getGameSave().getPrisonLocations());
+			setIDs(save.getPrisonLocations());
 		}
 		
 	}

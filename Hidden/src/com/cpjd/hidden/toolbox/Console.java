@@ -13,6 +13,7 @@ import com.cpjd.hidden.files.IO;
 import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.map.Map;
+import com.cpjd.hidden.ui.hud.HUD;
 import com.cpjd.smartui.SmartField;
 import com.cpjd.tools.Layout;
 import com.cpjd.tools.Usage;
@@ -32,6 +33,8 @@ public class Console {
 	
 	private MessageLog messageLog;
 	private boolean messageLogOpen = false;
+	
+	private HUD hud;
 	
 	private final String PAGEID = "#";
 	//maximum ten lines per page, top and third should be empty
@@ -86,6 +89,7 @@ public class Console {
 			try {
 				processCommand(field.getText());
 			} catch(Exception e) {
+				e.printStackTrace();
 				output.add("Incorrect command syntax. Use help for usage.");
 			}
 			field.setEnterPressed(false);
@@ -95,7 +99,7 @@ public class Console {
 	public void processCommand(String s) throws Exception {
 		String[] tokens = s.split("\\s+");
 		
-		lastCommand = tokens[0];
+		lastCommand = s;
 		
 		// Basic commands
 		if (tokens[0].toLowerCase().equals("stop")){
@@ -205,6 +209,14 @@ public class Console {
 			}
 			return;
 		}
+		else if(tokens[0].toLowerCase().equals("give")) {
+			hud.addItem(hud.getItems().getItem(Integer.parseInt(tokens[1])));
+			return;
+		}
+		else if(tokens[0].toLowerCase().equals("clearinv")) {
+			hud.clearInventory();
+			return;
+		}
 		else{
 			output.add("Unrecognized command. Type help for list of commands");
 		}
@@ -308,5 +320,9 @@ public class Console {
 			MessageLog.log("Attempted to load unrecognized GameState " + name);
 			return false;
 		}
+	}
+	
+	public void setHUD(HUD hud) {
+		this.hud = hud;
 	}
 }

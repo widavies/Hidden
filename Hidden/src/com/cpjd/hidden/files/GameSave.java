@@ -4,7 +4,7 @@ import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.cpjd.hidden.items.Items.Item;
+import com.cpjd.hidden.items.Item;
 
 /**
  * Represents all the data that should be saved for the game
@@ -22,38 +22,48 @@ public class GameSave implements Serializable {
 	
 	// Inventory related
 	private Item[][] inventory;
+	private Item[] hotbar;
+	private Item[][] clothing;
 	
-	public void setInventory(Item[][] inventory) {
-		this.inventory = inventory;
-	}
 	
-	public Item[][] getInventory() {
-		return inventory;
-	}
-	
-	public void setMap(byte[][] map) {
-		this.map = map;
-	}
-	
+	/*
+	 * GETTERS AND SETTERS - NOTHING TO SEE HERE
+	 */
 	public byte[][] getMap() {
 		return map;
 	}
-	
+	public void setMap(byte[][] map) {
+		this.map = map;
+	}
 	public ArrayList<ArrayList<Point>> getPrisonLocations() {
 		return prisonLocations;
 	}
-	
 	public void setPrisonLocations(ArrayList<ArrayList<Point>> prisonLocations) {
 		this.prisonLocations = prisonLocations;
 	}
-	
-	public void setPlayerLocation(Point p) {
-		this.playerLocation = p;
-	}
-	
 	public Point getPlayerLocation() {
 		return playerLocation;
 	}
-	
-	
+	public void setPlayerLocation(Point playerLocation) {
+		this.playerLocation = playerLocation;
+	}
+	public Item[][] getInventory() {
+		return inventory;
+	}
+	public void setInventory(Item[][] inventory) {
+		this.inventory = inventory;
+	}
+	public Item[] getHotbar() {
+		return hotbar;
+	}
+	public void setHotbar(Item[] hotbar) {
+		this.hotbar = hotbar;
+	}
+	public Item[][] getClothing() {
+		return clothing;
+	}
+	public void setClothing(Item[][] clothing) {
+		this.clothing = clothing;
+	}
+
 }

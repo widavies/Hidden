@@ -17,10 +17,6 @@ public class Items {
 
 	private ArrayList<Item> items;
 	
-	public static void main(String[] args) {
-		new Items();
-	}
-	
 	/**
 	 * Loads all the specified items into the system
 	 */
@@ -45,6 +41,10 @@ public class Items {
 		}
 	}
 	
+	private void loadImage(Item item) {
+		
+	}
+	
 	/**
 	 * Loads the specified item in and adds it to the items arraylist
 	 * @param itemName The item's name (no extension)
@@ -60,7 +60,7 @@ public class Items {
 			int damage = Integer.parseInt(br.readLine());
 			BufferedImage icon = ImageIO.read(getClass().getResourceAsStream(br.readLine()));
 			
-			items.add(new Item(icon, title, tooltip, type, damage));
+			items.add(new Item(icon, title, tooltip, type, damage, 0));
 			
 			icon = null;
 		} catch (Exception e) {
@@ -83,44 +83,5 @@ public class Items {
 	public void release() {
 		items.clear();
 		items = null;
-	}
-	
-	public class Item {
-		public static final int BLOCK = 0;
-		public static final int TOOL = 1;
-		public static final int ARMOR = 2;
-		
-		private BufferedImage icon;
-		private String title;
-		private String tooltip;
-		private int type;
-		private int damage;
-		
-		public Item(BufferedImage icon, String title, String tooltip, int type, int damage) {
-			this.icon = icon;
-			this.title = title;
-			this.tooltip = tooltip;
-			this.type = type;
-			this.damage = damage;
-		}
-		
-		public int getType() {
-			return type;
-		}
-		public BufferedImage getIcon() {
-			return icon;
-		}
-		public String getTitle() {
-			return title;
-		}
-		public String getTooltip() {
-			return tooltip;
-		}
-		public int getDamage() {
-			return damage;
-		}
-		public void setType(int type) {
-			this.type = type;
-		}
 	}
 }

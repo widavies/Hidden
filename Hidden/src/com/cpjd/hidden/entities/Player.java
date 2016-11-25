@@ -93,7 +93,7 @@ public class Player extends Entity {
 		fixedRotation = calculateRotation(fixedAnimation.getImage(), degrees);
 		
 		if(degrees % 90 == 0) g.drawImage(fixedRotation, x, y,width, height, null);
-		else g.drawImage(fixedRotation, x, y,(int)(width * 1.25), (int)(height * 1.25), null);
+		else g.drawImage(fixedRotation, x, y,(int)(width * 1.31), (int)(height * 1.31), null);
 	}
 	
 	private BufferedImage calculateRotation(BufferedImage toRotate, int degrees) {
