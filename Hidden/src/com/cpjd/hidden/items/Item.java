@@ -18,12 +18,15 @@ public class Item implements Serializable {
 		private int damage;
 		private int ID;
 		
-		public Item(BufferedImage icon, String title, String tooltip, int type, int damage, int id) {
+		private String filePath;
+		
+		public Item(BufferedImage icon, String title, String tooltip, int type, int damage, int id, String filePath) {
 			this.icon = icon;
 			this.title = title;
 			this.tooltip = tooltip;
 			this.type = type;
 			this.damage = damage;
+			this.filePath = filePath;
 		}
 		public int getID() {
 			return ID;
@@ -48,5 +51,12 @@ public class Item implements Serializable {
 		}
 		public void setType(int type) {
 			this.type = type;
+		}
+		public String getPath() {
+			return filePath;
+		}
+		public void setIcon(BufferedImage image) {
+			icon = image;
+			image = null;
 		}
 	}

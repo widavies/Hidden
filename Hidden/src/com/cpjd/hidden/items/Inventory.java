@@ -43,11 +43,23 @@ public class Inventory {
 		
 		items = new Items();
 		
-		addItem(items.getItem(0));
-		addItem(items.getItem(0));
-		addItem(items.getItem(0));
-		addItem(items.getItem(0));
-		addItem(items.getItem(0));
+		// Reload already existing items
+		for(int row = 0; row < inventory[0].length; row++) {
+			for(int col = 0; col < inventory.length; col++) {
+				inventory[row][col] = items.loadImage(inventory[row][col]);
+			}
+		}
+		
+		for(int row = 0; row < getHeight(CLOTH); row++) {
+			for(int col = 0; col < getWidth(CLOTH); col++) {
+				clothing[row][col] = items.loadImage(clothing[row][col]);
+			}
+		}
+		
+		for(int col = 0; col < hotbar.length; col++) {
+			hotbar[col] = items.loadImage(hotbar[col]);
+		}
+		
 		addItem(items.getItem(0));
 	}
 	
@@ -162,7 +174,7 @@ public class Inventory {
 	
 	public int getHeight(int which) {
 		if(which == INV) return inventory[0].length;
-		if(which == HOTBAR) return 1;
+		if(which == HOTBAR) return hotbar.length;
 		if(which == CLOTH) return 5;
 		return 0;
 	}

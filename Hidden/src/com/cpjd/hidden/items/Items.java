@@ -41,8 +41,32 @@ public class Items {
 		}
 	}
 	
-	private void loadImage(Item item) {
+	/**
+	 * Re-loads the image of a serialized item
+	 * @param item The item whoose image needs to be reloaded
+	 */
+	public Item loadImage(Item item) {
+		if(item == null) return null;
 		
+		try {
+			InputStream in = getClass().getResourceAsStream(item.getPath());
+			BufferedReader br = new BufferedReader(new InputStreamReader(in));
+
+			br.readLine();
+			br.readLine();
+			br.readLine();
+			br.readLine();
+
+			BufferedImage icon = ImageIO.read(getClass().getResourceAsStream(br.readLine()));
+			item.setIcon(icon);
+			
+			icon = null;
+			return item;
+		} catch (Exception e) {
+			System.err.println("Error loading item: Unproperly specified item information file.");
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	/**
@@ -60,8 +84,8 @@ public class Items {
 			int damage = Integer.parseInt(br.readLine());
 			BufferedImage icon = ImageIO.read(getClass().getResourceAsStream(br.readLine()));
 			
-			items.add(new Item(icon, title, tooltip, type, damage, 0));
-			
+			items.add(new Item(icon, title, tooltip, type, damage, 0, "/items-info/"+itemName+".item"));
+	
 			icon = null;
 		} catch (Exception e) {
 			System.err.println("Error loading item: Unproperly specified item information file.");

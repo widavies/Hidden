@@ -121,7 +121,7 @@ public class HUD {
 		drawTabs(g);
 		
 		if(hand != null) {
-			g.drawImage(hand.getIcon(), mousex, mousey, null);
+			g.drawImage(hand.getIcon(), mousex, mousey, hand.getIcon().getWidth() + 15,hand.getIcon().getHeight() + 15, null);
 		}
 		
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC, 1f));
@@ -129,6 +129,7 @@ public class HUD {
 	}
 	
 	private void drawPlayer(Graphics2D g) {
+
 		g.setFont(GameStateManager.font.deriveFont((float)(Layout.WIDTH * 0.012229 + 0.0204)));
 		
 		g.setColor(Color.WHITE);
@@ -146,7 +147,7 @@ public class HUD {
 		g.drawString("Stats", Layout.centerw(width) + 5, Layout.centerh(height) + (int)(itemSize * 2) + Layout.getStringHeight(g) * 5);
 		g.drawString("100 / 200 prisons conquered", Layout.centerw(width) + 5, Layout.centerh(height) + (int)(itemSize * 2) + Layout.getStringHeight(g) * 6);
 		
-		if(player != null) player.draw(g, playerx, playery, degrees);
+		if(player != null && playerx > 50 && playery > 50) player.draw(g, playerx, playery, degrees);
 		
 		for(int col = 0; col < inv.getWidth(Inventory.INV) + 1; col++) {
 			if(col == 0 || col >= 3) g.drawLine(Layout.centerw(width) + col * itemSize, Layout.centerh(height), Layout.centerw(width) + col * itemSize, Layout.centerh(height) + height);
@@ -155,7 +156,6 @@ public class HUD {
 				g.drawLine((Layout.centerw(width) + 3 * itemSize), (Layout.centerh(height) + row * itemSize), Layout.centerw(width) + width, Layout.centerh(height) + row * itemSize);
 			}
 		}
-		
 		for(int col = 0; col < inv.getWidth(Inventory.CLOTH); col++) {
 			for(int row = 0; row < inv.getHeight(Inventory.CLOTH); row++) {
 				Item item = inv.getItem(col, row, Inventory.CLOTH);
