@@ -3,6 +3,7 @@ package com.cpjd.hidden.ui.hud;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
@@ -120,11 +121,31 @@ public class HUD {
 		if(clickedT2) drawPlayer(g);	
 		drawTabs(g);
 		
+		
+		
 		if(hand != null) {
 			g.drawImage(hand.getIcon(), mousex, mousey, hand.getIcon().getWidth() + 15,hand.getIcon().getHeight() + 15, null);
 		}
 		
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC, 1f));
+		
+		g.setFont(GameStateManager.font.deriveFont((float)(Layout.WIDTH * 0.010229 + 0.0204)));
+		if(hand != null) return;
+		for (int col = 0; col < inv.getWidth(Inventory.INV); col++) {
+			for (int row = 0; row < inv.getHeight(Inventory.INV); row++) {
+				if(invContains(col,row) && inv.getItem(col, row, Inventory.INV) != null) {
+					g.setColor(Color.WHITE);
+					g.fillRoundRect(mousex + 10, mousey + 10, Layout.WIDTH / 5, Layout.HEIGHT / 5, 15, 15);
+					g.setColor(Color.BLACK);
+					g.drawRoundRect(mousex + 10, mousey + 10, Layout.WIDTH / 5, Layout.HEIGHT / 5, 15, 15);
+					g.drawString(inv.getItem(col, row, Inventory.INV).getTitle(),mousex + 15, mousey + Layout.getStringHeight(g) + 5);
+					g.drawString(inv.getItem(col, row, Inventory.INV).getTooltip(),mousex + 15, mousey + Layout.getStringHeight(g) * 2 + 5);
+					g.drawString("Damage: "+inv.getItem(col, row, Inventory.INV).getDamage(),mousex + 15, mousey + Layout.getStringHeight(g) * 3 + 5);
+					
+					
+				}
+			}
+		}
 		
 	}
 	

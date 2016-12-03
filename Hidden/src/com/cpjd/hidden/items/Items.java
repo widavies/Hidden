@@ -64,7 +64,6 @@ public class Items {
 			return item;
 		} catch (Exception e) {
 			System.err.println("Error loading item: Unproperly specified item information file.");
-			e.printStackTrace();
 			return null;
 		}
 	}
@@ -89,6 +88,7 @@ public class Items {
 			icon = null;
 		} catch (Exception e) {
 			System.err.println("Error loading item: Unproperly specified item information file.");
+			e.printStackTrace();
 		}
 	}
 	
