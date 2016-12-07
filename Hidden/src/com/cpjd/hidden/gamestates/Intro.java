@@ -49,7 +49,7 @@ public class Intro extends GameState implements Runnable {
 	
 	// All initial game assets that need to be ready when the menu is active should be placed here
 	public void run() {
-		String[] sounds = {SoundKeys.MENU_HOVER};
+		String[] sounds = {SoundKeys.MENU_HOVER, SoundKeys.NOTIFY};
 		String[] music = {SoundKeys.CREDITS_MUSIC};
 		soundLoader = new SoundLoader(new SoundRequest(sounds, music));
 		soundLoader.load();
@@ -126,4 +126,6 @@ public class Intro extends GameState implements Runnable {
 	public void mouseMoved(int x, int y) {}
 	@Override
 	public void mouseWheelMoved(int k) {}
+	@Override
+	public void save() {}
 }

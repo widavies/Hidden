@@ -2,7 +2,6 @@ package com.cpjd.hidden.gamestate;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.event.KeyEvent;
 
 import com.cpjd.hidden.entities.Player;
 import com.cpjd.hidden.files.GameSave;
@@ -37,7 +36,14 @@ public class Chapter extends GameState {
 		if(hud.isOpen()) return;
 		player.update();
 	}
-
+	@Override
+	public void save() {
+		GameSave save = gsm.getGameSave();
+		save.setMap(tileMap.getMap());
+		save.setPlayerLocation(new Point((int)player.getX(), (int)player.getY()));
+		gsm.saveGame(save);
+		hud.save();
+	}
 	@Override
 	public void draw(Graphics2D g) {
 		if(!finishedGen) return;
@@ -56,15 +62,6 @@ public class Chapter extends GameState {
 	@Override
 	public void keyReleased(int k) {
 		if(player != null) player.keyReleased(k);
-		
-		if(k == KeyEvent.VK_F5) {
-			GameSave save = gsm.getGameSave();
-			save.setMap(tileMap.getMap());
-			save.setPlayerLocation(new Point((int)player.getX(), (int)player.getY()));
-			gsm.saveGame(save);
-			System.out.println("Game saved!");
-			hud.save();
-		}
 	}
 	
 	@Override

@@ -3,7 +3,6 @@ package com.cpjd.hidden.ui.hud;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
@@ -43,6 +42,8 @@ public class HUD {
 	
 	// If an item has been picked up
 	private Item hand;
+	
+	private int hotbarSelection;
 	
 	public HUD(GameSave gameSave) {
 		inv = new Inventory(gameSave);
@@ -121,28 +122,26 @@ public class HUD {
 		if(clickedT2) drawPlayer(g);	
 		drawTabs(g);
 		
-		
-		
 		if(hand != null) {
 			g.drawImage(hand.getIcon(), mousex, mousey, hand.getIcon().getWidth() + 15,hand.getIcon().getHeight() + 15, null);
 		}
 		
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC, 1f));
 		
+		if(!clickedT1) return;
 		g.setFont(GameStateManager.font.deriveFont((float)(Layout.WIDTH * 0.010229 + 0.0204)));
 		if(hand != null) return;
 		for (int col = 0; col < inv.getWidth(Inventory.INV); col++) {
 			for (int row = 0; row < inv.getHeight(Inventory.INV); row++) {
-				if(invContains(col,row) && inv.getItem(col, row, Inventory.INV) != null) {
+				Item item = inv.getItem(col, row, Inventory.INV);
+				if(invContains(col,row) && item != null) {
 					g.setColor(Color.WHITE);
 					g.fillRoundRect(mousex + 10, mousey + 10, Layout.WIDTH / 5, Layout.HEIGHT / 5, 15, 15);
 					g.setColor(Color.BLACK);
 					g.drawRoundRect(mousex + 10, mousey + 10, Layout.WIDTH / 5, Layout.HEIGHT / 5, 15, 15);
-					g.drawString(inv.getItem(col, row, Inventory.INV).getTitle(),mousex + 15, mousey + Layout.getStringHeight(g) + 5);
-					g.drawString(inv.getItem(col, row, Inventory.INV).getTooltip(),mousex + 15, mousey + Layout.getStringHeight(g) * 2 + 5);
-					g.drawString("Damage: "+inv.getItem(col, row, Inventory.INV).getDamage(),mousex + 15, mousey + Layout.getStringHeight(g) * 3 + 5);
-					
-					
+					g.drawString(item.getTitle(),mousex + 15, mousey + Layout.getStringHeight(g) + 5);
+					g.drawString(item.getTooltip(),mousex + 15, mousey + Layout.getStringHeight(g) * 2 + 5);
+					g.drawString("Damage: "+item.getDamage(),mousex + 15, mousey + Layout.getStringHeight(g) * 3 + 5);	
 				}
 			}
 		}
@@ -153,7 +152,7 @@ public class HUD {
 
 		g.setFont(GameStateManager.font.deriveFont((float)(Layout.WIDTH * 0.012229 + 0.0204)));
 		
-		g.setColor(Color.WHITE);
+		g.setColor(new Color(192, 194, 196));
 		g.fillRect(Layout.centerw(width), Layout.centerh(height), width, height);
 		
 		g.setColor(Color.LIGHT_GRAY);
@@ -191,7 +190,7 @@ public class HUD {
 	
 	private void drawHotbar(Graphics2D g) {
 		g.setFont(GameStateManager.font.deriveFont((float)(Layout.WIDTH * 0.012229 + 0.0204)));
-		g.setColor(Color.WHITE);
+		g.setColor(new Color(192, 194, 196));
 		g.fillRect(Layout.centerw(width - itemSize), Layout.HEIGHT - itemSize, width - itemSize, itemSize);
 		
 		g.setColor(Color.BLACK);
@@ -213,7 +212,7 @@ public class HUD {
 	}
 	
 	private void drawInv(Graphics2D g) {
-		g.setColor(Color.WHITE);
+		g.setColor(new Color(192, 194, 196));
 		g.fillRect(Layout.centerw(width), Layout.centerh(height), width, height);
 		
 		g.setColor(Color.BLACK);
@@ -236,10 +235,10 @@ public class HUD {
 	}
 	
 	private void drawTabs(Graphics2D g) {
-		g.setColor(Color.WHITE);
+		g.setColor(new Color(192, 194, 196));
 		if(hoverT1 || clickedT1) g.setColor(Color.BLACK);
 		g.fillRect(Layout.centerw(width), Layout.centerh(height) - width / 15, (int)(itemSize * 1.5), width / 15);
-		g.setColor(Color.WHITE);
+		g.setColor(new Color(192, 194, 196));
 		if(hoverT2 || clickedT2) g.setColor(Color.BLACK);
 		g.fillRect((int)(Layout.centerw(width) + itemSize * 1.5), Layout.centerh(height) - width / 15, (int)(itemSize * 1.5), width / 15);
 		g.setColor(Color.BLACK);
@@ -250,10 +249,10 @@ public class HUD {
 		g.drawLine(Layout.centerw(width) + (int)(itemSize * 3) - 1 ,Layout.centerh(height) - width / 15, Layout.centerw(width) + (int)(itemSize * 3) - 1,Layout.centerh(height));
 		
 		g.setFont(GameStateManager.font.deriveFont((float)(Layout.WIDTH * 0.015729 + 0.0204)));
-		if(hoverT1 || clickedT1) g.setColor(Color.WHITE);
+		if(hoverT1 || clickedT1) g.setColor(new Color(192, 194, 196));
 		g.drawString("Inventory", Layout.centerw(width) + 5,(int)( Layout.centerh(height) - width / 15 + Layout.getStringHeight(g) / 1.25));
 		g.setColor(Color.BLACK);
-		if(hoverT2 || clickedT2) g.setColor(Color.WHITE);
+		if(hoverT2 || clickedT2) g.setColor(new Color(192, 194, 196));
 		g.drawString("Player", Layout.centerw(width) + (int)(itemSize * 1.5) + 5,(int)( Layout.centerh(height) - width / 15 + Layout.getStringHeight(g) / 1.25));
 	}
 	

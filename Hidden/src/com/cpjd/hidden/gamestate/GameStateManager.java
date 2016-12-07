@@ -14,6 +14,8 @@ import com.cpjd.hidden.gamestates.Intro;
 import com.cpjd.hidden.gamestates.Menu;
 import com.cpjd.hidden.main.GamePanel;
 import com.cpjd.hidden.toolbox.Console;
+import com.cpjd.hidden.ui.Notifications;
+import com.cpjd.hidden.ui.Notifications.GameSavedNotification;
 import com.cpjd.hidden.ui.UIListener;
 import com.cpjd.hidden.ui.content.PauseWindow;
 import com.cpjd.hidden.ui.elements.UIButton;
@@ -42,6 +44,8 @@ public class GameStateManager implements UIListener {
 		
 	private GameSave gameSave;
 	
+	private Notifications notifications;
+	
 	public GameStateManager() {
 		gameStates = new GameState[NUM_GAME_STATES];
 		try {
@@ -58,6 +62,8 @@ public class GameStateManager implements UIListener {
 		loadState(currentState);
 
 		console = new Console(this);
+		
+		notifications = new Notifications();
 	}
 	
 	/**
@@ -109,6 +115,9 @@ public class GameStateManager implements UIListener {
 		
 		if(gameStates[currentState] != null) gameStates[currentState].update();
 	}
+	public void save() {
+		gameStates[currentState].save();
+	}
 	public boolean isPaused() {
 		return pauseWindow != null;
 	}
@@ -120,6 +129,7 @@ public class GameStateManager implements UIListener {
 		if(pauseWindow != null) g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.15f));
 		if(gameStates[currentState] != null) gameStates[currentState].draw(g);
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+		notifications.draw(g);
 		if(pauseWindow != null) pauseWindow.draw(g);
 		console.draw(g);
 	}
@@ -128,8 +138,13 @@ public class GameStateManager implements UIListener {
 		
 		if(k == KeyEvent.VK_ESCAPE && currentState > MENU && pauseWindow == null) {
 			pauseWindow = new PauseWindow(this);
-			pauseWindow.center((int)(Layout.WIDTH / 4), (int)(Layout.HEIGHT / 4.5));
+			pauseWindow.center((int)(Layout.WIDTH / 4), (int)(Layout.HEIGHT / 3.3));
 			pauseWindow.addUIListener(this);
+		}
+		
+		if(k == KeyEvent.VK_F5){
+			Notifications.addNotification(new GameSavedNotification());
+			save();
 		}
 		
 		if(gameStates[currentState] != null) gameStates[currentState].keyPressed(k);

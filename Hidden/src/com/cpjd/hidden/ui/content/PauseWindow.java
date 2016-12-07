@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.cpjd.hidden.gamestate.GameStateManager;
+import com.cpjd.hidden.ui.Notifications;
+import com.cpjd.hidden.ui.Notifications.GameSavedNotification;
 import com.cpjd.hidden.ui.elements.UIButton;
 import com.cpjd.hidden.ui.windows.UIWindow;
 import com.cpjd.tools.Layout;
@@ -24,12 +26,14 @@ public class PauseWindow extends UIWindow {
 		ext = 40;
 		
 		addButton("Resume", 5, Layout.alignPoints(20, 0, (int) (Layout.HEIGHT / 4.5)),(int)(Layout.WIDTH / 4) - 10, true);
-		addButton("Options", 5, Layout.alignPoints(55, 0, (int) (Layout.HEIGHT / 4.5)), (int)(Layout.WIDTH / 4) - 10, true);
-		addButton("Exit to Menu", 5, Layout.alignPoints(90, 0, (int) (Layout.HEIGHT / 4.5)), (int)(Layout.WIDTH / 4) - 10, true);
+		addButton("Save", 5, Layout.alignPoints(55, 0, (int) (Layout.HEIGHT / 4.5)), (int)(Layout.WIDTH / 4) - 10, true);
+		addButton("Options", 5, Layout.alignPoints(90, 0, (int) (Layout.HEIGHT / 4.5)), (int)(Layout.WIDTH / 4) - 10, true);
+		addButton("Exit to Menu", 5, Layout.alignPoints(125, 0, (int) (Layout.HEIGHT / 4.5)), (int)(Layout.WIDTH / 4) - 10, true);
 	}
 	
 	@Override
 	public void draw(Graphics2D g) {
+		g.setFont(GameStateManager.font.deriveFont(35f));
 		g.setColor(Color.LIGHT_GRAY);
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.65f));
 		g.fillRect(x + ext, y + ext, width - 2*ext, height - 2*ext);
@@ -79,6 +83,10 @@ public class PauseWindow extends UIWindow {
 			optionsWindow.center((int)(Layout.WIDTH / 1.5), (int)(Layout.HEIGHT / 1.5));
 			optionsWindow.addUIListener(this);
 			optionsWindow.setAnimationSpeed(12);
+		}
+		if(b.getText().equals("Save")) {
+			gsm.save();
+			Notifications.addNotification(new GameSavedNotification());
 		}
 	}
 	

@@ -8,6 +8,8 @@ import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.hidden.sound.SoundKeys;
 import com.cpjd.hidden.sound.SoundPlayer;
 import com.cpjd.hidden.toolbox.Console;
+import com.cpjd.hidden.ui.Notifications;
+import com.cpjd.hidden.ui.Notifications.Test;
 import com.cpjd.hidden.ui.UIListener;
 import com.cpjd.hidden.ui.content.CreditsWindow;
 import com.cpjd.hidden.ui.content.OptionsWindow;
@@ -37,6 +39,8 @@ public class Menu extends GameState implements UIListener {
 		options.addUIListener(this);
 		credits.addUIListener(this);
 		exit.addUIListener(this);
+		
+		Notifications.addNotification(new Test());
 	}
 	
 	public void update() {
@@ -164,4 +168,7 @@ public class Menu extends GameState implements UIListener {
 	public void checkBoxPressed(UICheckbox checkBox, boolean checked) {
 		
 	}
+	
+	@Override
+	public void save() {}
 }
