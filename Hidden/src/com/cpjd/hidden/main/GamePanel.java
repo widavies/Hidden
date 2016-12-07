@@ -56,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
 			addMouseMotionListener(this);
 			addKeyListener(this);
 			addMouseWheelListener(this);
+			thread.setPriority(Thread.MAX_PRIORITY);
 			thread.start();
 		}
 	}

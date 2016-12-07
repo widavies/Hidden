@@ -196,14 +196,14 @@ public class Player extends Entity {
 	public void manageCollision() {
 		if(GamePanel.DEBUG) return;
 		
-		if(tm.getTileType(xtemp, y) == Tile.NO_COLLISION && tm.getTileType(x, ytemp) == Tile.NO_COLLISION && tm.getTileType(xtemp, ytemp) == Tile.NO_COLLISION){
+		if(tm.getTileType(xtemp, y, 1) == Tile.NO_COLLISION && tm.getTileType(x, ytemp, 1) == Tile.NO_COLLISION && tm.getTileType(xtemp, ytemp, 1) == Tile.NO_COLLISION){
   			return;
   		}else{
- 			if(tm.getTileType(x, ytemp) == Tile.NO_COLLISION){
+ 			if(tm.getTileType(x, ytemp, 1) == Tile.NO_COLLISION){
  				xtemp = x;
  				return;
  			}
-	 		else if(tm.getTileType(xtemp, y) == Tile.NO_COLLISION){
+	 		else if(tm.getTileType(xtemp, y, 1) == Tile.NO_COLLISION){
 	 				ytemp = y;
 	 				return;
 	 			}
@@ -213,13 +213,6 @@ public class Player extends Entity {
 	 			return;
 	 		}
   		}
-	}
-	
-	public boolean collision(double x, double y){
-		return tm.getTileType(x + cwidth / 2, y + cheight / 2) == Tile.COLLISION ||
-				tm.getTileType(x + cwidth / 2, y - cheight / 2) == Tile.COLLISION ||
-				tm.getTileType(x - cwidth / 2, y + cheight / 2) == Tile.COLLISION ||
-				tm.getTileType(x - cwidth / 2, y - cheight / 2) == Tile.COLLISION;
 	}
 	
 	public void setPosition(double x, double y) {

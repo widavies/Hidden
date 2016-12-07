@@ -33,13 +33,13 @@ public class GenVillages {
 	public static final int WIDTH = 30;
 	public static final int HEIGHT = 15;
 	
-	private byte[][] generation;
+	private byte[][][] generation;
 	private final byte BORDER = 50;
 	private final byte NUM_TO_GENERATE = 5;
 	private ArrayList<Point> villageLocations;
 	private Random r;
 	
-	public GenVillages(byte[][] generation) {
+	public GenVillages(byte[][][] generation) {
 		this.generation = generation;
 		
 		villageLocations = new ArrayList<Point>();
@@ -70,14 +70,14 @@ public class GenVillages {
 		for(int i = 0; i < villageLocations.size(); i++) {
 			for(int k = villageLocations.get(i).y, y = 0; y < 15; k++, y++) {
 				for(int j = villageLocations.get(i).x, l = 0; l < 30; j++, l++) {
-					generation[k][j] = (byte)(Structures.VILLAGE_1[y][l] - 1);
+					//generation[k][j] = (byte)(Structures.VILLAGE_1[y][l] - 1);
 				}
 			}
 		}
 		
 	}
 	
-	public byte[][] getMap() {
+	public byte[][][] getMap() {
 		return generation;
 	}
 	

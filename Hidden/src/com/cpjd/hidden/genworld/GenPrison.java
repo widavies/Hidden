@@ -42,12 +42,12 @@ public class GenPrison {
 	private final int[] MINIMUM = {25, 20, 20, 15, 15, 10, 10, 5, 5, 2};
 	private int[] currentCount;
 	
-	private byte[][] generation;
+	private byte[][][] generation;
 	private Random r;
 	
 	private ArrayList<Point> villageLocations;
 	
-	public GenPrison(byte[][] generation, ArrayList<Point> villageLocations) {
+	public GenPrison(byte[][][] generation, ArrayList<Point> villageLocations) {
 		this.generation = generation;
 		this.villageLocations = villageLocations;
 		
@@ -125,7 +125,7 @@ public class GenPrison {
 		if(structure == null) return;  
 		for(int row = centery - (int)Math.floor(structure[0].length / 2), y = 0; y < structure.length; row++, y++) {
 			for(int col = centerx - (int)Math.floor(structure.length / 2), x = 0; x < structure[0].length; col++, x++) {
-				generation[row][col] = structure[y][x];
+				//generation[row][col] = structure[y][x];
 			}
 		}
 	}
@@ -179,7 +179,7 @@ public class GenPrison {
 				
 				regionViable = false;
 				for(int i = 0; i < VIABLE_TILES.length; i++) {
-					if(generation[y][x] == VIABLE_TILES[i]) {
+					if(generation[y][x][0] == VIABLE_TILES[i] && generation[y][x][1] == VIABLE_TILES[i]) {
 						regionViable = true;
 						break;
 					}
@@ -192,7 +192,7 @@ public class GenPrison {
 		return true;
 	}
 	
-	public byte[][] getMap() {
+	public byte[][][] getMap() {
 		return generation;
 	}
 

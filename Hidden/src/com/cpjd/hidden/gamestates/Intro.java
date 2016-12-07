@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
+import com.cpjd.hidden.files.GameSave;
 import com.cpjd.hidden.gamestate.GameState;
 import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.hidden.main.GamePanel;
@@ -127,5 +128,5 @@ public class Intro extends GameState implements Runnable {
 	@Override
 	public void mouseWheelMoved(int k) {}
 	@Override
-	public void save() {}
+	public GameSave getSave(GameSave save) { return null; }
 }

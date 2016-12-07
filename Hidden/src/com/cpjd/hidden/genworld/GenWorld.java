@@ -17,7 +17,7 @@ public class GenWorld implements Runnable {
 	private double progress;
 	private double maxProgress;
 	private String status;
-	private byte[][] map;
+	private byte[][][] map;
 	private ArrayList<Point> poolLocations;
 	private ArrayList<Point> forestLocations;
 	private Point spawn;
@@ -78,7 +78,7 @@ public class GenWorld implements Runnable {
 	}
 
 	// Should only be called after getGenerationProgress() returns 100
-	public byte[][] getWorld() {
+	public byte[][][] getWorld() {
 		return map;
 	}
 	
@@ -87,7 +87,7 @@ public class GenWorld implements Runnable {
 	}
 	
 	private void generateWorld(int tileWidth, int tileHeight) {
-		byte[][] generation = new byte[tileHeight][tileWidth];
+		byte[][][] generation = new byte[tileHeight][tileWidth][2];
 		
 		maxProgress = tileWidth * tileHeight;
 		
@@ -106,12 +106,12 @@ public class GenWorld implements Runnable {
 				progress++;
 				listener.updateProgress(progress / maxProgress);
 				
-				if(generation[i][j] != 0) continue;
+				if(generation[i][j][0] != 0) continue;
 				
-				if(shouldGenOcean(tileWidth, tileHeight, i, j)) generation[i][j] = TileIDs.WATER;
-				else if(shouldGenForest(generation, tileWidth, tileHeight, i, j)) generation[i][j] = (byte)getForestVariation();
-				else if(shouldGenPool(generation, tileWidth, tileHeight, i, j)) generation[i][j] = TileIDs.WATER;
-				else generation[i][j] = (byte)getGrassVariation();
+				if(shouldGenOcean(tileWidth, tileHeight, i, j)) generation[i][j][0] = TileIDs.WATER;
+				else if(shouldGenForest(generation, tileWidth, tileHeight, i, j)) generation[i][j][1] = (byte)getForestVariation();
+				else if(shouldGenPool(tileWidth, tileHeight, i, j)) generation[i][j][0] = TileIDs.WATER;
+				generation[i][j][0] = (byte)getGrassVariation();
 			}
 
 		}
@@ -136,7 +136,7 @@ public class GenWorld implements Runnable {
 		findSpawn(tileWidth, tileHeight, generation);
 		
 	}
-	private void findSpawn(int tileWidth, int tileHeight, byte[][] generation) {
+	private void findSpawn(int tileWidth, int tileHeight, byte[][][] generation) {
 		/*
 		 * Let's figure out a good spawning location with these characteristics
 		 * 1) Centerish of map
@@ -158,7 +158,7 @@ public class GenWorld implements Runnable {
 				for(int j = 0; j < spawnSafeRange; j++) {
 					if(yOffset + i >= generation[0].length || xOffset + j >= generation.length) continue;
 					
-					if(generation[yOffset + i][xOffset + j] > 10) viable = false; 
+					if(generation[yOffset + i][xOffset + j][1] > 10) viable = false; 
 				}
 			}
 			
@@ -236,8 +236,8 @@ public class GenWorld implements Runnable {
 		if(prob == 77) return TileIDs.FLOWER_2;
 		else return TileIDs.GRASS_4;
 	}
-	private boolean shouldGenForest(byte[][] map, int tileWidth, int tileHeight, int row, int col) {
-		if(map[row][col] == TileIDs.WATER) return false;
+	private boolean shouldGenForest(byte[][][] map, int tileWidth, int tileHeight, int row, int col) {
+		if(map[row][col][0] == TileIDs.WATER) return false;
 		
 		// Several steps here. First determine if we're within the forest range of an existing forest, if we are, test the probability of this tile being a forest tile
 		for(int i = 0; i < forestLocations.size(); i++) {
@@ -259,7 +259,7 @@ public class GenWorld implements Runnable {
 		else return TileIDs.FOREST_4;
 	}
 	
-	private boolean shouldGenPool(byte[][] map, int tileWidth, int tileHeight, int row, int col) {
+	private boolean shouldGenPool(int tileWidth, int tileHeight, int row, int col) {
 		for(int i = 0; i < poolLocations.size(); i++) {
 			double range = Math.hypot(poolLocations.get(i).x - col, poolLocations.get(i).y - row);
 			if(range < POOL_RANGE) {

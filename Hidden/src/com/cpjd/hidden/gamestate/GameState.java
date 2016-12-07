@@ -2,6 +2,7 @@ package com.cpjd.hidden.gamestate;
 
 import java.awt.Graphics2D;
 
+import com.cpjd.hidden.files.GameSave;
 import com.cpjd.hidden.toolbox.Console;
 import com.cpjd.hidden.ui.hud.HUD;
 
@@ -24,5 +25,8 @@ public abstract class GameState {
 	public abstract void mouseReleased(int x, int y);
 	public abstract void mouseMoved(int x, int y);
 	public abstract void mouseWheelMoved(int k);
-	public abstract void save();
+	/**
+	 * Pass in a GameSave that is up to date with the game. The GameState will update it and return it.
+	 */
+	public abstract GameSave getSave(GameSave save);
 }

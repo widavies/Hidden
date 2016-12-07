@@ -19,6 +19,8 @@ BUGS
 -Player flashes in top left when inventory is initialized
 -fullscreen isnt actually fullscreen on Mac (I will fix this one)
 -screen sizes adjustments should always be managed, esp. during paused, viewing inventory
+-optimize gameplay a bit
+-loading screen from play button into game
 
 Some storyline stuff
 -Throughout the story, you learn of the corruptness of the agency, if you choose, you can try to destroy them

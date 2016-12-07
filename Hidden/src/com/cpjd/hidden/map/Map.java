@@ -12,6 +12,9 @@ import com.cpjd.hidden.main.GamePanel;
 
 /**
  * Manages the loading, drawing, scaling, and editing of the map.
+ * Layers -
+ * Higher leveled layers (e.g. map[y][x][5]) will draw on top of lower leveled layers.
+ * Collision is only checked in the 2nd layer. We really only use 2 layers in this game.
  * @author Will Davies
  *
  */
@@ -20,7 +23,7 @@ public class Map {
 	public static byte SCALE = 4;
 	
 	// Map
-	private byte[][] map;
+	private byte[][][] map;
 	private int tileSize;
 	private double scaledTileSize;
 	private Tile[][] tiles;
@@ -85,7 +88,7 @@ public class Map {
 			delim = "height="; tokens = br.readLine().split(delim);
 			numRows = Integer.parseInt(tokens[1]);
 			
-			byte[][] map = new byte[numRows][numCols];
+			byte[][][] map = new byte[numRows][numCols][1];
 
 			for(int i = 0; i < 10; i++) br.readLine();
 			
@@ -96,7 +99,7 @@ public class Map {
 				for(int col = 0; col < numCols; col++) {
 					byte tile = Byte.parseByte((tokens[col]));
 					if(tile != 0) tile--;
-					map[row][col] = tile;
+					map[row][col][0] = tile;
 				}
 			}
 			
@@ -110,7 +113,7 @@ public class Map {
 	 * Sets the current level to be managed
 	 * @param map A 2D array of tile ids
 	 */
-	public void setMap(byte[][] map) {
+	public void setMap(byte[][][] map) {
 		this.map = map;
 	
 		numCols = map.length;
@@ -133,7 +136,9 @@ public class Map {
 			for(short col = startCol, colPx = 0; col < numColsToDraw + startCol; col++, colPx++) {
 				if(col >= map.length || col < 0) break;
 				
-				g.drawImage(tiles[map[row][col] / numColsAcross][map[row][col] % numColsAcross].getImage(),(int)(colPx * scaledTileSize - adjustx), (int)(rowPx * scaledTileSize - adjusty), (int)scaledTileSize, (int)scaledTileSize, null);
+				g.drawImage(tiles[map[row][col][0] / numColsAcross][map[row][col][0] % numColsAcross].getImage(),(int)(colPx * scaledTileSize - adjustx), (int)(rowPx * scaledTileSize - adjusty), (int)scaledTileSize, (int)scaledTileSize, null);	
+				//if(map[row][col][1] != 0) g.drawImage(tiles[map[row][col][1] / numColsAcross][map[row][col][1] % numColsAcross].getImage(),(int)(colPx * scaledTileSize - adjustx), (int)(rowPx * scaledTileSize - adjusty), (int)scaledTileSize, (int)scaledTileSize, null);	
+				
 
 			}
 		}
@@ -177,7 +182,7 @@ public class Map {
 	/**
 	 * @return The current map that is being used
 	 */
-	public byte[][] getMap() {
+	public byte[][][] getMap() {
 		return map;
 	}
 	
@@ -186,8 +191,8 @@ public class Map {
 	 * @param y The vertical distance (in px) to the request tile
 	 * @return The tile type (Tile.NO_COLLISION, TIlE.COLLISION, etc) of the tile that the specified x,y is in
 	 */
-	public int getTileType(double x, double y) {
-		return (int)Math.floor(getTileID(x, y) / 30);
+	public int getTileType(double x, double y, int layer) {
+		return (int)Math.floor(getTileID(x, y, layer) / 30);
 	}
 	
 	/**
@@ -196,8 +201,8 @@ public class Map {
 	 * @param y The vertical distance (in px) to the request tile
 	 * @return The tile id (31, 4, 5, etc) of the tile that the specified x,y is in
 	 */
-	public int getTileID(double x, double y) {
-		return map[(int)(y / scaledTileSize)][(int)(x / scaledTileSize)];
+	public int getTileID(double x, double y, int layer) {
+		return map[(int)(y / scaledTileSize)][(int)(x / scaledTileSize)][layer];
 	}
 	
 	/**

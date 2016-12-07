@@ -16,7 +16,7 @@ public class GameSave implements Serializable {
 	private static final long serialVersionUID = 525924313781734122L;
 	
 	// Map related
-	private byte[][] map;
+	private byte[][][] map;
 	private ArrayList<ArrayList<Point>> prisonLocations;
 	private Point playerLocation;
 	
@@ -29,10 +29,10 @@ public class GameSave implements Serializable {
 	/*
 	 * GETTERS AND SETTERS - NOTHING TO SEE HERE
 	 */
-	public byte[][] getMap() {
+	public byte[][][] getMap() {
 		return map;
 	}
-	public void setMap(byte[][] map) {
+	public void setMap(byte[][][] map) {
 		this.map = map;
 	}
 	public ArrayList<ArrayList<Point>> getPrisonLocations() {

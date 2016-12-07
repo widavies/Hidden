@@ -10,6 +10,7 @@ import java.io.InputStream;
 import com.cpjd.hidden.chapters.World;
 import com.cpjd.hidden.files.GameSave;
 import com.cpjd.hidden.files.IO;
+import com.cpjd.hidden.files.LowProfileSaver;
 import com.cpjd.hidden.gamestates.Intro;
 import com.cpjd.hidden.gamestates.Menu;
 import com.cpjd.hidden.main.GamePanel;
@@ -76,14 +77,6 @@ public class GameStateManager implements UIListener {
 		return gameSave;
 	}
 	
-	/**
-	 * Saves the game to the file system
-	 * @param save The GameSave with it's updated values
-	 */
-	public void saveGame(GameSave save) {
-		IO.serializeGameSave(save);
-	}
-	
 	public void setState(int state) {
 		unloadState(currentState);
 		currentState = state;
@@ -116,7 +109,7 @@ public class GameStateManager implements UIListener {
 		if(gameStates[currentState] != null) gameStates[currentState].update();
 	}
 	public void save() {
-		gameStates[currentState].save();
+		new LowProfileSaver(gameStates[currentState]);
 	}
 	public boolean isPaused() {
 		return pauseWindow != null;

@@ -128,7 +128,7 @@ public class Notifications extends View {
 	
 	public static class Test extends Notification {
 		public Test() {
-			super("Welcome to Hidden. Where\n what's actually hidden is\nthe tileset!", 3.2);
+			super("Welcome to Hidden. Where\nwhat's actually hidden is\nthe tileset!", 3.2);
 		}
 	}
 }

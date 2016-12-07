@@ -3,6 +3,7 @@ package com.cpjd.hidden.gamestates;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import com.cpjd.hidden.files.GameSave;
 import com.cpjd.hidden.gamestate.GameState;
 import com.cpjd.hidden.gamestate.GameStateManager;
 import com.cpjd.hidden.sound.SoundKeys;
@@ -170,5 +171,5 @@ public class Menu extends GameState implements UIListener {
 	}
 	
 	@Override
-	public void save() {}
+	public GameSave getSave(GameSave save) { return null; }
 }

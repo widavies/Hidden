@@ -37,12 +37,12 @@ public class Chapter extends GameState {
 		player.update();
 	}
 	@Override
-	public void save() {
-		GameSave save = gsm.getGameSave();
+	public GameSave getSave(GameSave prior) {
+		GameSave save = prior;
 		save.setMap(tileMap.getMap());
 		save.setPlayerLocation(new Point((int)player.getX(), (int)player.getY()));
-		gsm.saveGame(save);
 		hud.save();
+		return save;
 	}
 	@Override
 	public void draw(Graphics2D g) {
