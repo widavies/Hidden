@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.io.InputStream;
 
+import com.cpjd.hidden.chapters.Tier1;
 import com.cpjd.hidden.chapters.World;
 import com.cpjd.hidden.files.GameSave;
 import com.cpjd.hidden.files.IO;
@@ -87,6 +88,7 @@ public class GameStateManager implements UIListener {
 		if(state == INTRO) gameStates[state] = new Intro(this, console);
 		if(state == MENU) gameStates[state] = new Menu(this, console);
 		if(state == WORLD) gameStates[state] = new World(this, console);
+		if(state == LVL_1) gameStates[state] = new Tier1(this, console);
 	}
 	private void unloadState(int state) {
 		gameStates[state] = null;

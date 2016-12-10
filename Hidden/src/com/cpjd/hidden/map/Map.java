@@ -138,8 +138,7 @@ public class Map {
 				
 				g.drawImage(tiles[map[row][col][0] / numColsAcross][map[row][col][0] % numColsAcross].getImage(),(int)(colPx * scaledTileSize - adjustx), (int)(rowPx * scaledTileSize - adjusty), (int)scaledTileSize, (int)scaledTileSize, null);	
 				//if(map[row][col][1] != 0) g.drawImage(tiles[map[row][col][1] / numColsAcross][map[row][col][1] % numColsAcross].getImage(),(int)(colPx * scaledTileSize - adjustx), (int)(rowPx * scaledTileSize - adjusty), (int)scaledTileSize, (int)scaledTileSize, null);	
-				
-
+				System.out.println("drawn at " + (int)(colPx * scaledTileSize - adjustx) + ", " + (int)(rowPx * scaledTileSize - adjusty));
 			}
 		}
 	}
