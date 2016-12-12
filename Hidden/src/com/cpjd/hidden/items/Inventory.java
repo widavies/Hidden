@@ -59,8 +59,6 @@ public class Inventory {
 		for(int col = 0; col < hotbar.length; col++) {
 			hotbar[col] = items.loadImage(hotbar[col]);
 		}
-		
-		addItem(items.getItem(0));
 	}
 	
 	/**
@@ -186,11 +184,15 @@ public class Inventory {
 	/**
 	 * Saves the inventory to the file system.
 	 */
-	public void saveChanges() {
-		gameSave = IO.deserializeGameSave();
-		gameSave.setInventory(inventory);
-		gameSave.setHotbar(hotbar);
-		gameSave.setClothing(clothing);
-		IO.serializeGameSave(gameSave);
+	public Item[][] getInventory() {
+		return inventory;
+	}
+	
+	public Item[][] getClothing() {
+		return clothing;
+	}
+	
+	public Item[] getHotbar() {
+		return hotbar;
 	}
 }

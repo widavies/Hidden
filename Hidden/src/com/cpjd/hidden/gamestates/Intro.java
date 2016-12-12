@@ -77,7 +77,7 @@ public class Intro extends GameState implements Runnable {
 			if(alphas[2] > 1f) alphas[2] = 1f;
 		} 
 		else if(ext < GamePanel.HEIGHT / 2 + logo.getHeight() / 8) ext+=3;
-		else if(ext2 >= 17 && soundLoader.isFinishedLoading() && seconds >= 6) gsm.setState(GameStateManager.MENU);
+		//else if(ext2 >= 17 && soundLoader.isFinishedLoading() && seconds >= 6) gsm.setState(GameStateManager.MENU);
 	}
 
 	@Override

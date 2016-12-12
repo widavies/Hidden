@@ -41,7 +41,9 @@ public class Chapter extends GameState {
 		GameSave save = prior;
 		save.setMap(tileMap.getMap());
 		save.setPlayerLocation(new Point((int)player.getX(), (int)player.getY()));
-		hud.save();
+		save.setInventory(hud.getInventory());
+		save.setClothing(hud.getClothing());
+		save.setHotbar(hud.getHotbar());
 		return save;
 	}
 	@Override

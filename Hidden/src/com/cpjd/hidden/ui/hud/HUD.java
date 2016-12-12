@@ -329,9 +329,7 @@ public class HUD {
 	}	
 	public void mouseWheelMoved(int k) {}
 	
-	public void save() {
-		inv.saveChanges();
-	}
+	
 	public int getAngle(int targetx, int targety, int actx, int acty) {
 	    int angle = (int) Math.toDegrees(Math.atan2(targety - acty, targetx - actx));
 
@@ -375,5 +373,16 @@ public class HUD {
 	}
 	public void clearInventory() {
 		inv.clearInventory();
+	}
+	public Item[][] getInventory() {
+		return inv.getInventory();
+	}
+	
+	public Item[][] getClothing() {
+		return inv.getClothing();
+	}
+	
+	public Item[] getHotbar() {
+		return inv.getHotbar();
 	}
 }
