@@ -16,11 +16,11 @@ public class Tier1 extends Chapter {
 		
 		int mapSize = 25;
 		
-		byte[][][] map = new byte[mapSize][mapSize][2];
+		int[][][] map = new int[mapSize][mapSize][2];
 		
 		for(int x = 0; x < mapSize; x++)
 			for(int y = 0; y < mapSize; y++)
-				map[x][y] = new byte[] {7, 0};
+				map[x][y] = new int[] {7, 0};
 		
 		tileMap.setMap(map);
 		player = new Player(tileMap);

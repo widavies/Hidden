@@ -20,10 +20,10 @@ import com.cpjd.hidden.main.GamePanel;
  */
 public class Map {
 	// Constants
-	public static byte SCALE = 4;
+	public static int SCALE = 4;
 	
 	// Map
-	private byte[][][] map;
+	private int[][][] map;
 	private int tileSize;
 	private double scaledTileSize;
 	private Tile[][] tiles;
@@ -32,7 +32,7 @@ public class Map {
 	private int numRowsAcross, numColsAcross;
 	
 	// Drawing
-	private byte numColsToDraw, numRowsToDraw;
+	private int numColsToDraw, numRowsToDraw;
 	private int numRows, numCols;
 	private int width, height;
 	private short startRow, startCol;
@@ -61,8 +61,8 @@ public class Map {
 			numRowsAcross = tileset.getHeight() / tileSize;
 			tiles = new Tile[numRowsAcross][numColsAcross];
 			
-			for(byte row = 0; row < numRowsAcross; row++) {
-				for(byte col = 0; col < numColsAcross; col++) {
+			for(int row = 0; row < numRowsAcross; row++) {
+				for(int col = 0; col < numColsAcross; col++) {
 					tiles[row][col] = new Tile(tileset.getSubimage(col * tileSize, row * tileSize, tileSize, tileSize));
 				}
 			}
@@ -88,7 +88,7 @@ public class Map {
 			delim = "height="; tokens = br.readLine().split(delim);
 			numRows = Integer.parseInt(tokens[1]);
 			
-			byte[][][] map = new byte[numRows][numCols][1];
+			int[][][] map = new int[numRows][numCols][1];
 
 			for(int i = 0; i < 10; i++) br.readLine();
 			
@@ -97,7 +97,7 @@ public class Map {
 				String line = br.readLine();
 				tokens = line.split(delims);
 				for(int col = 0; col < numCols; col++) {
-					byte tile = Byte.parseByte((tokens[col]));
+					int tile = Integer.parseInt((tokens[col]));
 					if(tile != 0) tile--;
 					map[row][col][0] = tile;
 				}
@@ -113,7 +113,7 @@ public class Map {
 	 * Sets the current level to be managed
 	 * @param map A 2D array of tile ids
 	 */
-	public void setMap(byte[][][] map) {
+	public void setMap(int[][][] map) {
 		this.map = map;
 	
 		numCols = map.length;
@@ -137,7 +137,7 @@ public class Map {
 				if(col >= map.length || col < 0) break;
 				
 				g.drawImage(tiles[map[row][col][0] / numColsAcross][map[row][col][0] % numColsAcross].getImage(),(int)(colPx * scaledTileSize - adjustx), (int)(rowPx * scaledTileSize - adjusty), (int)scaledTileSize, (int)scaledTileSize, null);	
-				//if(map[row][col][1] != 0) g.drawImage(tiles[map[row][col][1] / numColsAcross][map[row][col][1] % numColsAcross].getImage(),(int)(colPx * scaledTileSize - adjustx), (int)(rowPx * scaledTileSize - adjusty), (int)scaledTileSize, (int)scaledTileSize, null);	
+				if(map[row][col][1] != 0) g.drawImage(tiles[map[row][col][1] / numColsAcross][map[row][col][1] % numColsAcross].getImage(),(int)(colPx * scaledTileSize - adjustx), (int)(rowPx * scaledTileSize - adjusty), (int)scaledTileSize, (int)scaledTileSize, null);	
 			}
 		}
 	}
@@ -151,8 +151,8 @@ public class Map {
 		if(x > GamePanel.WIDTH / 2 && x < width - (GamePanel.WIDTH / 2)) xOffset = x - GamePanel.WIDTH / 2;
 		if(y > GamePanel.HEIGHT / 2 && y < height - (GamePanel.HEIGHT / 2))	yOffset = y - GamePanel.HEIGHT / 2;
 		
-		numColsToDraw = (byte)(GamePanel.WIDTH / (tileSize * SCALE) + 2);
-		numRowsToDraw = (byte)(GamePanel.HEIGHT / (tileSize * SCALE) + 2);
+		numColsToDraw = (int)(GamePanel.WIDTH / (tileSize * SCALE) + 2);
+		numRowsToDraw = (int)(GamePanel.HEIGHT / (tileSize * SCALE) + 2);
 		
 		if(lastScreenWidth != GamePanel.WIDTH) {
 			if(x > GamePanel.WIDTH / 2) xOffset = xOffset - (GamePanel.WIDTH - lastScreenWidth) / 2;
@@ -180,7 +180,7 @@ public class Map {
 	/**
 	 * @return The current map that is being used
 	 */
-	public byte[][][] getMap() {
+	public int[][][] getMap() {
 		return map;
 	}
 	

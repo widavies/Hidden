@@ -34,7 +34,7 @@ public class Game {
 			}
 		}
 		
-		frame = new JFrame("HIDDEN Build: v1.70 (Cascade) - Unstable");
+		frame = new JFrame("HIDDEN Build: v1.80 (Cascade) - Semi-stable");
 		
 		game = new GamePanel();
 		

@@ -39,7 +39,7 @@ public class Chapter extends GameState {
 	@Override
 	public GameSave getSave(GameSave prior) {
 		GameSave save = prior;
-		save.setMap(tileMap.getMap());
+		//save.setMap(tileMap.getMap());
 		save.setPlayerLocation(new Point((int)player.getX(), (int)player.getY()));
 		save.setInventory(hud.getInventory());
 		save.setClothing(hud.getClothing());
