@@ -51,11 +51,11 @@ public class Turbulence implements Runnable, ModuleListener {
 			}
 		}
 		
-		map = new int[500][500][2];
+		map = new int[TurbulenceConstants.WIDTH][TurbulenceConstants.HEIGHT][2];
 		
 		for(int row = 0; row < TurbulenceConstants.HEIGHT / TurbulenceConstants.BUFFER_SIZE; row++) {
 			for(int col = 0; col < TurbulenceConstants.WIDTH / TurbulenceConstants.BUFFER_SIZE; col++) {
-				modules.add(new TerrainModule(map, row, col, TurbulenceConstants.BUFFER_SIZE, TurbulenceConstants.BUFFER_SIZE, poolLocations, forestLocations, this));
+				modules.add(new TerrainModule(map, row * TurbulenceConstants.BUFFER_SIZE, col * TurbulenceConstants.BUFFER_SIZE, TurbulenceConstants.BUFFER_SIZE, TurbulenceConstants.BUFFER_SIZE, poolLocations, forestLocations, this));
 			}
 		}
 		
@@ -81,7 +81,7 @@ public class Turbulence implements Runnable, ModuleListener {
 	}
 	
 	@Override
-	public void moduleFinished(int[][][] map, int startx, int starty, int width, int height) {
+	public void moduleFinished(int[][][] map, int startx, int starty, int width, int height, ArrayList<Point> villageLocations, ArrayList<ArrayList<Point>> prisonLocations) {
 		for(int row = starty; row < height; row++) {
 			for(int col = startx; col < width; col++) {
 				this.map[row][col][0] = map[row][col][0];
@@ -91,7 +91,9 @@ public class Turbulence implements Runnable, ModuleListener {
 		
 		currentModules++;
 		
-		if(currentModules == NUM_MODULES + 1) listener.worldGenerated(map);
+		if(currentModules == NUM_MODULES + 1) {
+			listener.worldGenerated(map, villageLocations, prisonLocations, findSpawn());
+		}
 	}
 
 	public void addListener(TurbulenceListener listener) {
@@ -100,8 +102,76 @@ public class Turbulence implements Runnable, ModuleListener {
 
 	@Override
 	public void villagesFinished(int[][][] map, ArrayList<Point> villageLocations) {
-		System.out.println("Starting prison module");
 		modules.add(new PrisonModule(map, villageLocations, this));
 		
+	}
+	
+	// Location a valid spawning location
+	private Point findSpawn() {
+		int xOffset = TurbulenceConstants.WIDTH / 2;
+		int yOffset = TurbulenceConstants.HEIGHT / 2;
+		int searches = 0;
+		int spawnSafeRange = 4;
+		boolean viable = false;
+		int randomAttempts = 0;
+		Point spawn = null;
+		
+		do {
+			viable = true;
+			for(int i = 0; i < spawnSafeRange; i++) {
+				for(int j = 0; j < spawnSafeRange; j++) {
+					if(yOffset + i >= map[0].length || xOffset + j >= map.length) continue;
+					
+					// FIXME
+					if(map[yOffset + i][xOffset + j][1] > 10) viable = false;
+				}
+			}
+			
+			if(searches == 0) {
+				xOffset+=2;
+				if(xOffset > TurbulenceConstants.WIDTH - 1) {
+					xOffset = TurbulenceConstants.WIDTH / 2;
+					searches = 1;
+				}
+			}
+			else if(searches == 1) {
+				xOffset-=2;
+				if(xOffset < 0) {
+					xOffset = TurbulenceConstants.WIDTH / 2;
+					searches = 2;
+				}
+			}
+			else if(searches == 2) {
+				yOffset += 2;
+				if(yOffset > TurbulenceConstants.HEIGHT - 1) {
+					yOffset = TurbulenceConstants.HEIGHT / 2;
+					searches = 3;
+				}
+			}
+			else if(searches == 3) {
+				yOffset-=2;
+				if(yOffset < 0) {
+					yOffset = 0;
+					searches = 4;
+				}
+			}
+			else if(searches == 3) {
+				xOffset = r.nextInt(TurbulenceConstants.WIDTH - 1);
+				yOffset = r.nextInt(TurbulenceConstants.HEIGHT - 1);
+				randomAttempts++;
+			}
+			
+			if(randomAttempts > 30) {
+				viable = true;
+			}
+		} while(!viable);
+		
+		if(viable && randomAttempts >= 30) {
+			// regenerate world
+		} else if(viable) {
+			spawn = new Point(xOffset + (int)(spawnSafeRange / 2), yOffset + (int)(spawnSafeRange / 2));
+		}
+		
+		return spawn;
 	}
 }

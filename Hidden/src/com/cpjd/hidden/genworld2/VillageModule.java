@@ -49,7 +49,7 @@ public class VillageModule extends TurbulenceModule implements Runnable {
 		}
 		
 		listener.villagesFinished(map, villageLocations);
-		listener.moduleFinished(map, 0, 0, map.length, map[0].length);
+		listener.moduleFinished(map, 0, 0, map.length, map[0].length, null, null);
 		
 		try {
 			thread.join();

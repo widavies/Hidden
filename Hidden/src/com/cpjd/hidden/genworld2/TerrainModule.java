@@ -41,6 +41,7 @@ public class TerrainModule extends TurbulenceModule implements Runnable {
 	public void run() {
 		for(int row = starty; row < height + starty; row++) {
 			for(int col = startx; col < width + startx; col++) {
+
 				if(map[row][col][0] != 0) continue;
 				
 				if(shouldGenOcean(map.length, map[0].length, row, col)) map[row][col][1] = TileIDs.WATER;
@@ -55,7 +56,7 @@ public class TerrainModule extends TurbulenceModule implements Runnable {
 			}
 		}
 		
-		listener.moduleFinished(map, startx, starty, width, height);
+		listener.moduleFinished(map, startx, starty, width, height, null, null);
 		
 		try {
 			thread.join();

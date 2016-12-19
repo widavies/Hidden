@@ -1,8 +1,8 @@
 package com.cpjd.hidden.genworld2;
 
 public class TurbulenceConstants {
-	public static int WIDTH = 1000;
-	public static int HEIGHT = 1000;
+	public static int WIDTH = 500;
+	public static int HEIGHT = 500;
 	
 	public static int BUFFER_SIZE = 100; // Square tiles per thread
 	

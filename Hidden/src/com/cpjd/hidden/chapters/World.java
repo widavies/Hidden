@@ -19,8 +19,6 @@ import com.cpjd.tools.Layout;
 
 public class World extends Chapter implements TurbulenceListener {
 
-	private double progress;
-	
 	protected Turbulence world;
 	
 	private PUD pud;
@@ -40,7 +38,7 @@ public class World extends Chapter implements TurbulenceListener {
 			world = new Turbulence();
 			world.addListener(this);
 		} else {
-			//tileMap.setMap(save.getMap());
+			tileMap.setMap(save.getMap());
 			player = new Player(tileMap);
 			player.setPosition(save.getPlayerLocation().x, save.getPlayerLocation().y);
 			tileMap.initCamera(player.getX(), player.getY());
@@ -48,7 +46,7 @@ public class World extends Chapter implements TurbulenceListener {
 			hud.setPlayer(player);
 			finishedGen = true;
 			
-			setIDs(save.getPrisonLocations());
+			//setIDs(save.getPrisonLocations());
 		}
 		
 	}
@@ -91,10 +89,10 @@ public class World extends Chapter implements TurbulenceListener {
 	}
 	
 	@Override
-	public void worldGenerated(int[][][] map) {
+	public void worldGenerated(int[][][] map, ArrayList<Point> villageLocations, ArrayList<ArrayList<Point>> prisonLocations, Point spawn) {
 		tileMap.setMap(world.getWorld());
 		player = new Player(tileMap);
-		//player.setPosition(world.getSpawn().x * tileMap.getScaledTileSize(), world.getSpawn().y * tileMap.getScaledTileSize());
+		player.setPosition(spawn.x * tileMap.getScaledTileSize(), spawn.y * tileMap.getScaledTileSize());
 		player.setPosition(100, 100);
 		tileMap.initCamera(player.getX(), player.getY());
 		console.setPlayer(player);
@@ -103,10 +101,10 @@ public class World extends Chapter implements TurbulenceListener {
 		
 		GameSave save = new GameSave();
 		save.setMap(world.getWorld());
-		//save.setPrisonLocations(world.getPrisonLocations());
+		save.setPrisonLocations(prisonLocations);
 		save.setPlayerLocation(new Point((int)player.getX(), (int)player.getY()));
 		
-		//setIDs(world.getPrisonLocations());
+		//setIDs(prisonLocations);
 		
 		IO.serializeGameSave(save);
 		

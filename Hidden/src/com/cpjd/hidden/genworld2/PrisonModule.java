@@ -57,7 +57,7 @@ public class PrisonModule extends TurbulenceModule implements Runnable {
 			}
 		}
 
-		listener.moduleFinished(map, 0, 0, map.length, map[0].length);
+		listener.moduleFinished(map, 0, 0, map.length, map[0].length, villageLocations, prisonLocations);
 
 		try {
 			thread.join();

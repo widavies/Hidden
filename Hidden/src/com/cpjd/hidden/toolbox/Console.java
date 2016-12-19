@@ -128,6 +128,10 @@ public class Console {
 			output.add("Deleted game save file.");
 			return;
 		}
+		else if(tokens[0].toLowerCase().equals("tp")) {
+			player.setPosition(Integer.parseInt(tokens[1].split(",")[0]) * 64, Integer.parseInt(tokens[1].split(",")[1]) * 64);
+			output.add("Player teleported.");
+		}
 		else if (tokens[0].toLowerCase().equals("clear")){
 			if(tokens.length > 1){
 				

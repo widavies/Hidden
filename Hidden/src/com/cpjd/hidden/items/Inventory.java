@@ -1,7 +1,6 @@
 package com.cpjd.hidden.items;
 
 import com.cpjd.hidden.files.GameSave;
-import com.cpjd.hidden.files.IO;
 
 /**
  * Manages the inventory for Hidden. It's a 5 x 5  grid. The bottom left-most square isn't used.
@@ -27,12 +26,9 @@ public class Inventory {
 	private Item[][] inventory; // Note: position 4,0 is not used
 	private Item[] hotbar;
 	private Item[][] clothing;
-	private GameSave gameSave;
 	private Items items;
 	
 	public Inventory(GameSave gameSave) {
-		this.gameSave = gameSave;
-		
 		if(gameSave != null) inventory = gameSave.getInventory();
 		if(gameSave != null) hotbar = gameSave.getHotbar();
 		if(gameSave != null) clothing = gameSave.getClothing();
