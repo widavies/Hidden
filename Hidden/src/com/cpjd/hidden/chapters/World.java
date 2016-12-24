@@ -90,6 +90,8 @@ public class World extends Chapter implements TurbulenceListener {
 	
 	@Override
 	public void worldGenerated(int[][][] map, ArrayList<Point> villageLocations, ArrayList<ArrayList<Point>> prisonLocations, Point spawn) {
+		System.out.println("WORLD GENERATED");
+		
 		tileMap.setMap(world.getWorld());
 		player = new Player(tileMap);
 		player.setPosition(spawn.x * tileMap.getScaledTileSize(), spawn.y * tileMap.getScaledTileSize());

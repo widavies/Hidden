@@ -115,6 +115,8 @@ public class Player extends Entity {
 
 	@Override
 	public void update() {
+		maxSpeed = 50;
+		
 		manageMovement();
 		
 		// Manage animation update

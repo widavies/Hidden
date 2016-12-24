@@ -30,8 +30,6 @@ public class Turbulence implements Runnable, ModuleListener {
 
 	private ArrayList<TurbulenceModule> modules;
 	
-	private int NUM_MODULES;
-	
 	public Turbulence() {
 		forestLocations = new ArrayList<Point>();
 		poolLocations = new ArrayList<Point>();
@@ -60,16 +58,10 @@ public class Turbulence implements Runnable, ModuleListener {
 		}
 		
 		modules.add(new VillageModule(map, this));
-		
-		NUM_MODULES = modules.size();
 	}
 
 	public double getCollectiveProgress() {
-		double progress = 0;
-		for(int i = 0; i < modules.size(); i++) {
-			progress += modules.get(i).getProgress();
-		}
-		return progress / (TurbulenceConstants.WIDTH * TurbulenceConstants.HEIGHT) * 2;
+		return currentModules / ((double) modules.size()+ 1);
 	}
 	
 	public void release() {
@@ -91,7 +83,8 @@ public class Turbulence implements Runnable, ModuleListener {
 		
 		currentModules++;
 		
-		if(currentModules == NUM_MODULES + 1) {
+		if(currentModules == modules.size()) {
+			currentModules++;
 			listener.worldGenerated(map, villageLocations, prisonLocations, findSpawn());
 		}
 	}
